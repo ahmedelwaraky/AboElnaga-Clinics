@@ -1,15 +1,15 @@
-import Salah from "../assets/images/doctors/Salah.png";
-import Abbas from "../assets/images/doctors/Abbas.png";
-import Omar from "../assets/images/doctors/Omar.png";
-import Galal from "../assets/images/doctors/Galal.png";
-import Ibrahim from "../assets/images/doctors/Galal.png";
-import yousef from "../assets/images/doctors/yousef1.png";
-import Afnan from "../assets/images/doctors/Afnan.png";
-import wafa from "../assets/images/doctors/Wafa.png";
-import Aya from "../assets/images/doctors/Aya.png";
-import Nada from "../assets/images/doctors/Nada.png";
-import Maraim from "../assets/images/doctors/Mariam.png";
-import Hader from "../assets/images/doctors/Hadeer.png";
+import salah from "../assets/images/doctors/salah.png";
+import abbas from "../assets/images/doctors/abbas.png";
+import omar from "../assets/images/doctors/omar.png";
+import galal from "../assets/images/doctors/galal.png";
+import ibrahim from "../assets/images/doctors/ibrahim.png";
+import yousef from "../assets/images/doctors/yousef.png";
+import afnan from "../assets/images/doctors/afnan.png";
+import wafa from "../assets/images/doctors/wafa.png";
+import aya from "../assets/images/doctors/aya.png";
+import nada from "../assets/images/doctors/nada.png";
+import mariam from "../assets/images/doctors/mariam.png";
+import hadeer from "../assets/images/doctors/hadeer.png";
 
 export const teamMembers = [
   {
@@ -20,7 +20,7 @@ export const teamMembers = [
     roleEn: "Cosmetic Dentist",
     specialtyAr: "أخصائي الحشوات التجميلية وحشو العصب والتركيبات",
     specialtyEn: "Aesthetic fillings, root canal & prosthetics specialist",
-    img: Galal,
+    img: galal,
   },
   {
     id: 2,
@@ -30,7 +30,7 @@ export const teamMembers = [
     roleEn: "Endodontist",
     specialtyAr: "أخصائي حشو العصب",
     specialtyEn: "Root canal specialist",
-    img: Abbas,
+    img: abbas,
   },
   {
     id: 3,
@@ -40,7 +40,7 @@ export const teamMembers = [
     roleEn: "Cosmetic Dentist",
     specialtyAr: "اخصائي الحشوات التجميلية",
     specialtyEn: "Aesthetic fillings specialist",
-    img: Salah,
+    img: salah,
   },
   {
     id: 4,
@@ -60,7 +60,7 @@ export const teamMembers = [
     roleEn: "Endodontist & Prosthodontist",
     specialtyAr: "أخصائي حشو العصب والحشوات التجميلية والتركيبات",
     specialtyEn: "Root canal, aesthetic fillings & prosthetics specialist",
-    img: Ibrahim,
+    img: ibrahim,
   },
   {
     id: 6,
@@ -70,7 +70,7 @@ export const teamMembers = [
     roleEn: "Implantologist",
     specialtyAr: "أخصائي جراحة وزراعة الاسنان",
     specialtyEn: "Dental surgery & implant specialist",
-    img: Omar,
+    img: omar,
   },
   {
     id: 7,
@@ -80,7 +80,7 @@ export const teamMembers = [
     roleEn: "Removable Prosthodontist",
     specialtyAr: "أخصائي التركيبات المتحركة",
     specialtyEn: "Removable dentures & prosthetics specialist",
-    img: Afnan,
+    img: afnan,
   },
   {
     id: 8,
@@ -90,7 +90,7 @@ export const teamMembers = [
     roleEn: "Prosthodontist",
     specialtyAr: "أخصائي تركيبات الأسنان",
     specialtyEn: "Dental prosthetics specialist",
-    img: Hader,
+    img: hadeer,
   },
   {
     id: 9,
@@ -100,7 +100,7 @@ export const teamMembers = [
     roleEn: "Cosmetic Dentist",
     specialtyAr: "أخصائيه الحشوات التجميلية و التركيبات",
     specialtyEn: "Aesthetic fillings & prosthetics specialist",
-    img: Maraim,
+    img: mariam,
   },
   {
     id: 10,
@@ -111,7 +111,7 @@ export const teamMembers = [
     specialtyAr: "أخصائية حشو العصب والحشوات التجميلية والتركيبات الثابتة",
     specialtyEn:
       "Root canal, aesthetic fillings & fixed prosthetics specialist",
-    img: Nada,
+    img: nada,
   },
   {
     id: 11,
@@ -132,6 +132,6 @@ export const teamMembers = [
     roleEn: "Aesthetic Dentist",
     specialtyAr: "أخصائية الحشوات والتركيبات التجميلية",
     specialtyEn: "Aesthetic fillings & prosthetics specialist",
-    img: Aya,
+    img: aya,
   },
 ];
