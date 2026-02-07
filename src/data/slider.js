@@ -2,7 +2,7 @@ import hero1 from "../assets/images/heros/hero-1.jpg";
 import hero2 from "../assets/images/heros/hero-2.jpg";
 import hero3 from "../assets/images/heros/hero-3.jpg";
 
-export const slides = [
+export const slider = [
   {
     image: hero1,
     titleAr: "التميز في رعاية الأسنان",
