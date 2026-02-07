@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import ClinicSelectionPopup from "../../shared/ui/ClinicSelectionPopup";
-import  slider  from "../../Data/slider";
+import { heroSliders } from "../../data/heroSliders";
 
 const HeroSlider = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -13,19 +13,19 @@ const HeroSlider = () => {
     if (!isAutoPlaying) return;
 
     const interval = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % slider.length);
+      setCurrentSlide((prev) => (prev + 1) % heroSliders.length);
     }, 5000);
 
     return () => clearInterval(interval);
   }, [isAutoPlaying]);
 
   const nextSlide = () => {
-    setCurrentSlide((prev) => (prev + 1) % slider.length);
+    setCurrentSlide((prev) => (prev + 1) % heroSliders.length);
     setIsAutoPlaying(false);
   };
 
   const prevSlide = () => {
-    setCurrentSlide((prev) => (prev - 1 + slider.length) % slider.length);
+    setCurrentSlide((prev) => (prev - 1 + heroSliders.length) % heroSliders.length);
     setIsAutoPlaying(false);
   };
 
@@ -48,7 +48,7 @@ const HeroSlider = () => {
     <div className="relative w-full h-screen overflow-hidden">
       {/* Background Images - يتحرك */}
       <div className="absolute inset-0 w-full h-full">
-        {slider.map((slide, index) => (
+        {heroSliders.map((slide, index) => (
           <div
             key={index}
             className={`absolute inset-0 w-full h-full transition-opacity duration-1000 ease-in-out ${
@@ -75,12 +75,12 @@ const HeroSlider = () => {
           <div className="text-right max-w-3xl mr-auto">
             {/* Title */}
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-4">
-              {slider[currentSlide].titleAr}
+              {heroSliders[currentSlide].titleAr}
             </h1>
 
             {/* Subtitle */}
             <p className="text-lg md:text-xl text-white/95 mb-10 leading-relaxed">
-              {slider[currentSlide].subtitleAr}
+              {heroSliders[currentSlide].subtitleAr}
             </p>
 
             {/* Buttons */}
@@ -124,7 +124,7 @@ const HeroSlider = () => {
 
       {/* Dot Indicators */}
       <div className="absolute bottom-12 left-1/2 -translate-x-1/2 z-20 flex gap-3">
-        {slider.map((_, index) => (
+        {heroSliders.map((_, index) => (
           <button
             key={index}
             onClick={() => goToSlide(index)}
