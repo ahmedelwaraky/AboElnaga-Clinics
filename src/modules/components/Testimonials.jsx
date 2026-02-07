@@ -8,7 +8,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "../../shared/ui/Carousel";
-import testimonials  from "../../data/testimonials";
+import {testimonials}  from "../../data/testimonials";
 
 const Testimonials = () => {
   const { isDark } = useTheme();

@@ -1,5 +1,5 @@
 import { useTheme } from "../../core/createContext";
-import  cases  from "../../data/before-after";
+import  {cases}  from "../../data/before-after";
 import {
   Carousel,
   CarouselContent,

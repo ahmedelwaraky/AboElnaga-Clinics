@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 import { Share2, Copy, MessageCircle, Check, Facebook, Twitter, Linkedin, Send, Mail } from "lucide-react";
 import { useTheme } from "../../core/createContext";
-import  videos  from "../../data/reels-data";
+import  {videos}  from "../../data/reels-data";
 import {
   Carousel,
   CarouselContent,

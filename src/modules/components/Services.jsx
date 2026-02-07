@@ -1,6 +1,6 @@
 import { Smile, Sparkles, Shield, Zap, Activity, Star } from "lucide-react";
 import { useTheme } from "../../core/createContext";
-import  services  from "../../data/services";
+import  {services}  from "../../data/services";
 import { useEffect, useRef, useState } from "react";
 
 const Services = () => {

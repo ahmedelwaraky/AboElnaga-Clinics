@@ -1,7 +1,7 @@
 import { MapPin, Phone, Clock, Headphones } from "lucide-react";
 import { Card, CardContent } from "../../shared/ui/Card";
 import { useTheme } from "../../core/createContext";
-import  locations  from "../../data/branches";
+import  {locations}  from "../../data/branches";
 
 const Locations = () => {
   const { isDark } = useTheme();

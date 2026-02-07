@@ -1,5 +1,5 @@
 import { useTheme } from "../../core/createContext";
-import  teamMembers  from "../../data/team";
+import  {teamMembers}  from "../../data/team";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "../../shared/ui/Carousel";
 import { useNavigate } from "react-router-dom";
 
