@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import {
   MapPin,
   Phone,
@@ -14,27 +14,18 @@ import {
   getDirectionsUrl,
   getWhatsappUrl,
   distanceKm,
+  isBranchOpen,
 } from "../../data/branches";
-
-/* مواعيد العمل: السبت - الخميس، 10ص : 10م (الجمعة مغلق) — بتوقيت القاهرة */
-const useIsOpenNow = () =>
-  useMemo(() => {
-    const now = new Date(
-      new Date().toLocaleString("en-US", { timeZone: "Africa/Cairo" })
-    );
-    const hour = now.getHours() + now.getMinutes() / 60;
-    return now.getDay() !== 5 && hour >= 10 && hour < 22;
-  }, []);
 
 const Locations = () => {
   const { isDark } = useTheme();
-  const isOpen = useIsOpenNow();
 
   const [active, setActive] = useState(0);
   const [nearest, setNearest] = useState(null); // { index, km }
   const [locating, setLocating] = useState(false);
 
   const branch = locations[active];
+  const isOpen = isBranchOpen(branch); // مواعيد الجمعة بتختلف من فرع لفرع
 
   const findNearest = () => {
     if (!navigator.geolocation) return;
@@ -70,6 +61,7 @@ const Locations = () => {
       ? "bg-blue-500 text-white border-blue-500 shadow-lg shadow-blue-500/25"
       : "bg-blue-600 text-white border-blue-600 shadow-lg shadow-blue-600/25",
     row: isDark ? "bg-white/[0.04]" : "bg-gray-50",
+    divider: isDark ? "border-white/10" : "border-gray-200",
   };
 
   const InfoRow = ({ icon: Icon, children }) => (
@@ -185,7 +177,15 @@ const Locations = () => {
 
               <div className="mt-5 flex-1 space-y-2.5">
                 <InfoRow icon={MapPin}>{branch.addressAr}</InfoRow>
-                <InfoRow icon={Clock}>{branch.hoursAr}</InfoRow>
+
+                {/* المواعيد: أيام الأسبوع + الجمعة */}
+                <InfoRow icon={Clock}>
+                  <span className="block">{branch.hoursAr}</span>
+                  <span className={`mt-1.5 block border-t pt-1.5 ${t.divider}`}>
+                    {branch.fridayAr}
+                  </span>
+                </InfoRow>
+
                 <InfoRow icon={Phone}>
                   <a href={`tel:${branch.phone}`} dir="ltr" className={`font-semibold hover:underline ${t.accent}`}>
                     {branch.phone}
@@ -235,7 +235,7 @@ const Locations = () => {
         </div>
 
         <p className={`mt-5 text-center text-xs ${t.muted}`}>
-          {locations.length} فروع في محافظة المنوفية · الجمعة إجازة
+          {locations.length} فروع في محافظة المنوفية · مفتوحين طول أيام الأسبوع
         </p>
       </div>
     </section>

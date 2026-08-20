@@ -1,7 +1,18 @@
 import { useRef, useState } from "react";
-import { Share2, Copy, MessageCircle, Check, Facebook, Twitter, Linkedin, Send, Mail } from "lucide-react";
+import {
+  Share2,
+  Copy,
+  MessageCircle,
+  Check,
+  Facebook,
+  Twitter,
+  Linkedin,
+  Send,
+  Mail,
+  Play,
+} from "lucide-react";
 import { useTheme } from "../../core/createContext";
-import  {videos}  from "../../data/reels-data";
+import { videos } from "../../data/reels-data";
 import {
   Carousel,
   CarouselContent,
@@ -11,10 +22,9 @@ import {
 } from "../../shared/ui/Carousel";
 import { Card, CardContent } from "../../shared/ui/Card";
 
-// Simple Dialog Component
+/* ── Dialog ───────────────────────────────────────────── */
 const Dialog = ({ open, onOpenChange, children }) => {
   if (!open) return null;
-
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
       <div
@@ -26,70 +36,155 @@ const Dialog = ({ open, onOpenChange, children }) => {
   );
 };
 
-const DialogContent = ({ className, children, onClose }) => {
-  return (
-    <div
-      className={`relative bg-white dark:bg-gray-900 rounded-lg shadow-xl p-4 sm:p-6 w-full max-w-lg mx-4 ${className || ""}`}
+const DialogContent = ({ className, children, onClose }) => (
+  <div
+    className={`relative bg-white dark:bg-gray-900 rounded-lg shadow-xl p-4 sm:p-6 w-full max-w-lg mx-4 ${
+      className || ""
+    }`}
+  >
+    <button
+      onClick={onClose}
+      className="absolute top-3 left-3 sm:top-4 sm:left-4 p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
     >
-      <button
-        onClick={onClose}
-        className="absolute top-3 left-3 sm:top-4 sm:left-4 p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
-      >
-        <span className="sr-only">Close</span>
-        <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-        </svg>
-      </button>
-      {children}
-    </div>
-  );
-};
+      <span className="sr-only">إغلاق</span>
+      <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+      </svg>
+    </button>
+    {children}
+  </div>
+);
 
-const DialogHeader = ({ children }) => {
-  return <div className="flex flex-col space-y-1.5 mb-3 sm:mb-4">{children}</div>;
-};
+const DialogHeader = ({ children }) => (
+  <div className="flex flex-col space-y-1.5 mb-3 sm:mb-4">{children}</div>
+);
 
-const DialogTitle = ({ className, children }) => {
+const DialogTitle = ({ className, children }) => (
+  <h2 className={`text-base sm:text-lg font-semibold leading-none tracking-tight ${className || ""}`}>
+    {children}
+  </h2>
+);
+
+/* ── كارت الفيديو ─────────────────────────────────────────
+   المشكلة: الموبايل (iOS خصوصاً) مش بيرسم أول فريم مع preload="metadata"
+   الحل: poster لو متوفر، وإلا #t=0.1 عشان المتصفح يعمل seek ويرسم فريم
+──────────────────────────────────────────────────────── */
+const VideoCard = ({ video, index, videoRefs, isDark, onPlay, onShare }) => {
+  const [started, setStarted] = useState(false);
+
+  const src = video.poster
+    ? video.src
+    : video.src.includes("#")
+    ? video.src
+    : `${video.src}#t=0.1`;
+
+  const handlePlayClick = () => {
+    const el = videoRefs.current[index];
+    if (el) el.play();
+  };
+
   return (
-    <h2 className={`text-base sm:text-lg font-semibold leading-none tracking-tight ${className || ""}`}>
-      {children}
-    </h2>
+    <Card
+      className={`group overflow-hidden cursor-pointer rounded-2xl md:rounded-3xl border-0 transition-transform duration-300 my-3 md:my-5 mx-1 md:mx-2 ${
+        isDark ? "bg-[#1e293b] hover:scale-105" : "bg-white hover:scale-105"
+      }`}
+    >
+      <CardContent className="p-0 relative">
+        <div className="relative w-full h-full bg-gray-900 rounded-t-2xl md:rounded-t-3xl overflow-hidden">
+          <video
+            ref={(el) => (videoRefs.current[index] = el)}
+            src={src}
+            poster={video.poster || undefined}
+            controls
+            playsInline
+            preload="metadata"
+            className="w-full h-full object-cover"
+            onPlay={() => {
+              setStarted(true);
+              onPlay(index);
+            }}
+          />
+
+          {/* زر تشغيل فوق الصورة - بيختفي أول ما الفيديو يشتغل */}
+          {!started && (
+            <button
+              onClick={handlePlayClick}
+              aria-label={`تشغيل ${video.titleAr}`}
+              className="absolute inset-0 flex items-center justify-center bg-black/15 transition-colors hover:bg-black/25"
+            >
+              <span className="flex h-14 w-14 items-center justify-center rounded-full bg-white/95 shadow-xl transition-transform duration-300 group-hover:scale-110 md:h-16 md:w-16">
+                <Play className="mr-0.5 h-6 w-6 fill-gray-900 text-gray-900 md:h-7 md:w-7" />
+              </span>
+            </button>
+          )}
+
+          {/* الفئة */}
+          <div className="pointer-events-none absolute top-2 md:top-3 left-2 md:left-3 bg-yellow-400 text-gray-900 px-2 md:px-3 py-1 md:py-1.5 rounded-full text-[10px] md:text-xs font-light shadow-lg">
+            {video.categoryAr}
+          </div>
+
+          {/* المدة */}
+          <div className="pointer-events-none absolute bottom-2 md:bottom-3 right-2 md:right-3 bg-gray-900/80 backdrop-blur-sm text-white px-1.5 md:px-2 py-0.5 rounded text-[10px] md:text-xs font-medium">
+            {video.duration}
+          </div>
+        </div>
+
+        {/* العنوان + الشير */}
+        <div
+          className={`flex items-center justify-between px-3 md:px-4 py-2 md:py-3 rounded-b-2xl md:rounded-b-3xl ${
+            isDark ? "bg-[#1e293b]" : "bg-gray-100"
+          }`}
+        >
+          <button
+            onClick={() => onShare(video)}
+            aria-label="مشاركة"
+            className={`p-1.5 md:p-2 rounded-full transition-all hover:scale-110 ${
+              isDark ? "text-white hover:bg-white/10" : "text-gray-700 hover:bg-gray-200"
+            }`}
+          >
+            <Share2 className="w-3.5 h-3.5 md:w-4 md:h-4" />
+          </button>
+
+          <h3
+            className={`text-xs md:text-sm font-semibold text-right flex-1 mr-2 line-clamp-1 ${
+              isDark ? "text-white" : "text-gray-900"
+            }`}
+          >
+            {video.titleAr}
+          </h3>
+        </div>
+      </CardContent>
+    </Card>
   );
 };
 
+/* ── السيكشن ──────────────────────────────────────────── */
 const ReelsVideos = () => {
   const { isDark } = useTheme();
   const videoRefs = useRef([]);
   const [shareDialog, setShareDialog] = useState({ open: false, video: null });
   const [copied, setCopied] = useState(false);
 
-  // لما فيديو يشتغل → نوقف الباقي
   const handlePlay = (index) => {
-    videoRefs.current.forEach((video, i) => {
-      if (video && i !== index) {
-        video.pause();
-      }
+    videoRefs.current.forEach((v, i) => {
+      if (v && i !== index) v.pause();
     });
   };
 
-  // فتح نافذة المشاركة
   const openShareDialog = (video) => {
     setShareDialog({ open: true, video });
     setCopied(false);
   };
 
-  // نسخ الرابط
   const copyToClipboard = (url) => {
     navigator.clipboard.writeText(url);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
 
-  // منصات التواصل الاجتماعي
   const getSocialLinks = (video) => {
     const text = video.titleAr;
     const url = video.url;
-
     return [
       {
         name: "WhatsApp",
@@ -145,8 +240,7 @@ const ReelsVideos = () => {
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Added top spacing for navigation */}
-          <div className="h-16 md:h-20"></div>
+          <div className="h-16 md:h-20" />
 
           {/* العنوان */}
           <div className="text-center mb-10 md:mb-16">
@@ -165,38 +259,33 @@ const ReelsVideos = () => {
               تعلم عن رعاية الأسنان وشاهد إجراءاتنا عملياً
             </p>
 
-            {/* Decorative Divider */}
             <div className="flex items-center justify-center gap-3 md:gap-4">
-              {/* Left Line */}
-              <div className={`h-[2px] w-24 md:w-32 rounded-full ${
-                isDark 
-                  ? "bg-gradient-to-r from-transparent via-blue-400 to-blue-400" 
-                  : "bg-gradient-to-r from-transparent via-blue-500 to-blue-500"
-              }`}></div>
-              
-              {/* Right Line */}
-              <div className={`h-[2px] w-24 md:w-32 rounded-full ${
-                isDark 
-                  ? "bg-gradient-to-l from-transparent via-blue-400 to-blue-400" 
-                  : "bg-gradient-to-l from-transparent via-blue-500 to-blue-500"
-              }`}></div>
+              <div
+                className={`h-[2px] w-24 md:w-32 rounded-full ${
+                  isDark
+                    ? "bg-gradient-to-r from-transparent via-blue-400 to-blue-400"
+                    : "bg-gradient-to-r from-transparent via-blue-500 to-blue-500"
+                }`}
+              />
+              <div
+                className={`h-[2px] w-24 md:w-32 rounded-full ${
+                  isDark
+                    ? "bg-gradient-to-l from-transparent via-blue-400 to-blue-400"
+                    : "bg-gradient-to-l from-transparent via-blue-500 to-blue-500"
+                }`}
+              />
             </div>
 
-            {/* Decorative dots */}
             <div className="flex items-center justify-center gap-1.5 mt-4 md:mt-6">
-              <div className={`w-1.5 h-1.5 rounded-full ${isDark ? "bg-blue-400" : "bg-blue-500"}`}></div>
-              <div className={`w-2 h-2 rounded-full ${isDark ? "bg-blue-400" : "bg-blue-500"}`}></div>
-              <div className={`w-1.5 h-1.5 rounded-full ${isDark ? "bg-blue-400" : "bg-blue-500"}`}></div>
+              <div className={`w-1.5 h-1.5 rounded-full ${isDark ? "bg-blue-400" : "bg-blue-500"}`} />
+              <div className={`w-2 h-2 rounded-full ${isDark ? "bg-blue-400" : "bg-blue-500"}`} />
+              <div className={`w-1.5 h-1.5 rounded-full ${isDark ? "bg-blue-400" : "bg-blue-500"}`} />
             </div>
           </div>
 
           {/* الكاروسيل */}
           <Carousel
-            opts={{
-              align: "start",
-              loop: true,
-              direction: "rtl",
-            }}
+            opts={{ align: "start", loop: true, direction: "rtl" }}
             autoplay={false}
             className="w-full"
           >
@@ -206,65 +295,14 @@ const ReelsVideos = () => {
                   key={video.id}
                   className="pl-2 md:pl-4 basis-4/5 sm:basis-1/2 md:basis-1/3 lg:basis-1/4 xl:basis-1/5"
                 >
-                  <Card
-                    className={`group overflow-hidden cursor-pointer rounded-2xl md:rounded-3xl border-0 transition-transform duration-300 my-3 md:my-5 mx-1 md:mx-2 ${
-                      isDark
-                        ? "bg-[#1e293b] hover:scale-105"
-                        : "bg-white hover:scale-105"
-                    }`}
-                  >
-                    <CardContent className="p-0 relative">
-                      {/* الفيديو - ياخد كل المساحة */}
-                      <div className="relative w-full h-full">
-                        <video
-                          ref={(el) => (videoRefs.current[index] = el)}
-                          src={video.src}
-                          controls
-                          preload="metadata"
-                          className="w-full h-full object-cover rounded-t-2xl md:rounded-t-3xl"
-                          onPlay={() => handlePlay(index)}
-                        />
-
-                        {/* الفئة - في الأعلى على اليسار */}
-                        <div className="absolute top-2 md:top-3 left-2 md:left-3 bg-yellow-400 text-gray-900 px-2 md:px-3 py-1 md:py-1.5 rounded-full text-[10px] md:text-xs font-light shadow-lg">
-                          {video.categoryAr}
-                        </div>
-
-                        {/* المدة - في الأسفل على اليمين */}
-                        <div className="absolute bottom-2 md:bottom-3 right-2 md:right-3 bg-gray-900/80 backdrop-blur-sm text-white px-1.5 md:px-2 py-0.5 rounded text-[10px] md:text-xs font-medium">
-                          {video.duration}
-                        </div>
-                      </div>
-
-                      {/* العنوان + الشير - في الأسفل */}
-                      <div
-                        className={`flex items-center justify-between px-3 md:px-4 py-2 md:py-3 rounded-b-2xl md:rounded-b-3xl ${
-                          isDark ? "bg-[#1e293b]" : "bg-gray-100"
-                        }`}
-                      >
-                        {/* زر المشاركة - على اليسار */}
-                        <button
-                          onClick={() => openShareDialog(video)}
-                          className={`p-1.5 md:p-2 rounded-full transition-all hover:scale-110 ${
-                            isDark
-                              ? "text-white hover:bg-white/10"
-                              : "text-gray-700 hover:bg-gray-200"
-                          }`}
-                        >
-                          <Share2 className="w-3.5 h-3.5 md:w-4 md:h-4" />
-                        </button>
-
-                        {/* العنوان - على اليمين */}
-                        <h3
-                          className={`text-xs md:text-sm font-semibold text-right flex-1 mr-2 line-clamp-1 ${
-                            isDark ? "text-white" : "text-gray-900"
-                          }`}
-                        >
-                          {video.titleAr}
-                        </h3>
-                      </div>
-                    </CardContent>
-                  </Card>
+                  <VideoCard
+                    video={video}
+                    index={index}
+                    videoRefs={videoRefs}
+                    isDark={isDark}
+                    onPlay={handlePlay}
+                    onShare={openShareDialog}
+                  />
                 </CarouselItem>
               ))}
             </CarouselContent>
@@ -291,18 +329,12 @@ const ReelsVideos = () => {
           </DialogHeader>
 
           <div className="space-y-3 sm:space-y-4">
-            {/* عنوان الفيديو */}
             {shareDialog.video && (
-              <p
-                className={`text-center text-xs sm:text-sm ${
-                  isDark ? "text-gray-300" : "text-gray-600"
-                }`}
-              >
+              <p className={`text-center text-xs sm:text-sm ${isDark ? "text-gray-300" : "text-gray-600"}`}>
                 {shareDialog.video.titleAr}
               </p>
             )}
 
-            {/* منصات التواصل الاجتماعي */}
             <div className="grid grid-cols-3 gap-2 sm:gap-3">
               {shareDialog.video &&
                 getSocialLinks(shareDialog.video).map((social) => {
@@ -325,9 +357,7 @@ const ReelsVideos = () => {
                       <IconComponent
                         className={`w-6 h-6 sm:w-8 sm:h-8 mb-1 sm:mb-2 ${social.iconColor} transition-colors`}
                       />
-                      <span
-                        className={`text-[10px] sm:text-xs font-medium transition-colors ${textClass}`}
-                      >
+                      <span className={`text-[10px] sm:text-xs font-medium transition-colors ${textClass}`}>
                         {social.name}
                       </span>
                     </a>
@@ -335,12 +365,7 @@ const ReelsVideos = () => {
                 })}
             </div>
 
-            {/* نسخ الرابط */}
-            <div
-              className={`pt-3 sm:pt-4 border-t ${
-                isDark ? "border-gray-700" : "border-gray-200"
-              }`}
-            >
+            <div className={`pt-3 sm:pt-4 border-t ${isDark ? "border-gray-700" : "border-gray-200"}`}>
               <div className="flex items-center gap-2">
                 <input
                   type="text"
