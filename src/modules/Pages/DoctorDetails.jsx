@@ -1,4 +1,4 @@
-import { useParams, useNavigate, Link } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useTheme } from "../../core/createContext";
 import {
   Award,
@@ -10,17 +10,100 @@ import {
   Stethoscope,
   Quote,
   Phone,
+  Play,
 } from "lucide-react";
 import { Card, CardContent } from "../../shared/ui/Card";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import Navbar from "../components/Navbar";
 import ClinicSelectionPopup from "../../shared/ui/ClinicSelectionPopup";
 import { getDoctorById } from "../../data/doctorDeatails";
+import useFullscreenVideoFit from "../../shared/ui/Usefullscreenvideofit";
 
 const STAT_ICONS = [Users, Award, Star, Calendar];
 
+/* ===== كارت فيديو: بيعرض صورة بدل الشاشة السودا على الموبايل ===== */
+const DoctorVideoCard = ({ video, isDark }) => {
+  const ref = useRef(null);
+  const [started, setStarted] = useState(false);
+
+  // من غير poster المتصفح على الموبايل مش بيرسم أول فريم → #t=0.1 بتجبره يعمل seek
+  const src = video.poster
+    ? video.src
+    : video.src.includes("#")
+      ? video.src
+      : `${video.src}#t=0.1`;
+
+  return (
+    <Card
+      className={`group overflow-hidden rounded-2xl transition-all duration-300 hover:-translate-y-1 hover:shadow-xl ${
+        isDark ? "border-gray-700/60 bg-[#1E2E45]" : "border-gray-200 bg-white"
+      }`}
+    >
+      <div className="relative bg-black">
+        <video
+          ref={ref}
+          src={src}
+          poster={video.poster || undefined}
+          controls
+          playsInline
+          preload="metadata"
+          className="aspect-[9/13] w-full object-cover"
+          onPlay={() => setStarted(true)}
+        />
+
+        {!started && (
+          <button
+            onClick={() => ref.current?.play()}
+            aria-label={`تشغيل ${video.title}`}
+            className="absolute inset-0 flex items-center justify-center bg-black/15 transition-colors hover:bg-black/25"
+          >
+            <span className="flex h-14 w-14 items-center justify-center rounded-full bg-white/95 shadow-xl transition-transform duration-300 group-hover:scale-110 md:h-16 md:w-16">
+              <Play className="ml-0.5 h-6 w-6 fill-gray-900 text-gray-900 md:h-7 md:w-7" />
+            </span>
+          </button>
+        )}
+      </div>
+
+      <CardContent className="p-4">
+        <h3
+          className={`mb-2 text-right text-base font-bold ${
+            isDark ? "text-white" : "text-[#0F2647]"
+          }`}
+        >
+          {video.title}
+        </h3>
+        <div className="flex items-center justify-between">
+          {video.url && (
+            <a
+              href={video.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`inline-flex items-center gap-1.5 text-xs font-medium transition-colors ${
+                isDark
+                  ? "text-blue-400 hover:text-blue-300"
+                  : "text-blue-600 hover:text-blue-700"
+              }`}
+            >
+              <ExternalLink className="h-3.5 w-3.5" />
+              مشاهدة على تيك توك
+            </a>
+          )}
+          {video.duration && (
+            <span
+              className={`text-xs ${isDark ? "text-gray-500" : "text-gray-400"}`}
+            >
+              {video.duration}
+            </span>
+          )}
+        </div>
+      </CardContent>
+    </Card>
+  );
+};
+
 const DoctorDetails = () => {
   const { id } = useParams();
+  useFullscreenVideoFit(); // ← ضيف السطر ده
   const navigate = useNavigate();
   const { isDark } = useTheme();
   const [showClinicPopup, setShowClinicPopup] = useState(false);
@@ -93,9 +176,7 @@ const DoctorDetails = () => {
       >
         {/* ================= HERO ================= */}
         <section
-          className={`relative overflow-hidden ${
-            isDark ? "bg-[#193D66]" : "bg-[#DDEAF8]"
-          }`}
+          className={`relative overflow-hidden ${isDark ? "bg-[#193D66]" : "bg-[#DDEAF8]"}`}
         >
           {/* دوائر زخرفية */}
           <div
@@ -110,10 +191,13 @@ const DoctorDetails = () => {
           />
 
           <div className="relative mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8 lg:py-16">
-            <div className="grid items-center gap-10 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1fr)] lg:gap-16">
+            {/*
+              الصفحة dir="rtl" → أول عمود في الجريد = جهة اليمين.
+              الصورة أول عنصر في الـ DOM: تظهر فوق على الموبايل، وعلى اليمين في الشاشات الكبيرة.
+            */}
+            <div className="grid items-center gap-10 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1fr)] lg:gap-16">
               {/* ===== الصورة ===== */}
-              <div className="order-1 lg:order-2">
-                {" "}
+              <div>
                 <div className="relative mx-auto w-full max-w-md lg:max-w-none">
                   {/* إطار زخرفي خلفي */}
                   <div
@@ -136,9 +220,7 @@ const DoctorDetails = () => {
               </div>
 
               {/* ===== البيانات ===== */}
-              {/* ===== البيانات ===== */}
-              <div className="order-2 text-right lg:order-1">
-                {" "}
+              <div className="text-right">
                 {/* شارة التخصص */}
                 <span
                   className={`mb-5 inline-flex items-center gap-2 rounded-full border px-4 py-1.5 text-sm font-medium ${
@@ -150,6 +232,7 @@ const DoctorDetails = () => {
                   <Stethoscope className="h-4 w-4" />
                   {doctor.roleAr}
                 </span>
+
                 <h1
                   className={`mb-5 text-4xl font-bold leading-tight md:text-5xl lg:text-[3.4rem] ${
                     isDark ? "text-white" : "text-[#0F2647]"
@@ -157,6 +240,7 @@ const DoctorDetails = () => {
                 >
                   {doctor.nameAr}
                 </h1>
+
                 <p
                   className={`mb-8 max-w-xl text-base leading-8 md:text-lg ${
                     isDark ? "text-gray-300" : "text-gray-700"
@@ -164,6 +248,7 @@ const DoctorDetails = () => {
                 >
                   {doctor.bio}
                 </p>
+
                 {/* زر حجز سريع */}
                 <button
                   onClick={() => setShowClinicPopup(true)}
@@ -176,6 +261,7 @@ const DoctorDetails = () => {
                   احجز موعدك الآن
                   <Calendar className="h-5 w-5" />
                 </button>
+
                 {/* الإحصائيات */}
                 <div className="grid grid-cols-2 gap-3 sm:gap-4">
                   {doctor.stats?.map((stat, index) => {
@@ -202,9 +288,7 @@ const DoctorDetails = () => {
                           {stat.number}
                         </div>
                         <div
-                          className={`text-xs ${
-                            isDark ? "text-gray-400" : "text-gray-600"
-                          }`}
+                          className={`text-xs ${isDark ? "text-gray-400" : "text-gray-600"}`}
                         >
                           {stat.label}
                         </div>
@@ -229,7 +313,6 @@ const DoctorDetails = () => {
                 }`}
               >
                 <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:gap-10">
-                  {/* العنوان الجانبي */}
                   <div className="shrink-0 lg:w-56">
                     <div className="flex items-center gap-3">
                       <span
@@ -256,14 +339,12 @@ const DoctorDetails = () => {
                     </div>
                   </div>
 
-                  {/* فاصل رأسي */}
                   <div
                     className={`hidden w-px self-stretch lg:block ${
                       isDark ? "bg-white/10" : "bg-gray-200"
                     }`}
                   />
 
-                  {/* الـ chips */}
                   <div className="flex flex-wrap gap-2.5">
                     {doctor.specializations.map((spec) => (
                       <span
@@ -295,67 +376,17 @@ const DoctorDetails = () => {
         {doctor.videos?.length > 0 && (
           <section
             id="videos"
-            className={`scroll-mt-24 py-16 lg:py-20 ${
-              isDark ? "bg-[#16233A]" : "bg-white"
-            }`}
+            className={`scroll-mt-24 py-16 lg:py-20 ${isDark ? "bg-[#16233A]" : "bg-white"}`}
           >
             <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
               <SectionHeading isDark={isDark} title="فيديوهات الدكتور" />
               <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
                 {doctor.videos.map((video) => (
-                  <Card
+                  <DoctorVideoCard
                     key={video.id}
-                    className={`overflow-hidden rounded-2xl transition-all duration-300 hover:-translate-y-1 hover:shadow-xl ${
-                      isDark
-                        ? "border-gray-700/60 bg-[#1E2E45]"
-                        : "border-gray-200 bg-white"
-                    }`}
-                  >
-                    <div className="relative bg-black">
-                      <video
-                        src={video.src}
-                        controls
-                        playsInline
-                        preload="metadata"
-                        className="aspect-[9/13] w-full object-cover"
-                      />
-                    </div>
-                    <CardContent className="p-4">
-                      <h3
-                        className={`mb-2 text-right text-base font-bold ${
-                          isDark ? "text-white" : "text-[#0F2647]"
-                        }`}
-                      >
-                        {video.title}
-                      </h3>
-                      <div className="flex items-center justify-between">
-                        {video.url && (
-                          <a
-                            href={video.url}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className={`inline-flex items-center gap-1.5 text-xs font-medium transition-colors ${
-                              isDark
-                                ? "text-blue-400 hover:text-blue-300"
-                                : "text-blue-600 hover:text-blue-700"
-                            }`}
-                          >
-                            <ExternalLink className="h-3.5 w-3.5" />
-                            مشاهدة على تيك توك
-                          </a>
-                        )}
-                        {video.duration && (
-                          <span
-                            className={`text-xs ${
-                              isDark ? "text-gray-500" : "text-gray-400"
-                            }`}
-                          >
-                            {video.duration}
-                          </span>
-                        )}
-                      </div>
-                    </CardContent>
-                  </Card>
+                    video={video}
+                    isDark={isDark}
+                  />
                 ))}
               </div>
             </div>
@@ -406,9 +437,7 @@ const DoctorDetails = () => {
                         {review.date}
                       </span>
                       <span
-                        className={`text-sm font-bold ${
-                          isDark ? "text-white" : "text-[#0F2647]"
-                        }`}
+                        className={`text-sm font-bold ${isDark ? "text-white" : "text-[#0F2647]"}`}
                       >
                         {review.name}
                       </span>
@@ -423,9 +452,7 @@ const DoctorDetails = () => {
         {/* ================= CTA ================= */}
         <section
           id="booking"
-          className={`scroll-mt-24 py-16 lg:py-20 ${
-            isDark ? "bg-[#193D66]" : "bg-[#DDEAF8]"
-          }`}
+          className={`scroll-mt-24 py-16 lg:py-20 ${isDark ? "bg-[#193D66]" : "bg-[#DDEAF8]"}`}
         >
           <div className="mx-auto max-w-4xl px-4 text-center sm:px-6 lg:px-8">
             <h2
@@ -481,9 +508,7 @@ const DoctorDetails = () => {
 const SectionHeading = ({ isDark, title }) => (
   <div className="mb-10 text-right">
     <h2
-      className={`mb-3 text-2xl font-bold md:text-3xl ${
-        isDark ? "text-white" : "text-[#0F2647]"
-      }`}
+      className={`mb-3 text-2xl font-bold md:text-3xl ${isDark ? "text-white" : "text-[#0F2647]"}`}
     >
       {title}
     </h2>

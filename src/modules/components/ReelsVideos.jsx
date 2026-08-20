@@ -21,6 +21,7 @@ import {
   CarouselPrevious,
 } from "../../shared/ui/Carousel";
 import { Card, CardContent } from "../../shared/ui/Card";
+import useFullscreenVideoFit from "../../shared/ui/Usefullscreenvideofit";
 
 /* ── Dialog ───────────────────────────────────────────── */
 const Dialog = ({ open, onOpenChange, children }) => {
@@ -47,8 +48,18 @@ const DialogContent = ({ className, children, onClose }) => (
       className="absolute top-3 left-3 sm:top-4 sm:left-4 p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
     >
       <span className="sr-only">إغلاق</span>
-      <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+      <svg
+        className="w-4 h-4 sm:w-5 sm:h-5"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth={2}
+          d="M6 18L18 6M6 6l12 12"
+        />
       </svg>
     </button>
     {children}
@@ -60,14 +71,18 @@ const DialogHeader = ({ children }) => (
 );
 
 const DialogTitle = ({ className, children }) => (
-  <h2 className={`text-base sm:text-lg font-semibold leading-none tracking-tight ${className || ""}`}>
+  <h2
+    className={`text-base sm:text-lg font-semibold leading-none tracking-tight ${className || ""}`}
+  >
     {children}
   </h2>
 );
 
 /* ── كارت الفيديو ─────────────────────────────────────────
-   المشكلة: الموبايل (iOS خصوصاً) مش بيرسم أول فريم مع preload="metadata"
-   الحل: poster لو متوفر، وإلا #t=0.1 عشان المتصفح يعمل seek ويرسم فريم
+   1) الشاشة السودا على الموبايل: preload="metadata" مش بيرسم فريم
+      → poster لو متوفر، وإلا #t=0.1 عشان المتصفح يعمل seek ويرسم فريم.
+   2) القص في وضع ملء الشاشة: object-cover بيفضل شغال
+      → الحل في index.css عن طريق video:fullscreen { object-fit: contain }
 ──────────────────────────────────────────────────────── */
 const VideoCard = ({ video, index, videoRefs, isDark, onPlay, onShare }) => {
   const [started, setStarted] = useState(false);
@@ -75,8 +90,8 @@ const VideoCard = ({ video, index, videoRefs, isDark, onPlay, onShare }) => {
   const src = video.poster
     ? video.src
     : video.src.includes("#")
-    ? video.src
-    : `${video.src}#t=0.1`;
+      ? video.src
+      : `${video.src}#t=0.1`;
 
   const handlePlayClick = () => {
     const el = videoRefs.current[index];
@@ -98,7 +113,8 @@ const VideoCard = ({ video, index, videoRefs, isDark, onPlay, onShare }) => {
             controls
             playsInline
             preload="metadata"
-            className="w-full h-full object-cover"
+            /* object-cover داخل الكارت — و index.css بيحوّله لـ contain في fullscreen */
+            className="app-video w-full h-full object-cover"
             onPlay={() => {
               setStarted(true);
               onPlay(index);
@@ -139,7 +155,9 @@ const VideoCard = ({ video, index, videoRefs, isDark, onPlay, onShare }) => {
             onClick={() => onShare(video)}
             aria-label="مشاركة"
             className={`p-1.5 md:p-2 rounded-full transition-all hover:scale-110 ${
-              isDark ? "text-white hover:bg-white/10" : "text-gray-700 hover:bg-gray-200"
+              isDark
+                ? "text-white hover:bg-white/10"
+                : "text-gray-700 hover:bg-gray-200"
             }`}
           >
             <Share2 className="w-3.5 h-3.5 md:w-4 md:h-4" />
@@ -161,6 +179,8 @@ const VideoCard = ({ video, index, videoRefs, isDark, onPlay, onShare }) => {
 /* ── السيكشن ──────────────────────────────────────────── */
 const ReelsVideos = () => {
   const { isDark } = useTheme();
+  useFullscreenVideoFit(); // ← ضيف السطر ده
+
   const videoRefs = useRef([]);
   const [shareDialog, setShareDialog] = useState({ open: false, video: null });
   const [copied, setCopied] = useState(false);
@@ -277,9 +297,15 @@ const ReelsVideos = () => {
             </div>
 
             <div className="flex items-center justify-center gap-1.5 mt-4 md:mt-6">
-              <div className={`w-1.5 h-1.5 rounded-full ${isDark ? "bg-blue-400" : "bg-blue-500"}`} />
-              <div className={`w-2 h-2 rounded-full ${isDark ? "bg-blue-400" : "bg-blue-500"}`} />
-              <div className={`w-1.5 h-1.5 rounded-full ${isDark ? "bg-blue-400" : "bg-blue-500"}`} />
+              <div
+                className={`w-1.5 h-1.5 rounded-full ${isDark ? "bg-blue-400" : "bg-blue-500"}`}
+              />
+              <div
+                className={`w-2 h-2 rounded-full ${isDark ? "bg-blue-400" : "bg-blue-500"}`}
+              />
+              <div
+                className={`w-1.5 h-1.5 rounded-full ${isDark ? "bg-blue-400" : "bg-blue-500"}`}
+              />
             </div>
           </div>
 
@@ -323,14 +349,18 @@ const ReelsVideos = () => {
           onClose={() => setShareDialog({ open: false, video: null })}
         >
           <DialogHeader>
-            <DialogTitle className={`text-center ${isDark ? "text-white" : ""}`}>
+            <DialogTitle
+              className={`text-center ${isDark ? "text-white" : ""}`}
+            >
               مشاركة الفيديو
             </DialogTitle>
           </DialogHeader>
 
           <div className="space-y-3 sm:space-y-4">
             {shareDialog.video && (
-              <p className={`text-center text-xs sm:text-sm ${isDark ? "text-gray-300" : "text-gray-600"}`}>
+              <p
+                className={`text-center text-xs sm:text-sm ${isDark ? "text-gray-300" : "text-gray-600"}`}
+              >
                 {shareDialog.video.titleAr}
               </p>
             )}
@@ -357,7 +387,9 @@ const ReelsVideos = () => {
                       <IconComponent
                         className={`w-6 h-6 sm:w-8 sm:h-8 mb-1 sm:mb-2 ${social.iconColor} transition-colors`}
                       />
-                      <span className={`text-[10px] sm:text-xs font-medium transition-colors ${textClass}`}>
+                      <span
+                        className={`text-[10px] sm:text-xs font-medium transition-colors ${textClass}`}
+                      >
                         {social.name}
                       </span>
                     </a>
@@ -365,7 +397,9 @@ const ReelsVideos = () => {
                 })}
             </div>
 
-            <div className={`pt-3 sm:pt-4 border-t ${isDark ? "border-gray-700" : "border-gray-200"}`}>
+            <div
+              className={`pt-3 sm:pt-4 border-t ${isDark ? "border-gray-700" : "border-gray-200"}`}
+            >
               <div className="flex items-center gap-2">
                 <input
                   type="text"
@@ -383,8 +417,8 @@ const ReelsVideos = () => {
                     copied
                       ? "bg-green-500 text-white"
                       : isDark
-                      ? "bg-blue-600 text-white hover:bg-blue-700"
-                      : "bg-blue-500 text-white hover:bg-blue-600"
+                        ? "bg-blue-600 text-white hover:bg-blue-700"
+                        : "bg-blue-500 text-white hover:bg-blue-600"
                   }`}
                 >
                   {copied ? (

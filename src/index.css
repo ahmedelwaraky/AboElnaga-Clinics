@@ -26,3 +26,30 @@ body {
 .animate-float-whatsapp {
   animation: floatWhatsApp 3s ease-in-out infinite;
 }
+
+/* ==========================================================
+   الفيديو في وضع ملء الشاشة: يظهر كامل بأبعاده بدل ما يتقص
+   object-cover بيفضل شغال على عنصر الفيديو حتى وهو fullscreen،
+   فلازم override للـ object-fit في الحالة دي بس.
+   ينطبق على كل فيديوهات الموقع (الريلز + صفحة الدكتور).
+   ========================================================== */
+
+video:fullscreen,
+video:-webkit-full-screen,
+video:-moz-full-screen,
+video:-ms-fullscreen {
+  object-fit: contain !important;
+  width: 100% !important;
+  height: 100% !important;
+  max-height: 100vh !important;
+  background: #000;
+}
+
+/* بعض المتصفحات بتلف الفيديو في container خاص وهو fullscreen */
+:fullscreen video,
+:-webkit-full-screen video {
+  object-fit: contain !important;
+  width: 100% !important;
+  height: 100% !important;
+  background: #000;
+}
