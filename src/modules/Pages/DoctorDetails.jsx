@@ -57,7 +57,9 @@ const DoctorDetails = () => {
             isDark ? "bg-[#1a2332]" : "bg-gray-50"
           }`}
         >
-          <h1 className={`text-3xl font-bold ${isDark ? "text-white" : "text-gray-900"}`}>
+          <h1
+            className={`text-3xl font-bold ${isDark ? "text-white" : "text-gray-900"}`}
+          >
             لم يتم العثور على الطبيب
           </h1>
           <p className={isDark ? "text-gray-400" : "text-gray-600"}>
@@ -66,7 +68,9 @@ const DoctorDetails = () => {
           <button
             onClick={() => navigate("/")}
             className={`inline-flex items-center gap-2 rounded-full px-8 py-3 font-bold text-white transition-all hover:scale-105 ${
-              isDark ? "bg-blue-500 hover:bg-blue-600" : "bg-blue-600 hover:bg-blue-700"
+              isDark
+                ? "bg-blue-500 hover:bg-blue-600"
+                : "bg-blue-600 hover:bg-blue-700"
             }`}
           >
             <ArrowRight className="h-5 w-5" />
@@ -108,7 +112,8 @@ const DoctorDetails = () => {
           <div className="relative mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8 lg:py-16">
             <div className="grid items-center gap-10 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1fr)] lg:gap-16">
               {/* ===== الصورة ===== */}
-              <div className="order-2 lg:order-1">
+              <div className="order-1 lg:order-2">
+                {" "}
                 <div className="relative mx-auto w-full max-w-md lg:max-w-none">
                   {/* إطار زخرفي خلفي */}
                   <div
@@ -131,7 +136,9 @@ const DoctorDetails = () => {
               </div>
 
               {/* ===== البيانات ===== */}
-              <div className="order-1 text-right lg:order-2">
+              {/* ===== البيانات ===== */}
+              <div className="order-2 text-right lg:order-1">
+                {" "}
                 {/* شارة التخصص */}
                 <span
                   className={`mb-5 inline-flex items-center gap-2 rounded-full border px-4 py-1.5 text-sm font-medium ${
@@ -143,7 +150,6 @@ const DoctorDetails = () => {
                   <Stethoscope className="h-4 w-4" />
                   {doctor.roleAr}
                 </span>
-
                 <h1
                   className={`mb-5 text-4xl font-bold leading-tight md:text-5xl lg:text-[3.4rem] ${
                     isDark ? "text-white" : "text-[#0F2647]"
@@ -151,7 +157,6 @@ const DoctorDetails = () => {
                 >
                   {doctor.nameAr}
                 </h1>
-
                 <p
                   className={`mb-8 max-w-xl text-base leading-8 md:text-lg ${
                     isDark ? "text-gray-300" : "text-gray-700"
@@ -159,7 +164,6 @@ const DoctorDetails = () => {
                 >
                   {doctor.bio}
                 </p>
-
                 {/* زر حجز سريع */}
                 <button
                   onClick={() => setShowClinicPopup(true)}
@@ -172,7 +176,6 @@ const DoctorDetails = () => {
                   احجز موعدك الآن
                   <Calendar className="h-5 w-5" />
                 </button>
-
                 {/* الإحصائيات */}
                 <div className="grid grid-cols-2 gap-3 sm:gap-4">
                   {doctor.stats?.map((stat, index) => {
@@ -381,7 +384,10 @@ const DoctorDetails = () => {
                     />
                     <div className="mb-3 flex gap-1">
                       {Array.from({ length: review.rating }).map((_, i) => (
-                        <Star key={i} className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+                        <Star
+                          key={i}
+                          className="h-4 w-4 fill-yellow-400 text-yellow-400"
+                        />
                       ))}
                     </div>
                     <p
@@ -396,7 +402,9 @@ const DoctorDetails = () => {
                         isDark ? "border-gray-700/60" : "border-gray-100"
                       }`}
                     >
-                      <span className="text-xs text-gray-500">{review.date}</span>
+                      <span className="text-xs text-gray-500">
+                        {review.date}
+                      </span>
                       <span
                         className={`text-sm font-bold ${
                           isDark ? "text-white" : "text-[#0F2647]"
@@ -427,14 +435,18 @@ const DoctorDetails = () => {
             >
               هل تريد حجز موعد مع {doctor.nameAr}؟
             </h2>
-            <p className={`mb-8 text-base md:text-lg ${isDark ? "text-gray-300" : "text-gray-700"}`}>
+            <p
+              className={`mb-8 text-base md:text-lg ${isDark ? "text-gray-300" : "text-gray-700"}`}
+            >
               احجز استشارتك المجانية الآن واحصل على ابتسامة أحلامك
             </p>
             <div className="flex flex-wrap items-center justify-center gap-4">
               <button
                 onClick={() => setShowClinicPopup(true)}
                 className={`inline-flex items-center gap-2 rounded-full px-9 py-4 text-base font-bold text-white shadow-lg transition-all hover:scale-105 active:scale-95 ${
-                  isDark ? "bg-blue-500 hover:bg-blue-600" : "bg-blue-600 hover:bg-blue-700"
+                  isDark
+                    ? "bg-blue-500 hover:bg-blue-600"
+                    : "bg-blue-600 hover:bg-blue-700"
                 }`}
               >
                 احجز موعدك الآن
@@ -475,7 +487,9 @@ const SectionHeading = ({ isDark, title }) => (
     >
       {title}
     </h2>
-    <div className={`h-1 w-16 rounded-full ${isDark ? "bg-blue-400" : "bg-blue-600"}`} />
+    <div
+      className={`h-1 w-16 rounded-full ${isDark ? "bg-blue-400" : "bg-blue-600"}`}
+    />
   </div>
 );
 
