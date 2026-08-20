@@ -1,5 +1,5 @@
 import salah from "../assets/images/doctors/salah.png";
-import abbas from "../assets/images/doctors/abbas.png";
+// import abbas from "../assets/images/doctors/abbas.png";
 import omar from "../assets/images/doctors/omar.png";
 import galal from "../assets/images/doctors/galal.png";
 import ibrahim from "../assets/images/doctors/ibrahim.png";
@@ -10,6 +10,8 @@ import aya from "../assets/images/doctors/aya.png";
 import nada from "../assets/images/doctors/nada.png";
 import mariam from "../assets/images/doctors/mariam.png";
 import hadeer from "../assets/images/doctors/hadeer.png";
+import ayaMohamedy from "../assets/images/doctors/AyaMohamdy.jpg.jpeg";
+
 
 export const teamMembers = [
   {
@@ -24,13 +26,13 @@ export const teamMembers = [
   },
   {
     id: 2,
-    nameAr: "د. محمد عباس",
-    nameEn: "Dr. Mohamed Abbas",
+    nameAr: "د. ايه محمدي  ",
+    nameEn: "Dr. Aya Mohamedy",
     roleAr: "أخصائي علاج الجذور",
     roleEn: "Endodontist",
     specialtyAr: "أخصائي حشو العصب",
     specialtyEn: "Root canal specialist",
-    img: abbas,
+    img: ayaMohamedy,
   },
   {
     id: 3,
