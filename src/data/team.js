@@ -21,7 +21,7 @@ export const teamMembers = [
     specialtyFullAr:
       "أخصائية طب أسنان الأطفال — ماجستير طب أسنان الأطفال، جامعة طنطا",
     specialtyEn: "Pediatric Dentistry Specialist",
-    img: wafa,
+    img: Wafa,
   },
   {
     id: 2,
@@ -30,7 +30,7 @@ export const teamMembers = [
     specialtyAr: "أخصائية الحشوات التجميلية والتركيبات",
     specialtyFullAr: "أخصائية الحشوات التجميلية والتركيبات",
     specialtyEn: "Aesthetic Fillings & Prosthetics Specialist",
-    img: mariam,
+    img: Mariam,
   },
   {
     id: 3,
@@ -39,7 +39,7 @@ export const teamMembers = [
     specialtyAr: "أخصائية تركيبات الأسنان",
     specialtyFullAr: "أخصائية تركيبات الأسنان",
     specialtyEn: "Dental Prosthetics Specialist",
-    img: hadeer,
+    img: Hadeer,
   },
   {
     id: 4,
@@ -48,7 +48,7 @@ export const teamMembers = [
     specialtyAr: "أخصائية حشو العصب والتركيبات",
     specialtyFullAr: "أخصائية حشو العصب والحشوات التجميلية والتركيبات الثابتة",
     specialtyEn: "Endodontics & Fixed Prosthodontics Specialist",
-    img: nada,
+    img: Nada,
   },
   {
     id: 5,
@@ -57,7 +57,7 @@ export const teamMembers = [
     specialtyAr: "أخصائية الحشوات والتركيبات التجميلية",
     specialtyFullAr: "أخصائية الحشوات والتركيبات التجميلية",
     specialtyEn: "Aesthetic Fillings & Prosthetics Specialist",
-    img: aya,
+    img: AyaAshraf,
   },
   {
     id: 6,
@@ -66,7 +66,7 @@ export const teamMembers = [
     specialtyAr: "أخصائية التركيبات المتحركة",
     specialtyFullAr: "أخصائية التركيبات المتحركة",
     specialtyEn: "Removable Prosthodontics Specialist",
-    img: afnan,
+    img: Afnan,
   },
   {
     id: 7,
@@ -75,7 +75,7 @@ export const teamMembers = [
     specialtyAr: "أخصائية الحشوات والتركيبات الثابتة",
     specialtyFullAr: "أخصائية الحشوات التجميلية والتركيبات الثابتة",
     specialtyEn: "Cosmetic Restorative & Fixed Prosthodontics Specialist",
-    img: ayaMohamedy,
+    img: AyaMohamedy,
   },
   {
     id: 8,
@@ -84,7 +84,7 @@ export const teamMembers = [
     specialtyAr: "أخصائي جراحة وزراعة الأسنان",
     specialtyFullAr: "أخصائي جراحة وزراعة الأسنان",
     specialtyEn: "Oral Surgery & Implantology Specialist",
-    img: omar,
+    img: Omar,
   },
   {
     id: 9,
@@ -93,7 +93,7 @@ export const teamMembers = [
     specialtyAr: "أخصائي حشو العصب والتركيبات",
     specialtyFullAr: "أخصائي حشو العصب والحشوات التجميلية والتركيبات",
     specialtyEn: "Endodontics & Prosthetics Specialist",
-    img: ibrahim,
+    img: AhmedIbrahim1,
   },
   {
     id: 10,
@@ -102,7 +102,7 @@ export const teamMembers = [
     specialtyAr: "أخصائي الحشوات التجميلية وحشو العصب",
     specialtyFullAr: "أخصائي الحشوات التجميلية وحشو العصب والتركيبات",
     specialtyEn: "Aesthetic Fillings, Endodontics & Prosthetics Specialist",
-    img: galal,
+    img: AhmedGalal,
   },
   {
     id: 11,
@@ -111,7 +111,7 @@ export const teamMembers = [
     specialtyAr: "أخصائي الحشوات التجميلية",
     specialtyFullAr: "أخصائي الحشوات التجميلية",
     specialtyEn: "Aesthetic Fillings Specialist",
-    img: salah,
+    img: Salah,
   },
   {
     id: 12,
@@ -120,7 +120,7 @@ export const teamMembers = [
     specialtyAr: "أخصائي الحشوات والتركيبات الثابتة",
     specialtyFullAr: "أخصائي الحشوات التجميلية والتركيبات الثابتة",
     specialtyEn: "Cosmetic Restorative & Fixed Prosthodontics Specialist",
-    img: ahmedibrahim,
+    img: AhmedIbrahim2,
   },
   {
     id: 13,
@@ -129,19 +129,19 @@ export const teamMembers = [
     specialtyAr: "أخصائي الحشوات التجميلية وحشو العصب",
     specialtyFullAr: "أخصائي الحشوات التجميلية وحشو العصب والتركيبات",
     specialtyEn: "Aesthetic Fillings, Endodontics & Prosthetics Specialist",
-    img: yousef,
+    img: Yousef,
   },
 ];
 
-/* حارس تطوير: بيكشف تكرار الـ id أو نقص الصور */
-if (import.meta.env?.DEV) {
-  const ids = teamMembers.map((m) => m.id);
-  const dupes = ids.filter((id, i) => ids.indexOf(id) !== i);
-  if (dupes.length) console.warn("[team] Duplicate ids:", dupes);
+// /* حارس تطوير: بيكشف تكرار الـ id أو نقص الصور */
+// if (import.meta.env?.DEV) {
+//   const ids = teamMembers.map((m) => m.id);
+//   const dupes = ids.filter((id, i) => ids.indexOf(id) !== i);
+//   if (dupes.length) console.warn("[team] Duplicate ids:", dupes);
 
-  const missing = teamMembers.filter((m) => !m.img).map((m) => m.nameAr);
-  if (missing.length) console.warn("[team] Missing images:", missing);
-}
+//   const missing = teamMembers.filter((m) => !m.img).map((m) => m.nameAr);
+//   if (missing.length) console.warn("[team] Missing images:", missing);
+// }
 
-export const getMemberById = (id) =>
-  teamMembers.find((m) => String(m.id) === String(id)) ?? null;
+// export const getMemberById = (id) =>
+//   teamMembers.find((m) => String(m.id) === String(id)) ?? null;
