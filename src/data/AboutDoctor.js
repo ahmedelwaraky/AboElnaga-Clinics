@@ -1,15 +1,19 @@
 import { Award, GraduationCap, Heart, Users } from "lucide-react";
 
-// ===== إعدادات العيادة =====
-const CAREER_START = { year: 2014, month: 9 }; // month: 1-12 (شهر بداية الممارسة)
+/* ===== إعدادات المصدر الوحيد للأرقام =====
+   غيّر هنا بس — كل الموقع هيتحدث لوحده */
+export const GRADUATION_YEAR = 2013;
+const GRADUATION_MONTH = 7; // 1-12 (شهر التخرج)
 
-const getYearsOfExperience = ({ year, month }) => {
+const calcYears = () => {
   const now = new Date();
-  let years = now.getFullYear() - year;
-  if (now.getMonth() + 1 < month) years -= 1; // ما يزودش غير بعد الشهر
+  let years = now.getFullYear() - GRADUATION_YEAR;
+  if (now.getMonth() + 1 < GRADUATION_MONTH) years -= 1;
   return Math.max(years, 0);
 };
-export const yearsOfExperience = getYearsOfExperience(CAREER_START);
+
+export const getYearsOfExperience = calcYears;
+export const yearsOfExperience = calcYears();
 
 export const specializations = [
   { text: "طب الأسنان التجميلي", color: "blue" },
@@ -23,24 +27,11 @@ export const specializations = [
   { text: "قشرة الأسنان", color: "blue" },
 ];
 
-export const stats = [
-  {
-    icon: Heart,
-    number: "100%",
-    label: "نسبة النجاح",
-    color: "blue",
-  },
-  {
-    icon: GraduationCap,
-    number: "6",
-    label: "الشهادات",
-    color: "blue",
-  },
-  {
-    icon: Users,
-    number: "2300+",
-    label: "المرضى السعداء",
-    color: "blue",
-  },
-   { icon: Award,          number: `${yearsOfExperience}+`,   label: "سنوات الخبرة",   color: "blue" },
+export const getStats = () => [
+  { icon: Heart,         number: "100%",                  label: "نسبة النجاح",    color: "blue" },
+  { icon: GraduationCap, number: "6",                     label: "الشهادات",       color: "blue" },
+  { icon: Users,         number: "2300+",                 label: "المرضى السعداء", color: "blue" },
+  { icon: Award,         number: `${calcYears()}+`,       label: "سنوات الخبرة",   color: "blue" },
 ];
+
+export const stats = getStats();

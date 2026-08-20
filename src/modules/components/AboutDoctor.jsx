@@ -1,21 +1,29 @@
+import { useMemo } from "react";
 import { useTheme } from "../../core/createContext";
-import { specializations, stats } from "../../data/AboutDoctor";
+import {
+  specializations,
+  getStats,
+  getYearsOfExperience,
+  GRADUATION_YEAR,
+} from "../../data/AboutDoctor";
 import DoctorImage from "../../assets/images/main/DR-AHMED.png";
 
 const AboutDoctor = () => {
   const { isDark } = useTheme();
 
+  // بتتحسب وقت الـ render مش وقت الـ build
+  const years = useMemo(() => getYearsOfExperience(), []);
+  const stats = useMemo(() => getStats(), []);
+
   return (
     <section
       id="about"
-      className={`py-20 ${
-        isDark ? "bg-[#2a2a2a]" : "bg-[#e8e5dc]"
-      }`}
+      className={`py-20 ${isDark ? "bg-[#2a2a2a]" : "bg-[#e8e5dc]"}`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Added top spacing for navigation */}
         <div className="h-20"></div>
-        
+
         <div className="grid md:grid-cols-2 gap-12 items-start">
           {/* Doctor Image - Always First on Mobile */}
           <div className="flex justify-center md:order-1">
@@ -34,27 +42,21 @@ const AboutDoctor = () => {
               </div>
 
               {/* Floating Experience Badge */}
-              <div 
+              <div
                 className="absolute -bottom-6 -left-6 bg-gradient-to-br from-yellow-400 to-yellow-500 rounded-2xl shadow-2xl p-6 hover:scale-110 transition-transform duration-300"
-                style={{
-                  animation: 'floating 3s ease-in-out infinite'
-                }}
+                style={{ animation: "floating 3s ease-in-out infinite" }}
               >
                 <style>
                   {`
                     @keyframes floating {
-                      0%, 100% {
-                        transform: translateY(0px);
-                      }
-                      50% {
-                        transform: translateY(-10px);
-                      }
+                      0%, 100% { transform: translateY(0px); }
+                      50% { transform: translateY(-10px); }
                     }
                   `}
                 </style>
                 <div className="text-center">
                   <div className="text-4xl font-bold text-gray-900">
-                    12+
+                    {years}+
                   </div>
                   <div className="text-sm font-medium text-gray-800">
                     سنة خبرة
@@ -90,11 +92,11 @@ const AboutDoctor = () => {
                 isDark ? "text-gray-300" : "text-gray-700"
               }`}
             >
-              الدكتور أحمد أبو النجا بخبرة أكثر من 12 عام في مجال طب الأسنان منذ
-              تخرجه عام 2013. حاصل على بكالوريوس طب وجراحة الفم والأسنان وجراحات
-              متقدم في زراعة الأسنان وتجميلها، وماجستير متقدم في تقويم الأسنان
-              تخصص الدكتور أحمد في تقويم الأسنان، ويسعى دائماً لمواكبة أحدث
-              التقنيات للتقويم لضمان راحة المرضاء.
+              الدكتور أحمد أبو النجا بخبرة أكثر من {years} عام في مجال طب الأسنان
+              منذ تخرجه عام {GRADUATION_YEAR}. حاصل على بكالوريوس طب وجراحة الفم
+              والأسنان وجراحات متقدمة في زراعة الأسنان وتجميلها، وماجستير متقدم في
+              تقويم الأسنان. تخصص الدكتور أحمد في تقويم الأسنان، ويسعى دائماً
+              لمواكبة أحدث التقنيات لضمان راحة المرضى.
             </p>
 
             {/* Specializations Heading */}
@@ -134,16 +136,17 @@ const AboutDoctor = () => {
                         ? "bg-[#1a2332] border border-gray-700/50 hover:border-blue-500/50 hover:shadow-2xl hover:shadow-blue-500/20"
                         : "bg-white shadow-md hover:shadow-2xl hover:shadow-blue-300/30"
                     }`}
-                    style={{ 
-                      transition: 'all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)'
+                    style={{
+                      transition: "all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)",
                     }}
                   >
                     <IconComponent
                       className={`w-8 h-8 mx-auto mb-3 transition-all duration-[400ms] group-hover:scale-125 group-hover:rotate-12 ${
                         isDark ? "text-blue-400" : "text-blue-500"
                       }`}
-                      style={{ 
-                        transition: 'all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55)'
+                      style={{
+                        transition:
+                          "all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55)",
                       }}
                     />
                     <div

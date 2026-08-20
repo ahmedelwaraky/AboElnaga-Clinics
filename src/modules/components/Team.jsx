@@ -1,8 +1,22 @@
 import { useTheme } from "../../core/createContext";
-import  {teamMembers}  from "../../data/team";
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "../../shared/ui/Carousel";
+import { teamMembers } from "../../data/team";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "../../shared/ui/Carousel";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+
+/* قص السطور بدون ما تعتمد على plugin line-clamp */
+const clamp = (lines) => ({
+  display: "-webkit-box",
+  WebkitBoxOrient: "vertical",
+  WebkitLineClamp: lines,
+  overflow: "hidden",
+});
 
 const Team = () => {
   const { isDark } = useTheme();
@@ -10,19 +24,15 @@ const Team = () => {
   const [activeCard, setActiveCard] = useState(null);
 
   const handleDoctorClick = (doctorId) => {
-    // على الموبايل - يحتاج ضغطة أولى لتفعيل الكارد، ثم ضغطة ثانية للانتقال
     const isMobile = window.innerWidth < 768;
-    
+
     if (isMobile) {
       if (activeCard === doctorId) {
-        // الضغطة الثانية - انتقل للتفاصيل
         navigate(`/doctor-details/${doctorId}`);
       } else {
-        // الضغطة الأولى - فعل الكارد
         setActiveCard(doctorId);
       }
     } else {
-      // على الديسكتوب - انتقل مباشرة
       navigate(`/doctor-details/${doctorId}`);
     }
   };
@@ -56,19 +66,21 @@ const Team = () => {
 
           {/* Decorative Divider */}
           <div className="flex items-center justify-center gap-3 md:gap-4">
-            {/* Left Line */}
-            <div className={`h-[2px] w-24 md:w-32 rounded-full ${
-              isDark 
-                ? "bg-gradient-to-r from-transparent via-blue-400 to-blue-400" 
-                : "bg-gradient-to-r from-transparent via-blue-500 to-blue-500"
-            }`}></div>
-            
-            {/* Right Line */}
-            <div className={`h-[2px] w-24 md:w-32 rounded-full ${
-              isDark 
-                ? "bg-gradient-to-l from-transparent via-blue-400 to-blue-400" 
-                : "bg-gradient-to-l from-transparent via-blue-500 to-blue-500"
-            }`}></div>
+            <div
+              className={`h-[2px] w-24 md:w-32 rounded-full ${
+                isDark
+                  ? "bg-gradient-to-r from-transparent via-blue-400 to-blue-400"
+                  : "bg-gradient-to-r from-transparent via-blue-500 to-blue-500"
+              }`}
+            ></div>
+
+            <div
+              className={`h-[2px] w-24 md:w-32 rounded-full ${
+                isDark
+                  ? "bg-gradient-to-l from-transparent via-blue-400 to-blue-400"
+                  : "bg-gradient-to-l from-transparent via-blue-500 to-blue-500"
+              }`}
+            ></div>
           </div>
 
           {/* Decorative dots */}
@@ -91,16 +103,17 @@ const Team = () => {
           }}
           className="w-full"
         >
-          <CarouselContent className="-ml-4">
+          {/* items-stretch = كل الكروت تاخد نفس الارتفاع */}
+          <CarouselContent className="-ml-4 items-stretch">
             {teamMembers.map((member, index) => (
               <CarouselItem
                 key={index}
-                className="pl-4 md:basis-1/2 lg:basis-1/4"
+                className="pl-4 md:basis-1/2 lg:basis-1/4 h-auto"
               >
                 <div
                   onClick={() => handleDoctorClick(member.id)}
-                  className={`group relative overflow-hidden rounded-2xl transition-all duration-500 hover:shadow-2xl cursor-pointer ${
-                    activeCard === member.id ? 'ring-2 ring-blue-500' : ''
+                  className={`group relative flex h-full flex-col overflow-hidden rounded-2xl transition-all duration-500 hover:shadow-2xl cursor-pointer ${
+                    activeCard === member.id ? "ring-2 ring-blue-500" : ""
                   } ${
                     isDark
                       ? "bg-[#192231] border border-gray-700/50 hover:border-blue-500/50"
@@ -109,8 +122,8 @@ const Team = () => {
                 >
                   {/* Background Pattern on Hover */}
                   <div
-                    className={`absolute inset-0 opacity-0 group-hover:opacity-100 md:group-hover:opacity-100 transition-opacity duration-500 ${
-                      activeCard === member.id ? 'opacity-100' : ''
+                    className={`absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500 ${
+                      activeCard === member.id ? "opacity-100" : ""
                     } ${
                       isDark
                         ? "bg-gradient-to-br from-blue-500/5 via-transparent to-blue-500/10"
@@ -118,9 +131,8 @@ const Team = () => {
                     }`}
                   />
 
-                  {/* Image Section */}
-                  <div className="relative h-72 overflow-hidden bg-white">
-                    {/* Doctor Image */}
+                  {/* Image Section - ارتفاع ثابت لا يتغير */}
+                  <div className="relative h-72 shrink-0 overflow-hidden bg-white">
                     <img
                       src={member.img}
                       alt={member.nameAr}
@@ -142,23 +154,10 @@ const Team = () => {
                           : "bg-gradient-to-br from-blue-600/90 to-blue-600/60"
                       }`}
                     >
-                      {/* Decorative circles */}
-                      <div
-                        className={`absolute top-0 right-0 w-32 h-32 rounded-full -translate-y-16 translate-x-16 ${
-                          isDark ? "bg-white/10" : "bg-white/10"
-                        }`}
-                      />
-                      <div
-                        className={`absolute bottom-0 left-0 w-24 h-24 rounded-full translate-y-12 -translate-x-12 ${
-                          isDark ? "bg-white/10" : "bg-white/10"
-                        }`}
-                      />
+                      <div className="absolute top-0 right-0 w-32 h-32 rounded-full -translate-y-16 translate-x-16 bg-white/10" />
+                      <div className="absolute bottom-0 left-0 w-24 h-24 rounded-full translate-y-12 -translate-x-12 bg-white/10" />
 
-                      <div
-                        className={`relative z-10 w-40 h-40 rounded-full flex items-center justify-center shadow-2xl transform group-hover:scale-110 transition-transform duration-500 ${
-                          isDark ? "bg-white" : "bg-white"
-                        }`}
-                      >
+                      <div className="relative z-10 w-40 h-40 rounded-full flex items-center justify-center shadow-2xl bg-white transform group-hover:scale-110 transition-transform duration-500">
                         <span
                           className={`text-5xl font-bold ${
                             isDark ? "text-blue-500" : "text-blue-600"
@@ -174,8 +173,8 @@ const Team = () => {
 
                     {/* Gradient Overlay on Hover */}
                     <div
-                      className={`absolute inset-0 opacity-0 group-hover:opacity-100 md:group-hover:opacity-100 transition-opacity duration-500 ${
-                        activeCard === member.id ? 'opacity-100' : ''
+                      className={`absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 ${
+                        activeCard === member.id ? "opacity-100" : ""
                       } ${
                         isDark
                           ? "bg-gradient-to-t from-gray-900/80 via-transparent to-transparent"
@@ -185,24 +184,23 @@ const Team = () => {
 
                     {/* View Profile Badge */}
                     <div
-                      className={`absolute bottom-4 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 md:group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300 px-4 py-2 rounded-xl text-xs font-light ${
-                        activeCard === member.id ? 'opacity-100 translate-y-0' : ''
-                      } ${
-                        isDark
-                          ? "bg-blue-500 text-white"
-                          : "bg-blue-600 text-white"
-                      }`}
+                      className={`absolute bottom-4 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300 px-4 py-2 rounded-xl text-xs font-light whitespace-nowrap ${
+                        activeCard === member.id ? "opacity-100 translate-y-0" : ""
+                      } ${isDark ? "bg-blue-500 text-white" : "bg-blue-600 text-white"}`}
                     >
-                      {activeCard === member.id ? 'عرض الملف الشخصي  ' : 'عرض الملف الشخصي'}
+                      عرض الملف الشخصي
                     </div>
                   </div>
 
-                  {/* Content Section */}
-                  <div className="relative p-6 space-y-4">
-                    {/* Name & Role */}
-                    <div className="text-center space-y-2">
+                  {/* Content Section - يملأ الباقي بالتساوي */}
+                                    {/* Content Section - يملأ الباقي بالتساوي */}
+                  <div className="relative flex flex-1 flex-col justify-between p-6">
+                    <div className="flex flex-col items-center gap-3">
+                      {/* الاسم: سطرين كحد أقصى بارتفاع ثابت */}
                       <h3
-                        className={`text-xl font-bold transition-colors duration-300 ${
+                        title={member.nameAr}
+                        style={clamp(2)}
+                        className={`min-h-[3.5rem] text-center text-lg sm:text-xl font-bold leading-7 transition-colors duration-300 ${
                           isDark
                             ? "text-blue-400 group-hover:text-blue-300"
                             : "text-gray-900 group-hover:text-blue-600"
@@ -210,18 +208,33 @@ const Team = () => {
                       >
                         {member.nameAr}
                       </h3>
-                      <p
-                        className={`text-sm font-medium ${
-                          isDark ? "text-blue-300" : "text-blue-600"
-                        }`}
-                      >
-                        {member.roleAr}
-                      </p>
+
+                      {/* التخصص: Badge بخلفية وبوردر مميزين */}
+                      <div className="flex min-h-[3.25rem] w-full items-center justify-center">
+                        <span
+                          title={member.specialtyAr}
+                          className={`inline-flex max-w-full items-center gap-2 rounded-full border px-3.5 py-1.5 text-[13px] font-medium leading-[1.375rem] backdrop-blur-sm transition-all duration-300 ${
+                            isDark
+                              ? "border-blue-400/30 bg-blue-400/10 text-blue-200 group-hover:border-blue-400/60 group-hover:bg-blue-400/20 group-hover:text-blue-100"
+                              : "border-blue-200 bg-blue-50 text-blue-700 group-hover:border-blue-400 group-hover:bg-blue-100 group-hover:text-blue-800"
+                          }`}
+                        >
+                          {/* نقطة مؤشر */}
+                          <span
+                            className={`h-1.5 w-1.5 shrink-0 rounded-full ${
+                              isDark ? "bg-blue-300" : "bg-blue-500"
+                            }`}
+                          />
+                          <span style={clamp(2)} className="text-center">
+                            {member.specialtyAr}
+                          </span>
+                        </span>
+                      </div>
                     </div>
 
                     {/* Divider */}
                     <div
-                      className={`h-px bg-gradient-to-r from-transparent to-transparent ${
+                      className={`mt-4 h-px bg-gradient-to-r from-transparent to-transparent ${
                         isDark ? "via-blue-500/30" : "via-gray-200"
                       }`}
                     />
@@ -229,8 +242,8 @@ const Team = () => {
 
                   {/* Bottom Accent Line */}
                   <div
-                    className={`h-1 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ${
-                      activeCard === member.id ? 'scale-x-100' : ''
+                    className={`h-1 shrink-0 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ${
+                      activeCard === member.id ? "scale-x-100" : ""
                     } ${
                       isDark
                         ? "bg-gradient-to-r from-transparent via-blue-500 to-transparent"
