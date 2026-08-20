@@ -217,21 +217,21 @@ const Team = () => {
                       </h3>
 
                       {/* التخصص: Badge بخلفية وبوردر مميزين */}
-                      <div className="flex min-h-[2.75rem] w-full items-center justify-center">
+                      <div className="flex min-h-[2.75rem] w-full items-center justify-center ">
                         <span
                           title={member.specialtyAr}
-                          className={`inline-flex max-w-full items-center gap-2 rounded-full border px-3.5 py-1.5 text-[13px] font-medium leading-[1.375rem] backdrop-blur-sm transition-all duration-300 ${
+                          className={`inline-flex max-w-full items-center gap-2 rounded-xl border px-3.5 py-1.5 text-[13px] font-medium leading-[1.375rem] backdrop-blur-sm transition-all duration-300 ${
                             isDark
                               ? "border-blue-400/30 bg-blue-400/10 text-blue-200 group-hover:border-blue-400/60 group-hover:bg-blue-400/20 group-hover:text-blue-100"
                               : "border-blue-200 bg-blue-50 text-blue-700 group-hover:border-blue-400 group-hover:bg-blue-100 group-hover:text-blue-800"
                           }`}
                         >
                           {/* نقطة مؤشر */}
-                          <span
+                          {/* <span
                             className={`h-1.5 w-1.5 shrink-0 rounded-full ${
                               isDark ? "bg-blue-300" : "bg-blue-500"
                             }`}
-                          />
+                          /> */}
                           <span style={clamp(2)} className="text-center">
                             {member.specialtyAr}
                           </span>
