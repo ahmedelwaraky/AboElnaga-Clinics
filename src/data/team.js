@@ -17,9 +17,10 @@ export const teamMembers = [
     id: 1,
     nameAr: "د. وفاء قاسم",
     nameEn: "Dr. Wafaa Kassem",
-    specialtyAr:
-      "أخصائية طب أسنان الأطفال - ماجيستير طب أسنان الأطفال جامعة طنطا",
-    specialtyEn: "Pediatric dentistry specialist - MSc, Tanta University",
+    specialtyAr: "أخصائية طب أسنان الأطفال",
+    specialtyFullAr:
+      "أخصائية طب أسنان الأطفال — ماجستير طب أسنان الأطفال، جامعة طنطا",
+    specialtyEn: "Pediatric Dentistry Specialist",
     img: wafa,
   },
   {
@@ -27,47 +28,53 @@ export const teamMembers = [
     nameAr: "د. مريم ناجي",
     nameEn: "Dr. Mariam Nagi",
     specialtyAr: "أخصائية الحشوات التجميلية والتركيبات",
-    specialtyEn: "Aesthetic fillings & prosthetics specialist",
+    specialtyFullAr: "أخصائية الحشوات التجميلية والتركيبات",
+    specialtyEn: "Aesthetic Fillings & Prosthetics Specialist",
     img: mariam,
   },
   {
     id: 3,
     nameAr: "د. هدير الفقي",
     nameEn: "Dr. Hadeer El Feky",
-    specialtyAr: "أخصائي تركيبات الأسنان",
-    specialtyEn: "Dental prosthetics specialist",
+    specialtyAr: "أخصائية تركيبات الأسنان",
+    specialtyFullAr: "أخصائية تركيبات الأسنان",
+    specialtyEn: "Dental Prosthetics Specialist",
     img: hadeer,
   },
   {
     id: 4,
     nameAr: "د. ندى فرحات",
     nameEn: "Dr. Nada Farahat",
-    specialtyAr: "أخصائية حشو العصب والحشوات التجميلية والتركيبات الثابتة",
-    specialtyEn:
-      "Root canal, aesthetic fillings & fixed prosthetics specialist",
+    specialtyAr: "أخصائية حشو العصب والتركيبات",
+    specialtyFullAr:
+      "أخصائية حشو العصب والحشوات التجميلية والتركيبات الثابتة",
+    specialtyEn: "Endodontics & Fixed Prosthodontics Specialist",
     img: nada,
   },
   {
     id: 5,
-    nameAr: "د. آيه أشرف",
+    nameAr: "د. آية أشرف",
     nameEn: "Dr. Aya Ashraf",
     specialtyAr: "أخصائية الحشوات والتركيبات التجميلية",
-    specialtyEn: "Aesthetic fillings & prosthetics specialist",
+    specialtyFullAr: "أخصائية الحشوات والتركيبات التجميلية",
+    specialtyEn: "Aesthetic Fillings & Prosthetics Specialist",
     img: aya,
   },
   {
     id: 6,
     nameAr: "د. أفنان حازم",
     nameEn: "Dr. Afnan Hazem",
-    specialtyAr: "أخصائي التركيبات المتحركة",
-    specialtyEn: "Removable dentures & prosthetics specialist",
+    specialtyAr: "أخصائية التركيبات المتحركة",
+    specialtyFullAr: "أخصائية التركيبات المتحركة",
+    specialtyEn: "Removable Prosthodontics Specialist",
     img: afnan,
   },
   {
     id: 7,
-    nameAr: "د. ايه محمدي",
+    nameAr: "د. آية محمدي",
     nameEn: "Dr. Aya Mohamedy",
-    specialtyAr: "أخصائية الحشوات التجميلية والتركيبات الثابتة",
+    specialtyAr: "أخصائية الحشوات والتركيبات الثابتة",
+    specialtyFullAr: "أخصائية الحشوات التجميلية والتركيبات الثابتة",
     specialtyEn: "Cosmetic Restorative & Fixed Prosthodontics Specialist",
     img: ayaMohamedy,
   },
@@ -76,23 +83,26 @@ export const teamMembers = [
     nameAr: "د. عمر سمير",
     nameEn: "Dr. Omar Samir",
     specialtyAr: "أخصائي جراحة وزراعة الأسنان",
-    specialtyEn: "Dental surgery & implant specialist",
+    specialtyFullAr: "أخصائي جراحة وزراعة الأسنان",
+    specialtyEn: "Oral Surgery & Implantology Specialist",
     img: omar,
   },
   {
     id: 9,
     nameAr: "د. أحمد إبراهيم",
     nameEn: "Dr. Ahmed Ibrahim",
-    specialtyAr: "أخصائي حشو العصب والحشوات التجميلية والتركيبات",
-    specialtyEn: "Root canal, aesthetic fillings & prosthetics specialist",
+    specialtyAr: "أخصائي حشو العصب والتركيبات",
+    specialtyFullAr: "أخصائي حشو العصب والحشوات التجميلية والتركيبات",
+    specialtyEn: "Endodontics & Prosthetics Specialist",
     img: ibrahim,
   },
   {
     id: 10,
     nameAr: "د. أحمد جلال",
     nameEn: "Dr. Ahmed Galal",
-    specialtyAr: "أخصائي الحشوات التجميلية وحشو العصب والتركيبات",
-    specialtyEn: "Aesthetic fillings, root canal & prosthetics specialist",
+    specialtyAr: "أخصائي الحشوات التجميلية وحشو العصب",
+    specialtyFullAr: "أخصائي الحشوات التجميلية وحشو العصب والتركيبات",
+    specialtyEn: "Aesthetic Fillings, Endodontics & Prosthetics Specialist",
     img: galal,
   },
   {
@@ -100,14 +110,16 @@ export const teamMembers = [
     nameAr: "د. محمد صلاح",
     nameEn: "Dr. Mohamed Salah",
     specialtyAr: "أخصائي الحشوات التجميلية",
-    specialtyEn: "Aesthetic fillings specialist",
+    specialtyFullAr: "أخصائي الحشوات التجميلية",
+    specialtyEn: "Aesthetic Fillings Specialist",
     img: salah,
   },
   {
     id: 12,
-    nameAr: "د. أحمد إبراهيم",
-    nameEn: "Dr. Ahmed Ibrahim",
-    specialtyAr: "أخصائي الحشوات التجميلية والتركيبات الثابتة",
+    nameAr: "د. أحمد إبراهيم عبد الله",
+    nameEn: "Dr. Ahmed Ibrahim Abdallah",
+    specialtyAr: "أخصائي الحشوات والتركيبات الثابتة",
+    specialtyFullAr: "أخصائي الحشوات التجميلية والتركيبات الثابتة",
     specialtyEn: "Cosmetic Restorative & Fixed Prosthodontics Specialist",
     img: ahmedibrahim,
   },
@@ -115,8 +127,22 @@ export const teamMembers = [
     id: 13,
     nameAr: "د. يوسف أسامة",
     nameEn: "Dr. Youssef Osama",
-    specialtyAr: "أخصائي الحشوات التجميلية وحشو العصب والتركيبات",
-    specialtyEn: "Aesthetic fillings, root canal & prosthetics specialist",
+    specialtyAr: "أخصائي الحشوات التجميلية وحشو العصب",
+    specialtyFullAr: "أخصائي الحشوات التجميلية وحشو العصب والتركيبات",
+    specialtyEn: "Aesthetic Fillings, Endodontics & Prosthetics Specialist",
     img: yousef,
   },
 ];
+
+/* حارس تطوير: بيكشف تكرار الـ id أو نقص الصور */
+if (import.meta.env?.DEV) {
+  const ids = teamMembers.map((m) => m.id);
+  const dupes = ids.filter((id, i) => ids.indexOf(id) !== i);
+  if (dupes.length) console.warn("[team] Duplicate ids:", dupes);
+
+  const missing = teamMembers.filter((m) => !m.img).map((m) => m.nameAr);
+  if (missing.length) console.warn("[team] Missing images:", missing);
+}
+
+export const getMemberById = (id) =>
+  teamMembers.find((m) => String(m.id) === String(id)) ?? null;
