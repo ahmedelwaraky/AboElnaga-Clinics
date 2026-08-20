@@ -1,225 +1,242 @@
-import { MapPin, Phone, Clock, Headphones } from "lucide-react";
-import { Card, CardContent } from "../../shared/ui/Card";
+import { useMemo, useState } from "react";
+import {
+  MapPin,
+  Phone,
+  Clock,
+  Headphones,
+  Navigation,
+  MessageCircle,
+  LocateFixed,
+} from "lucide-react";
 import { useTheme } from "../../core/createContext";
-import  {locations}  from "../../data/branches";
+import {
+  locations,
+  getDirectionsUrl,
+  getWhatsappUrl,
+  distanceKm,
+} from "../../data/branches";
+
+/* مواعيد العمل: السبت - الخميس، 10ص : 10م (الجمعة مغلق) — بتوقيت القاهرة */
+const useIsOpenNow = () =>
+  useMemo(() => {
+    const now = new Date(
+      new Date().toLocaleString("en-US", { timeZone: "Africa/Cairo" })
+    );
+    const hour = now.getHours() + now.getMinutes() / 60;
+    return now.getDay() !== 5 && hour >= 10 && hour < 22;
+  }, []);
 
 const Locations = () => {
   const { isDark } = useTheme();
+  const isOpen = useIsOpenNow();
+
+  const [active, setActive] = useState(0);
+  const [nearest, setNearest] = useState(null); // { index, km }
+  const [locating, setLocating] = useState(false);
+
+  const branch = locations[active];
+
+  const findNearest = () => {
+    if (!navigator.geolocation) return;
+    setLocating(true);
+    navigator.geolocation.getCurrentPosition(
+      ({ coords }) => {
+        let best = { index: 0, km: Infinity };
+        locations.forEach((l, i) => {
+          const km = distanceKm(coords.latitude, coords.longitude, l.lat, l.lng);
+          if (km < best.km) best = { index: i, km };
+        });
+        setNearest(best);
+        setActive(best.index);
+        setLocating(false);
+      },
+      () => setLocating(false),
+      { timeout: 8000 }
+    );
+  };
+
+  /* ── ألوان الوضعين في مكان واحد ── */
+  const t = {
+    section: isDark ? "bg-[#2a2a2a]" : "bg-[#e8e5dc]",
+    panel: isDark ? "bg-[#243447] border-gray-700/60" : "bg-white border-gray-200",
+    title: isDark ? "text-white" : "text-gray-800",
+    body: isDark ? "text-gray-300" : "text-gray-600",
+    muted: isDark ? "text-gray-400" : "text-gray-500",
+    accent: isDark ? "text-blue-400" : "text-blue-600",
+    chipIdle: isDark
+      ? "bg-[#243447] text-gray-300 border-gray-700/60 hover:border-blue-500/60"
+      : "bg-white text-gray-600 border-gray-200 hover:border-blue-400/60",
+    chipActive: isDark
+      ? "bg-blue-500 text-white border-blue-500 shadow-lg shadow-blue-500/25"
+      : "bg-blue-600 text-white border-blue-600 shadow-lg shadow-blue-600/25",
+    row: isDark ? "bg-white/[0.04]" : "bg-gray-50",
+  };
+
+  const InfoRow = ({ icon: Icon, children }) => (
+    <div className={`flex items-start gap-3 rounded-xl p-3 ${t.row}`}>
+      <Icon className={`mt-0.5 h-[18px] w-[18px] shrink-0 ${t.accent}`} />
+      <div className={`text-sm leading-relaxed ${t.body}`}>{children}</div>
+    </div>
+  );
 
   return (
     <section
       id="locations"
-      className={`py-16 md:py-20 transition-colors duration-300 ${
-        isDark ? "bg-[#2a2a2a]" : "bg-[#e8e5dc]"
-      }`}
+      className={`py-16 md:py-20 transition-colors duration-300 ${t.section}`}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Added top spacing for navigation */}
-        <div className="h-16 md:h-20"></div>
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="h-16 md:h-20" />
 
         {/* العنوان */}
-        <div className="text-center mb-10 md:mb-16">
-          <h2
-            className={`text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-3 md:mb-4 ${
-              isDark ? "text-white" : "text-gray-700"
-            }`}
-          >
+        <div className="mb-10 text-center md:mb-14">
+          <h2 className={`mb-3 text-2xl font-bold sm:text-3xl md:text-4xl lg:text-5xl ${t.title}`}>
             فروعنا المريحة
           </h2>
-          <p
-            className={`text-sm sm:text-base md:text-lg max-w-2xl mx-auto px-4 mb-6 md:mb-8 ${
-              isDark ? "text-gray-400" : "text-gray-600"
-            }`}
-          >
-            قم بزيارتنا في أي من فروعنا الحديثة للحصول على أفضل تجربة طبية
+          <p className={`mx-auto max-w-2xl px-4 text-sm sm:text-base md:text-lg ${t.body}`}>
+            اختار الفرع الأقرب ليك وشوفه على الخريطة قبل ما تيجي
           </p>
 
-          {/* Decorative Divider */}
-          <div className="flex items-center justify-center gap-3 md:gap-4">
-            {/* Left Line */}
-            <div className={`h-[2px] w-24 md:w-32 rounded-full ${
-              isDark 
-                ? "bg-gradient-to-r from-transparent via-blue-400 to-blue-400" 
-                : "bg-gradient-to-r from-transparent via-blue-500 to-blue-500"
-            }`}></div>
-            
-            {/* Right Line */}
-            <div className={`h-[2px] w-24 md:w-32 rounded-full ${
-              isDark 
-                ? "bg-gradient-to-l from-transparent via-blue-400 to-blue-400" 
-                : "bg-gradient-to-l from-transparent via-blue-500 to-blue-500"
-            }`}></div>
-          </div>
-
-          {/* Decorative dots */}
-          <div className="flex items-center justify-center gap-1.5 mt-4 md:mt-6">
-            <div className={`w-1.5 h-1.5 rounded-full ${isDark ? "bg-blue-400" : "bg-blue-500"}`}></div>
-            <div className={`w-2 h-2 rounded-full ${isDark ? "bg-blue-400" : "bg-blue-500"}`}></div>
-            <div className={`w-1.5 h-1.5 rounded-full ${isDark ? "bg-blue-400" : "bg-blue-500"}`}></div>
+          <div className="mt-6 flex items-center justify-center gap-2">
+            <span
+              className={`h-[2px] w-20 rounded-full md:w-28 ${
+                isDark
+                  ? "bg-gradient-to-r from-transparent to-blue-400"
+                  : "bg-gradient-to-r from-transparent to-blue-500"
+              }`}
+            />
+            <span className={`h-2 w-2 rounded-full ${isDark ? "bg-blue-400" : "bg-blue-500"}`} />
+            <span
+              className={`h-[2px] w-20 rounded-full md:w-28 ${
+                isDark
+                  ? "bg-gradient-to-l from-transparent to-blue-400"
+                  : "bg-gradient-to-l from-transparent to-blue-500"
+              }`}
+            />
           </div>
         </div>
 
-        {/* الكروت */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
-          {locations.map((location, index) => (
-            <Card
-              key={index}
-              className={`overflow-hidden rounded-xl md:rounded-2xl transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 ${
-                isDark
-                  ? "bg-[#243447] border-gray-700/50 hover:border-blue-500/50"
-                  : "bg-white border-gray-200 hover:border-blue-400/50 shadow-md"
-              }`}
+        {/* أزرار الفروع */}
+        <div className="mb-6 flex flex-wrap items-center justify-center gap-2.5 md:gap-3">
+          {locations.map((l, i) => (
+            <button
+              key={l.id}
+              onClick={() => setActive(i)}
+              aria-pressed={active === i}
+              className={`rounded-full border px-4 py-2.5 text-sm font-semibold transition-all duration-300
+                          focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2
+                          ${active === i ? t.chipActive : t.chipIdle}`}
             >
-              {/* Header */}
-              <div className="p-4 md:p-6 pb-2">
-                <h3
-                  className={`text-lg md:text-xl font-semibold flex items-center gap-2 ${
-                    isDark ? "text-white" : "text-gray-900"
-                  }`}
-                >
-                  <MapPin
-                    className={`w-4 h-4 md:w-5 md:h-5 ${
-                      isDark ? "text-blue-400" : "text-blue-600"
-                    }`}
-                  />
-                  {location.nameAr}
-                </h3>
+              {l.cityAr}
+              {nearest?.index === i && (
+                <span className="mr-2 text-[11px] opacity-80">
+                  · {nearest.km < 1 ? "أقل من كم" : `${nearest.km.toFixed(1)} كم`}
+                </span>
+              )}
+            </button>
+          ))}
+
+          <button
+            onClick={findNearest}
+            disabled={locating}
+            className={`inline-flex items-center gap-2 rounded-full border border-dashed px-4 py-2.5 text-sm font-semibold
+                        transition-all disabled:opacity-60 focus-visible:outline-none focus-visible:ring-2
+                        focus-visible:ring-blue-500 focus-visible:ring-offset-2
+                        ${
+                          isDark
+                            ? "border-blue-400/50 text-blue-400 hover:bg-blue-400/10"
+                            : "border-blue-500/50 text-blue-600 hover:bg-blue-500/10"
+                        }`}
+          >
+            <LocateFixed className={`h-4 w-4 ${locating ? "animate-spin" : ""}`} />
+            {locating ? "بندوّر..." : "أقرب فرع ليّا"}
+          </button>
+        </div>
+
+        {/* البانل */}
+        <div className={`overflow-hidden rounded-2xl border shadow-xl transition-colors duration-300 ${t.panel}`}>
+          <div className="grid lg:grid-cols-5">
+            {/* الخريطة */}
+            <div className="relative h-64 sm:h-80 lg:col-span-3 lg:h-[26rem]">
+              <iframe
+                key={branch.id}
+                src={branch.map}
+                title={branch.nameAr}
+                loading="lazy"
+                allowFullScreen
+                referrerPolicy="no-referrer-when-downgrade"
+                className="h-full w-full border-0"
+              />
+              <span
+                className={`pointer-events-none absolute left-4 top-4 inline-flex items-center gap-2 rounded-full
+                            px-3 py-1.5 text-xs font-bold text-white shadow-lg backdrop-blur-md
+                            ${isOpen ? "bg-emerald-500/95" : "bg-gray-700/90"}`}
+              >
+                <span className={`h-2 w-2 rounded-full bg-white ${isOpen ? "animate-pulse" : "opacity-60"}`} />
+                {isOpen ? "مفتوح الآن" : "مغلق الآن"}
+              </span>
+            </div>
+
+            {/* التفاصيل */}
+            <div className="flex flex-col p-5 sm:p-7 lg:col-span-2">
+              <h3 className={`flex items-center gap-2 text-xl font-bold md:text-2xl ${t.title}`}>
+                <MapPin className={`h-5 w-5 ${t.accent}`} />
+                {branch.nameAr}
+              </h3>
+
+              <div className="mt-5 flex-1 space-y-2.5">
+                <InfoRow icon={MapPin}>{branch.addressAr}</InfoRow>
+                <InfoRow icon={Clock}>{branch.hoursAr}</InfoRow>
+                <InfoRow icon={Phone}>
+                  <a href={`tel:${branch.phone}`} dir="ltr" className={`font-semibold hover:underline ${t.accent}`}>
+                    {branch.phone}
+                  </a>
+                </InfoRow>
+                {branch.tel && (
+                  <InfoRow icon={Headphones}>
+                    <a href={`tel:${branch.tel}`} dir="ltr" className={`font-semibold hover:underline ${t.accent}`}>
+                      {branch.tel}
+                    </a>
+                  </InfoRow>
+                )}
               </div>
 
-              <CardContent className="p-4 md:p-6 space-y-3 md:space-y-4">
-                {/* الخريطة */}
-                <div
-                  className={`w-full h-48 md:h-56 rounded-lg md:rounded-xl overflow-hidden border ${
-                    isDark ? "border-gray-700" : "border-gray-200"
-                  }`}
+              <div className="mt-6 space-y-2.5">
+                <a
+                  href={getWhatsappUrl(branch)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex w-full items-center justify-center gap-2 rounded-xl bg-[#25D366] px-4 py-3 text-sm font-bold
+                             text-white transition-all hover:bg-[#1EB855] focus-visible:outline-none focus-visible:ring-2
+                             focus-visible:ring-emerald-400 focus-visible:ring-offset-2"
                 >
-                  {location.map ? (
-                    <iframe
-                      src={location.map}
-                      loading="lazy"
-                      allowFullScreen
-                      referrerPolicy="no-referrer-when-downgrade"
-                      className="w-full h-full border-0"
-                    ></iframe>
-                  ) : (
-                    <div
-                      className={`w-full h-full flex items-center justify-center text-xs sm:text-sm ${
-                        isDark
-                          ? "bg-gradient-to-br from-blue-500/10 to-blue-400/10 text-gray-400"
-                          : "bg-gradient-to-br from-blue-100/50 to-blue-50/50 text-gray-600"
-                      }`}
-                    >
-                      الخريطة غير متاحة حالياً
-                    </div>
-                  )}
-                </div>
+                  <MessageCircle className="h-4 w-4" />
+                  احجز عبر واتساب
+                </a>
 
-                {/* البيانات */}
-                <div className="space-y-2.5 md:space-y-3 text-xs sm:text-sm">
-                  <div className="flex gap-2 md:gap-3">
-                    <MapPin
-                      className={`w-4 h-4 md:w-5 md:h-5 flex-shrink-0 ${
-                        isDark ? "text-gray-400" : "text-gray-600"
-                      }`}
-                    />
-                    <span
-                      className={`${
-                        isDark ? "text-gray-300" : "text-gray-700"
-                      }`}
-                    >
-                      {location.addressAr}
-                    </span>
-                  </div>
-
-                  <div className="flex gap-2 md:gap-3">
-                    <Headphones
-                      className={`w-4 h-4 md:w-5 md:h-5 flex-shrink-0 ${
-                        isDark ? "text-gray-400" : "text-gray-600"
-                      }`}
-                    />
-                    {location.tel && location.tel !== "قريباً" ? (
-                      <a
-                        href={`tel:${location.tel}`}
-                        className={`hover:underline ${
-                          isDark ? "text-blue-400" : "text-blue-600"
-                        }`}
-                      >
-                        {location.tel}
-                      </a>
-                    ) : (
-                      <span
-                        className={`${
-                          isDark ? "text-gray-300" : "text-gray-700"
-                        }`}
-                      >
-                        قريباً
-                      </span>
-                    )}
-                  </div>
-
-                  <div className="flex gap-2 md:gap-3">
-                    <Phone
-                      className={`w-4 h-4 md:w-5 md:h-5 flex-shrink-0 ${
-                        isDark ? "text-gray-400" : "text-gray-600"
-                      }`}
-                    />
-                    {location.phone && location.phone !== "قريباً" ? (
-                      <a
-                        href={`tel:${location.phone}`}
-                        className={`hover:underline ${
-                          isDark ? "text-blue-400" : "text-blue-600"
-                        }`}
-                      >
-                        {location.phone}
-                      </a>
-                    ) : (
-                      <span
-                        className={`${
-                          isDark ? "text-gray-300" : "text-gray-700"
-                        }`}
-                      >
-                        قريباً
-                      </span>
-                    )}
-                  </div>
-
-                  <div className="flex gap-2 md:gap-3">
-                    <Clock
-                      className={`w-4 h-4 md:w-5 md:h-5 flex-shrink-0 ${
-                        isDark ? "text-gray-400" : "text-gray-600"
-                      }`}
-                    />
-                    <span
-                      className={`${
-                        isDark ? "text-gray-300" : "text-gray-700"
-                      }`}
-                    >
-                      {location.hoursAr}
-                    </span>
-                  </div>
-                </div>
-
-                {/* زر الاتجاهات */}
-                {location.map && (
-                  <a
-                    href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
-                      location.addressAr
-                    )}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={`block w-full mt-3 md:mt-4 px-4 py-2.5 md:py-2 rounded-lg text-center text-sm md:text-base font-bold transition-all hover:scale-105 ${
-                      isDark
-                        ? "bg-blue-500 text-white hover:bg-blue-600"
-                        : "bg-blue-600 text-white hover:bg-blue-700"
-                    }`}
-                  >
-                    احصل على الاتجاهات
-                  </a>
-                )}
-              </CardContent>
-            </Card>
-          ))}
+                <a
+                  href={getDirectionsUrl(branch)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`flex w-full items-center justify-center gap-2 rounded-xl border px-4 py-3 text-sm font-bold
+                              transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500
+                              focus-visible:ring-offset-2
+                              ${
+                                isDark
+                                  ? "border-blue-400/40 text-blue-400 hover:bg-blue-400/10"
+                                  : "border-blue-500/40 text-blue-600 hover:bg-blue-500/10"
+                              }`}
+                >
+                  <Navigation className="h-4 w-4" />
+                  احصل على الاتجاهات
+                </a>
+              </div>
+            </div>
+          </div>
         </div>
+
+        <p className={`mt-5 text-center text-xs ${t.muted}`}>
+          {locations.length} فروع في محافظة المنوفية · الجمعة إجازة
+        </p>
       </div>
     </section>
   );

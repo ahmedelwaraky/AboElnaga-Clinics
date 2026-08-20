@@ -1,106 +1,110 @@
-import { MapPin, X } from "lucide-react";
+import { useEffect } from "react";
+import { MapPin, X, Clock } from "lucide-react";
 import { useTheme } from "../../core/createContext";
+import { locations, getWhatsappUrl } from "../../data/branches";
 
 const ClinicSelectionPopup = ({ isOpen, onClose }) => {
   const { isDark } = useTheme();
 
-  const clinics = [
-    {
-      name: "عيادات قويسنا",
-      whatsapp: "201227599182",
-      available: true,
-    },
-    {
-      name: "عيادات طه شبرا",
-      whatsapp: "201040467770",
-      available: true,
-    },
-    {
-      name: "عيادات العجايزة",
-      whatsapp: "201070103436",
-      available: true,
-    },
-    {
-      name: "عيادات شبين",
-      whatsapp: "",
-      available: false,
-    },
-  ];
+  /* الفرع متاح لو عنده رقم واتساب */
+  const clinics = locations.map((l) => ({
+    ...l,
+    available: Boolean(l.phone),
+  }));
+
+  /* ESC للإغلاق + قفل سكرول الصفحة */
+  useEffect(() => {
+    if (!isOpen) return;
+    const onKey = (e) => e.key === "Escape" && onClose();
+    document.addEventListener("keydown", onKey);
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      document.body.style.overflow = prev;
+    };
+  }, [isOpen, onClose]);
 
   const handleClinicClick = (clinic) => {
-    if (clinic.available) {
-      const message = `مرحباً، أود حجز موعد في ${clinic.name}`;
-      const url = `https://wa.me/${clinic.whatsapp}?text=${encodeURIComponent(message)}`;
-      window.open(url, "_blank", "noopener,noreferrer");
-      onClose();
-    }
+    if (!clinic.available) return;
+    window.open(getWhatsappUrl(clinic), "_blank", "noopener,noreferrer");
+    onClose();
   };
 
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-[60] flex items-center justify-center bg-black/50 backdrop-blur-sm">
+    <div
+      className="fixed inset-0 z-[60] flex items-center justify-center bg-black/50 p-4 backdrop-blur-sm"
+      onClick={onClose}
+      role="dialog"
+      aria-modal="true"
+      aria-label="اختر الفرع"
+    >
       <div
-        className={`relative w-full max-w-md mx-4 rounded-2xl shadow-2xl overflow-hidden ${
-          isDark ? "bg-[#1a2332]" : "bg-white"
-        }`}
+        onClick={(e) => e.stopPropagation()}
+        className={`relative w-full max-w-md overflow-hidden rounded-2xl shadow-2xl
+                    duration-300 animate-in fade-in zoom-in-95
+                    ${isDark ? "bg-[#1a2332]" : "bg-white"}`}
       >
         {/* Header */}
         <div className="relative bg-gradient-to-r from-blue-500 to-blue-600 px-6 py-5">
           <button
             onClick={onClose}
-            className="absolute top-4 left-4 p-1 rounded-full bg-white/20 hover:bg-white/30 transition-all"
+            aria-label="إغلاق"
+            className="absolute left-4 top-4 rounded-full bg-white/20 p-1 transition-all hover:bg-white/30
+                       focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
           >
-            <X className="w-5 h-5 text-white" />
+            <X className="h-5 w-5 text-white" />
           </button>
-          <h2 className="text-2xl font-bold text-white text-center">
-            اختر الفرع
-          </h2>
-          <p className="text-sm text-white/90 text-center mt-1">
+          <h2 className="text-center text-2xl font-bold text-white">اختر الفرع</h2>
+          <p className="mt-1 text-center text-sm text-white/90">
             اختر العيادة الأقرب لك لحجز موعد
           </p>
         </div>
 
         {/* Clinics List */}
-        <div className="p-6 space-y-3">
-          {clinics.map((clinic, index) => (
+        <div className="space-y-3 p-6">
+          {clinics.map((clinic) => (
             <button
-              key={index}
+              key={clinic.id}
               onClick={() => handleClinicClick(clinic)}
               disabled={!clinic.available}
-              className={`w-full flex items-center gap-4 p-4 rounded-xl transition-all duration-300 ${
-                clinic.available
-                  ? isDark
-                    ? "bg-gray-700/50 hover:bg-gray-700 hover:scale-105 cursor-pointer"
-                    : "bg-gray-50 hover:bg-gray-100 hover:scale-105 cursor-pointer"
-                  : isDark
-                  ? "bg-gray-800/30 cursor-not-allowed opacity-60"
-                  : "bg-gray-100/50 cursor-not-allowed opacity-60"
-              }`}
+              className={`flex w-full items-center gap-4 rounded-xl p-4 text-right transition-all duration-300
+                          focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500
+                          ${
+                            clinic.available
+                              ? isDark
+                                ? "cursor-pointer bg-gray-700/50 hover:scale-[1.03] hover:bg-gray-700"
+                                : "cursor-pointer bg-gray-50 hover:scale-[1.03] hover:bg-gray-100"
+                              : isDark
+                              ? "cursor-not-allowed bg-gray-800/30 opacity-60"
+                              : "cursor-not-allowed bg-gray-100/50 opacity-60"
+                          }`}
             >
               <div
-                className={`p-3 rounded-full ${
-                  clinic.available
-                    ? "bg-blue-500"
-                    : isDark
-                    ? "bg-gray-600"
-                    : "bg-gray-300"
+                className={`rounded-full p-3 ${
+                  clinic.available ? "bg-blue-500" : isDark ? "bg-gray-600" : "bg-gray-300"
                 }`}
               >
-                <MapPin className="w-6 h-6 text-white" />
+                <MapPin className="h-6 w-6 text-white" />
               </div>
-              <div className="flex-1 text-right">
-                <h3
-                  className={`text-lg font-bold ${
-                    isDark ? "text-white" : "text-gray-800"
-                  }`}
-                >
-                  {clinic.name}
+
+              <div className="flex-1">
+                <h3 className={`text-lg font-bold ${isDark ? "text-white" : "text-gray-800"}`}>
+                  {clinic.nameAr}
                 </h3>
-                {!clinic.available && (
-                  <p className="text-sm text-yellow-500 font-medium">
-                    قريباً
+                {clinic.available ? (
+                  <p
+                    className={`mt-0.5 flex items-center gap-1.5 text-xs ${
+                      isDark ? "text-gray-400" : "text-gray-500"
+                    }`}
+                  >
+                    <Clock className="h-3.5 w-3.5" />
+                    {clinic.hoursAr}
                   </p>
+                ) : (
+                  <p className="text-sm font-medium text-yellow-500">قريباً</p>
                 )}
               </div>
             </button>
