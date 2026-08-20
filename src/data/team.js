@@ -1,16 +1,16 @@
-import salah from "../assets/images/doctors/Dr-M-salah.jpg.jpeg";
-import omar from "../assets/images/doctors/Dr-Omar.jpg.jpeg";
-import galal from "../assets/images/doctors/Dr-A-Galal.jpg.jpeg";
-import ibrahim from "../assets/images/doctors/Dr-ِA-Ibrahim-1.jpg.jpeg";
-import yousef from "../assets/images/doctors/Dr-Yousef.jpg.jpeg";
-import afnan from "../assets/images/doctors/Dr-AFnan.jpg.jpeg";
 import wafa from "../assets/images/doctors/wafa.png";
-import aya from "../assets/images/doctors/Dr-Aya-Ashraf.jpg.jpeg";
-import nada from "../assets/images/doctors/Dr-Nada.jpg.jpeg";
 import mariam from "../assets/images/doctors/mariam.png";
 import hadeer from "../assets/images/doctors/hadeer.png";
+import nada from "../assets/images/doctors/Dr-Nada.jpg.jpeg";
+import aya from "../assets/images/doctors/Dr-Aya-Ashraf.jpg.jpeg";
+import afnan from "../assets/images/doctors/Dr-AFnan.jpg.jpeg";
 import ayaMohamedy from "../assets/images/doctors/AyaMohamdy.jpeg";
+import omar from "../assets/images/doctors/Dr-Omar.jpg.jpeg";
+import ibrahim from "../assets/images/doctors/Dr-ِA-Ibrahim-1.jpg.jpeg";
+import galal from "../assets/images/doctors/AhmedGalal.jpeg";
+import salah from "../assets/images/doctors/Dr-M-salah.jpg.jpeg";
 import ahmedibrahim from "../assets/images/doctors/Dr-ِA-Ibrahim-2.jpg.jpeg";
+import yousef from "../assets/images/doctors/Dr-Yousef.jpg.jpeg";
 
 export const teamMembers = [
   {
