@@ -85,9 +85,15 @@ const Team = () => {
 
           {/* Decorative dots */}
           <div className="flex items-center justify-center gap-1.5 mt-4 md:mt-6">
-            <div className={`w-1.5 h-1.5 rounded-full ${isDark ? "bg-blue-300" : "bg-blue-400"}`}></div>
-            <div className={`w-2 h-2 rounded-full ${isDark ? "bg-blue-300" : "bg-blue-400"}`}></div>
-            <div className={`w-1.5 h-1.5 rounded-full ${isDark ? "bg-blue-300" : "bg-blue-400"}`}></div>
+            <div
+              className={`w-1.5 h-1.5 rounded-full ${isDark ? "bg-blue-300" : "bg-blue-400"}`}
+            ></div>
+            <div
+              className={`w-2 h-2 rounded-full ${isDark ? "bg-blue-300" : "bg-blue-400"}`}
+            ></div>
+            <div
+              className={`w-1.5 h-1.5 rounded-full ${isDark ? "bg-blue-300" : "bg-blue-400"}`}
+            ></div>
           </div>
         </div>
       </div>
@@ -185,22 +191,23 @@ const Team = () => {
                     {/* View Profile Badge */}
                     <div
                       className={`absolute bottom-4 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300 px-4 py-2 rounded-xl text-xs font-light whitespace-nowrap ${
-                        activeCard === member.id ? "opacity-100 translate-y-0" : ""
+                        activeCard === member.id
+                          ? "opacity-100 translate-y-0"
+                          : ""
                       } ${isDark ? "bg-blue-500 text-white" : "bg-blue-600 text-white"}`}
                     >
                       عرض الملف الشخصي
                     </div>
                   </div>
 
-                  {/* Content Section - يملأ الباقي بالتساوي */}
-                                    {/* Content Section - يملأ الباقي بالتساوي */}
+                                   {/* Content Section - يملأ الباقي بالتساوي */}
                   <div className="relative flex flex-1 flex-col justify-between p-6">
-                    <div className="flex flex-col items-center gap-3">
+                    <div className="flex flex-col items-center gap-1.5">
                       {/* الاسم: سطرين كحد أقصى بارتفاع ثابت */}
                       <h3
                         title={member.nameAr}
                         style={clamp(2)}
-                        className={`min-h-[3.5rem] text-center text-lg sm:text-xl font-bold leading-7 transition-colors duration-300 ${
+                        className={`min-h-[3 rem] text-center text-lg sm:text-xl font-bold leading-[1.625rem] transition-colors duration-300 ${
                           isDark
                             ? "text-blue-400 group-hover:text-blue-300"
                             : "text-gray-900 group-hover:text-blue-600"
@@ -210,7 +217,7 @@ const Team = () => {
                       </h3>
 
                       {/* التخصص: Badge بخلفية وبوردر مميزين */}
-                      <div className="flex min-h-[3.25rem] w-full items-center justify-center">
+                      <div className="flex min-h-[2.75rem] w-full items-center justify-center">
                         <span
                           title={member.specialtyAr}
                           className={`inline-flex max-w-full items-center gap-2 rounded-full border px-3.5 py-1.5 text-[13px] font-medium leading-[1.375rem] backdrop-blur-sm transition-all duration-300 ${
