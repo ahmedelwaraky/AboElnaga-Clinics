@@ -1,16 +1,16 @@
-import wafa from "../assets/images/doctors/Dr-Wafa.jpg.jpeg";
-import mariam from "../assets/images/doctors/Dr-Mariam.jpg.jpeg";
-import hadeer from "../assets/images/doctors/Dr-hadear.jpg.jpeg";
-import nada from "../assets/images/doctors/Dr-nada.jpg.jpeg";
-import aya from "../assets/images/doctors/Dr-Aya---1.jpg.jpeg";
-import afnan from "../assets/images/doctors/Dr-Afnan.jpg.jpeg";
-import ayaMohamedy from "../assets/images/doctors/Dr-Aya-2.jpg.jpeg";
-import omar from "../assets/images/doctors/Dr-Omar.jpg.jpeg";
-import ibrahim from "../assets/images/doctors/Dr-A-Ibrahim---1.jpg.jpeg";
-import galal from "../assets/images/doctors/AhmedGalal.jpeg";
-import salah from "../assets/images/doctors/Dr-M-salah.jpg.jpeg";
-import ahmedibrahim from "../assets/images/doctors/Dr-A-Ibrahim---2.jpg.jpeg";
-import yousef from "../assets/images/doctors/Dr-Yousef.jpg.jpeg";
+import Wafa from "../assets/images/doctors/Wafa.jpeg";
+import Mariam from "../assets/images/doctors/Mariam.jpeg";
+import Hadeer from "../assets/images/doctors/Hadeer.jpeg";
+import Nada from "../assets/images/doctors/Nada.jpeg";
+import AyaAshraf from "../assets/images/doctors/AyaAshraf.jpeg";
+import Afnan from "../assets/images/doctors/Afnan.jpeg";
+import AyaMohamedy from "../assets/images/doctors/AyaMohamedy.jpeg";
+import Omar from "../assets/images/doctors/Omar.jpeg";
+import AhmedIbrahim1 from "../assets/images/doctors/AhmedIbrahim1.jpeg";
+import AhmedGalal from "../assets/images/doctors/AhmedGalal.jpeg";
+import Salah from "../assets/images/doctors/Salah.jpeg";
+import AhmedIbrahim2 from "../assets/images/doctors/AhmedIbrahim2.jpeg";
+import Yousef from "../assets/images/doctors/Yousef.jpeg";
 
 export const teamMembers = [
   {
@@ -46,8 +46,7 @@ export const teamMembers = [
     nameAr: "د. ندى فرحات",
     nameEn: "Dr. Nada Farahat",
     specialtyAr: "أخصائية حشو العصب والتركيبات",
-    specialtyFullAr:
-      "أخصائية حشو العصب والحشوات التجميلية والتركيبات الثابتة",
+    specialtyFullAr: "أخصائية حشو العصب والحشوات التجميلية والتركيبات الثابتة",
     specialtyEn: "Endodontics & Fixed Prosthodontics Specialist",
     img: nada,
   },
@@ -116,8 +115,8 @@ export const teamMembers = [
   },
   {
     id: 12,
-    nameAr: "د. أحمد إبراهيم عبد الله",
-    nameEn: "Dr. Ahmed Ibrahim Abdallah",
+    nameAr: "د. أحمد ابراهيم  ",
+    nameEn: "Dr. Ahmed Ibrahim ",
     specialtyAr: "أخصائي الحشوات والتركيبات الثابتة",
     specialtyFullAr: "أخصائي الحشوات التجميلية والتركيبات الثابتة",
     specialtyEn: "Cosmetic Restorative & Fixed Prosthodontics Specialist",
