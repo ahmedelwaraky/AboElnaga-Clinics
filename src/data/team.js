@@ -10,6 +10,7 @@ import nada from "../assets/images/doctors/Dr-Nada.jpg.jpeg";
 import mariam from "../assets/images/doctors/mariam.png";
 import hadeer from "../assets/images/doctors/hadeer.png";
 import ayaMohamedy from "../assets/images/doctors/AyaMohamdy.jpeg";
+import ahmedibrahim from "../assets/images/doctors/Dr-ِA-Ibrahim-2.jpg.jpeg";
 
 export const teamMembers = [
   {
@@ -114,4 +115,12 @@ export const teamMembers = [
     specialtyEn: "Aesthetic fillings & prosthetics specialist",
     img: aya,
   },
+{
+  id: 12,
+  nameAr: "د. أحمد إبراهيم",
+  nameEn: "Dr. Ahmed Ibrahim",
+  specialtyAr: "أخصائي الحشوات التجميلية والتركيبات الثابتة",
+  specialtyEn: "Cosmetic Restorative & Fixed Prosthodontics Specialist",
+  img: ahmedibrahim,
+},
 ];
