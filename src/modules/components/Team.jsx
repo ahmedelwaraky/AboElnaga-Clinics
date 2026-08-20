@@ -73,7 +73,6 @@ const Team = () => {
                   : "bg-gradient-to-r from-transparent via-blue-500 to-blue-500"
               }`}
             ></div>
-
             <div
               className={`h-[2px] w-24 md:w-32 rounded-full ${
                 isDark
@@ -109,40 +108,33 @@ const Team = () => {
           }}
           className="w-full"
         >
-          {/* items-stretch = كل الكروت تاخد نفس الارتفاع */}
-          <CarouselContent className="-ml-4 items-stretch">
+          <CarouselContent className="-ml-4 items-stretch py-2">
             {teamMembers.map((member, index) => (
               <CarouselItem
                 key={index}
                 className="pl-4 md:basis-1/2 lg:basis-1/4 h-auto"
               >
+                {/* ===== الكارت: إطار خارجي بحشوة صغيرة ===== */}
                 <div
                   onClick={() => handleDoctorClick(member.id)}
-                  className={`group relative flex h-full flex-col overflow-hidden rounded-2xl transition-all duration-500 hover:shadow-2xl cursor-pointer ${
+                  className={`group relative flex h-full flex-col cursor-pointer rounded-[1.5rem] p-2.5 transition-all duration-500 ${
                     activeCard === member.id ? "ring-2 ring-blue-500" : ""
                   } ${
                     isDark
-                      ? "bg-[#192231] border border-gray-700/50 hover:border-blue-500/50"
-                      : "bg-white border border-gray-200 hover:border-blue-400/50 shadow-md"
+                      ? "bg-[#1E2A3C] border border-gray-700/40 shadow-lg shadow-black/30 hover:border-blue-500/50 hover:shadow-2xl hover:shadow-blue-900/40"
+                      : "bg-white border border-gray-200/80 shadow-md hover:border-blue-300 hover:shadow-2xl hover:shadow-blue-300/30"
                   }`}
                 >
-                  {/* Background Pattern on Hover */}
+                  {/* ===== الصورة: ارتفاع ثابت + الحواف مدوّرة ===== */}
                   <div
-                    className={`absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500 ${
-                      activeCard === member.id ? "opacity-100" : ""
-                    } ${
-                      isDark
-                        ? "bg-gradient-to-br from-blue-500/5 via-transparent to-blue-500/10"
-                        : "bg-gradient-to-br from-blue-400/5 via-transparent to-blue-400/10"
+                    className={`relative h-[24rem] w-full shrink-0 overflow-hidden rounded-[1.15rem] ${
+                      isDark ? "bg-[#243247]" : "bg-gray-100"
                     }`}
-                  />
-
-                  {/* Image Section - ارتفاع ثابت لا يتغير */}
-                  <div className="relative h-72 shrink-0 overflow-hidden bg-white">
+                  >
                     <img
                       src={member.img}
                       alt={member.nameAr}
-                      className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500"
+                      className="absolute inset-0 h-full w-full object-cover object-top transition-transform duration-700 group-hover:scale-[1.07]"
                       onError={(e) => {
                         const target = e.target;
                         target.style.display = "none";
@@ -152,18 +144,17 @@ const Team = () => {
                       }}
                     />
 
-                    {/* Fallback: Initials Circle (hidden by default) */}
+                    {/* Fallback: Initials Circle */}
                     <div
-                      className={`absolute inset-0 items-center justify-center hidden ${
+                      className={`absolute inset-0 hidden items-center justify-center ${
                         isDark
                           ? "bg-gradient-to-br from-blue-500/90 to-blue-500/60"
                           : "bg-gradient-to-br from-blue-600/90 to-blue-600/60"
                       }`}
                     >
-                      <div className="absolute top-0 right-0 w-32 h-32 rounded-full -translate-y-16 translate-x-16 bg-white/10" />
-                      <div className="absolute bottom-0 left-0 w-24 h-24 rounded-full translate-y-12 -translate-x-12 bg-white/10" />
-
-                      <div className="relative z-10 w-40 h-40 rounded-full flex items-center justify-center shadow-2xl bg-white transform group-hover:scale-110 transition-transform duration-500">
+                      <div className="absolute top-0 right-0 h-32 w-32 -translate-y-16 translate-x-16 rounded-full bg-white/10" />
+                      <div className="absolute bottom-0 left-0 h-24 w-24 translate-y-12 -translate-x-12 rounded-full bg-white/10" />
+                      <div className="relative z-10 flex h-36 w-36 items-center justify-center rounded-full bg-white shadow-2xl transition-transform duration-500 group-hover:scale-110">
                         <span
                           className={`text-5xl font-bold ${
                             isDark ? "text-blue-500" : "text-blue-600"
@@ -177,86 +168,66 @@ const Team = () => {
                       </div>
                     </div>
 
-                    {/* Gradient Overlay on Hover */}
+                    {/* تدرّج خفيف تحت عشان اللوحة تبان */}
+                    <div className="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-black/25 to-transparent" />
+
+                    {/* ===== لوحة الاسم والتخصص (Floating Panel) ===== */}
                     <div
-                      className={`absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 ${
-                        activeCard === member.id ? "opacity-100" : ""
+                      className={`absolute inset-x-3 bottom-3 rounded-2xl px-4 py-4 backdrop-blur-md transition-all duration-500 ${
+                        isDark
+                          ? "bg-[#111C2B]/90 border border-white/10 shadow-xl shadow-black/40 group-hover:bg-[#111C2B] group-hover:border-blue-400/40"
+                          : "bg-white/95 border border-white shadow-xl shadow-black/10 group-hover:bg-white"
+                      }`}
+                    >
+                      <div className="flex min-h-[3.75rem] flex-col items-center justify-center gap-1">
+                        {/* الاسم */}
+                        <h3
+                          title={member.nameAr}
+                          style={clamp(1)}
+                          className={`text-center text-[17px] font-bold leading-6 transition-colors duration-300 ${
+                            isDark
+                              ? "text-white group-hover:text-blue-300"
+                              : "text-[#0F2647] group-hover:text-blue-700"
+                          }`}
+                        >
+                          {member.nameAr}
+                        </h3>
+
+                        {/* التخصص */}
+                        <p
+                          title={member.specialtyAr}
+                          style={clamp(1)}
+                          className={`text-center text-[13px] font-medium leading-5 ${
+                            isDark ? "text-gray-400" : "text-gray-500"
+                          }`}
+                        >
+                          {member.specialtyAr}
+                        </p>
+                      </div>
+
+                      {/* خط أزرق بيظهر عند الـ hover */}
+                      <div
+                        className={`mx-auto mt-2 h-[3px] w-0 rounded-full transition-all duration-500 group-hover:w-16 ${
+                          activeCard === member.id ? "w-16" : ""
+                        } ${isDark ? "bg-blue-400" : "bg-blue-600"}`}
+                      />
+                    </div>
+
+                    {/* ===== زر عرض الملف (فوق الصورة) ===== */}
+                    <div
+                      className={`absolute right-3 top-3 translate-y-[-6px] rounded-xl px-3.5 py-2 text-[11px] font-medium opacity-0 shadow-lg transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100 ${
+                        activeCard === member.id
+                          ? "translate-y-0 opacity-100"
+                          : ""
                       } ${
                         isDark
-                          ? "bg-gradient-to-t from-gray-900/80 via-transparent to-transparent"
-                          : "bg-gradient-to-t from-white/80 via-transparent to-transparent"
+                          ? "bg-blue-500 text-white"
+                          : "bg-blue-600 text-white"
                       }`}
-                    />
-
-                    {/* View Profile Badge */}
-                    <div
-                      className={`absolute bottom-4 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300 px-4 py-2 rounded-xl text-xs font-light whitespace-nowrap ${
-                        activeCard === member.id
-                          ? "opacity-100 translate-y-0"
-                          : ""
-                      } ${isDark ? "bg-blue-500 text-white" : "bg-blue-600 text-white"}`}
                     >
                       عرض الملف الشخصي
                     </div>
                   </div>
-
-                                   {/* Content Section - يملأ الباقي بالتساوي */}
-                  <div className="relative flex flex-1 flex-col justify-between p-6">
-                    <div className="flex flex-col items-center gap-1.5">
-                      {/* الاسم: سطرين كحد أقصى بارتفاع ثابت */}
-                      <h3
-                        title={member.nameAr}
-                        style={clamp(2)}
-                        className={`min-h-[3 rem] text-center text-lg sm:text-xl font-bold leading-[1.625rem] transition-colors duration-300 ${
-                          isDark
-                            ? "text-blue-400 group-hover:text-blue-300"
-                            : "text-gray-900 group-hover:text-blue-600"
-                        }`}
-                      >
-                        {member.nameAr}
-                      </h3>
-
-                      {/* التخصص: Badge بخلفية وبوردر مميزين */}
-                      <div className="flex min-h-[2.75rem] w-full items-center justify-center ">
-                        <span
-                          title={member.specialtyAr}
-                          className={`inline-flex max-w-full items-center gap-2 rounded-xl border px-3.5 py-1.5 text-[13px] font-medium leading-[1.375rem] backdrop-blur-sm transition-all duration-300 ${
-                            isDark
-                              ? "border-blue-400/30 bg-blue-400/10 text-blue-200 group-hover:border-blue-400/60 group-hover:bg-blue-400/20 group-hover:text-blue-100"
-                              : "border-blue-200 bg-blue-50 text-blue-700 group-hover:border-blue-400 group-hover:bg-blue-100 group-hover:text-blue-800"
-                          }`}
-                        >
-                          {/* نقطة مؤشر */}
-                          {/* <span
-                            className={`h-1.5 w-1.5 shrink-0 rounded-full ${
-                              isDark ? "bg-blue-300" : "bg-blue-500"
-                            }`}
-                          /> */}
-                          <span style={clamp(2)} className="text-center">
-                            {member.specialtyAr}
-                          </span>
-                        </span>
-                      </div>
-                    </div>
-
-                    {/* Divider */}
-                    <div
-                      className={`mt-4 h-px bg-gradient-to-r from-transparent to-transparent ${
-                        isDark ? "via-blue-500/30" : "via-gray-200"
-                      }`}
-                    />
-                  </div>
-
-                  {/* Bottom Accent Line */}
-                  <div
-                    className={`h-1 shrink-0 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ${
-                      activeCard === member.id ? "scale-x-100" : ""
-                    } ${
-                      isDark
-                        ? "bg-gradient-to-r from-transparent via-blue-500 to-transparent"
-                        : "bg-gradient-to-r from-transparent via-blue-600 to-transparent"
-                    }`}
-                  />
                 </div>
               </CarouselItem>
             ))}
