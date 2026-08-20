@@ -3,7 +3,7 @@ import mariam from "../assets/images/doctors/Dr-Mariam.jpg.jpeg";
 import hadeer from "../assets/images/doctors/Dr-hadear.jpg.jpeg";
 import nada from "../assets/images/doctors/Dr-nada.jpg.jpeg";
 import aya from "../assets/images/doctors/Dr-Aya---1.jpg.jpeg";
-import afnan from "../assets/images/doctors/Dr-Afnan.jpg .jpeg";
+import afnan from "../assets/images/doctors/Dr-Afnan.jpg.jpeg";
 import ayaMohamedy from "../assets/images/doctors/Dr-Aya-2.jpg.jpeg";
 import omar from "../assets/images/doctors/Dr-Omar.jpg.jpeg";
 import ibrahim from "../assets/images/doctors/Dr-A-Ibrahim---1.jpg.jpeg";
