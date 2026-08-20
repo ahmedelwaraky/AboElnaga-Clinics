@@ -10,7 +10,7 @@ import aya from "../assets/images/doctors/aya.png";
 import nada from "../assets/images/doctors/nada.png";
 import mariam from "../assets/images/doctors/mariam.png";
 import hadeer from "../assets/images/doctors/hadeer.png";
-import ayaMohamedy from "../assets/images/doctors/AyaMohamdy.jpg.jpeg";
+import ayaMohamedy from "../assets/images/doctors/AyaMohamdy.jpeg";
 
 
 export const teamMembers = [

@@ -1,5 +1,16 @@
 import { Award, GraduationCap, Heart, Users } from "lucide-react";
 
+// ===== إعدادات العيادة =====
+const CAREER_START = { year: 2014, month: 9 }; // month: 1-12 (شهر بداية الممارسة)
+
+const getYearsOfExperience = ({ year, month }) => {
+  const now = new Date();
+  let years = now.getFullYear() - year;
+  if (now.getMonth() + 1 < month) years -= 1; // ما يزودش غير بعد الشهر
+  return Math.max(years, 0);
+};
+export const yearsOfExperience = getYearsOfExperience(CAREER_START);
+
 export const specializations = [
   { text: "طب الأسنان التجميلي", color: "blue" },
   { text: "زراعة الأسنان", color: "blue" },
@@ -31,10 +42,5 @@ export const stats = [
     label: "المرضى السعداء",
     color: "blue",
   },
-  {
-    icon: Award,
-    number: "12+",
-    label: "سنوات الخبرة",
-    color: "blue",
-  },
+   { icon: Award,          number: `${yearsOfExperience}+`,   label: "سنوات الخبرة",   color: "blue" },
 ];
