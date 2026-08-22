@@ -1,21 +1,34 @@
 @import "tailwindcss";
 
-
 html {
   scroll-behavior: smooth;
+  overflow-x: clip;
 }
 
 body {
-    font-family: "Cairo", sans-serif;
-
+  overflow-x: clip;
+  width: 100%;
+  max-width: 100%;
+  
+  font-family: "Cairo", sans-serif;
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 
+/* أي عنصر بيتوسّع غصب */
+img, video, iframe, svg, canvas {
+  max-width: 100%;
+}
+
+/* بديل الـ spacer divs اللي جوه كل سيكشن */
+/* section[id] {
+  scroll-margin-top: 5rem;
+} */
 /* WhatsApp Animation */
 @keyframes floatWhatsApp {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(0px);
   }
   50% {
@@ -25,31 +38,4 @@ body {
 
 .animate-float-whatsapp {
   animation: floatWhatsApp 3s ease-in-out infinite;
-}
-
-/* ==========================================================
-   الفيديو في وضع ملء الشاشة: يظهر كامل بأبعاده بدل ما يتقص
-   object-cover بيفضل شغال على عنصر الفيديو حتى وهو fullscreen،
-   فلازم override للـ object-fit في الحالة دي بس.
-   ينطبق على كل فيديوهات الموقع (الريلز + صفحة الدكتور).
-   ========================================================== */
-
-video:fullscreen,
-video:-webkit-full-screen,
-video:-moz-full-screen,
-video:-ms-fullscreen {
-  object-fit: contain !important;
-  width: 100% !important;
-  height: 100% !important;
-  max-height: 100vh !important;
-  background: #000;
-}
-
-/* بعض المتصفحات بتلف الفيديو في container خاص وهو fullscreen */
-:fullscreen video,
-:-webkit-full-screen video {
-  object-fit: contain !important;
-  width: 100% !important;
-  height: 100% !important;
-  background: #000;
 }
