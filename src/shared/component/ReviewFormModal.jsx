@@ -21,7 +21,8 @@ const RATING_LABELS = {
 };
 
 /* ============================================
-   قائمة اختيار الدكتور — custom بدل select
+   قائمة اختيار الدكتور
+   موبايل → bottom sheet | ديسكتوب → dropdown
    ============================================ */
 const DoctorSelect = ({ value, onChange, isDark, hasError }) => {
   const [open, setOpen] = useState(false);
@@ -30,23 +31,82 @@ const DoctorSelect = ({ value, onChange, isDark, hasError }) => {
 
   const selected = teamMembers.find((m) => String(m.id) === String(value));
 
-  // قفل بالضغط برّه القائمة
+  // قفل بالضغط برّه (pointerdown بيشتغل على اللمس والماوس)
   useEffect(() => {
     if (!open) return;
-    const onClick = (e) => {
+    const onDown = (e) => {
       if (!wrapRef.current?.contains(e.target)) setOpen(false);
     };
-    document.addEventListener("mousedown", onClick);
-    return () => document.removeEventListener("mousedown", onClick);
+    document.addEventListener("pointerdown", onDown);
+    return () => document.removeEventListener("pointerdown", onDown);
   }, [open]);
 
   // تمرير القائمة للعنصر المختار عند الفتح
   useEffect(() => {
     if (!open) return;
-    listRef.current
-      ?.querySelector("[data-selected='true']")
-      ?.scrollIntoView({ block: "center" });
+    const t = setTimeout(() => {
+      listRef.current
+        ?.querySelector("[data-selected='true']")
+        ?.scrollIntoView({ block: "center" });
+    }, 50);
+    return () => clearTimeout(t);
   }, [open]);
+
+  const optionRow = (member) => {
+    const isActive = String(member.id) === String(value);
+    return (
+      <button
+        key={member.id}
+        type="button"
+        role="option"
+        aria-selected={isActive}
+        data-selected={isActive}
+        onClick={() => {
+          onChange(String(member.id));
+          setOpen(false);
+        }}
+        className={`w-full flex items-center gap-3 px-4 py-2.5 text-right transition-colors ${
+          isActive
+            ? isDark
+              ? "bg-blue-500/15"
+              : "bg-blue-50"
+            : isDark
+            ? "active:bg-white/10 hover:bg-white/5"
+            : "active:bg-gray-100 hover:bg-gray-50"
+        }`}
+      >
+        <img
+          src={member.img}
+          alt=""
+          loading="lazy"
+          className="w-10 h-10 rounded-full object-cover object-top flex-shrink-0"
+        />
+        <span className="flex-1 min-w-0">
+          <span
+            className={`block text-sm font-semibold truncate ${
+              isDark ? "text-white" : "text-gray-800"
+            }`}
+          >
+            {member.nameAr.trim()}
+          </span>
+          <span
+            className={`block text-[11px] truncate ${
+              isDark ? "text-gray-400" : "text-gray-500"
+            }`}
+          >
+            {member.specialtyAr}
+          </span>
+        </span>
+        {isActive && (
+          <Check
+            className={`w-5 h-5 flex-shrink-0 ${
+              isDark ? "text-blue-400" : "text-blue-600"
+            }`}
+          />
+        )}
+      </button>
+    );
+  };
 
   return (
     <div ref={wrapRef} className="relative">
@@ -107,72 +167,63 @@ const DoctorSelect = ({ value, onChange, isDark, hasError }) => {
         />
       </button>
 
-      {/* القائمة */}
       {open && (
-        <div
-          ref={listRef}
-          role="listbox"
-          className={`absolute z-20 w-full mt-1.5 max-h-64 overflow-y-auto rounded-xl border shadow-xl ${
-            isDark
-              ? "bg-[#0f1c2e] border-gray-700/60"
-              : "bg-white border-gray-200"
-          }`}
-        >
-          {teamMembers.map((member) => {
-            const isActive = String(member.id) === String(value);
-            return (
-              <button
-                key={member.id}
-                type="button"
-                role="option"
-                aria-selected={isActive}
-                data-selected={isActive}
-                onClick={() => {
-                  onChange(String(member.id));
-                  setOpen(false);
-                }}
-                className={`w-full flex items-center gap-2.5 px-3 py-2 text-right transition-colors ${
-                  isActive
-                    ? isDark
-                      ? "bg-blue-500/15"
-                      : "bg-blue-50"
-                    : isDark
-                    ? "hover:bg-white/5"
-                    : "hover:bg-gray-50"
+        <>
+          {/* خلفية معتمة — موبايل بس */}
+          <div className="fixed inset-0 z-[105] bg-black/40 sm:hidden" />
+
+          {/* موبايل: bottom sheet | ديسكتوب: dropdown */}
+          <div
+            ref={listRef}
+            role="listbox"
+            dir="rtl"
+            className={`
+              fixed inset-x-0 bottom-0 z-[110] max-h-[65vh] overflow-y-auto
+              rounded-t-2xl border-t shadow-2xl
+              sm:absolute sm:inset-x-auto sm:bottom-auto sm:z-20 sm:w-full sm:mt-1.5
+              sm:max-h-64 sm:rounded-xl sm:border sm:shadow-xl
+              ${
+                isDark
+                  ? "bg-[#0f1c2e] border-gray-700/60"
+                  : "bg-white border-gray-200"
+              }
+            `}
+          >
+            {/* هيدر الشيت — موبايل بس */}
+            <div
+              className={`sticky top-0 z-10 flex items-center justify-between px-4 py-3 border-b sm:hidden ${
+                isDark
+                  ? "bg-[#0f1c2e] border-gray-700/60"
+                  : "bg-white border-gray-200"
+              }`}
+            >
+              <span
+                className={`text-sm font-bold ${
+                  isDark ? "text-white" : "text-gray-800"
                 }`}
               >
-                <img
-                  src={member.img}
-                  alt=""
-                  className="w-9 h-9 rounded-full object-cover object-top flex-shrink-0"
-                />
-                <span className="flex-1 min-w-0">
-                  <span
-                    className={`block text-sm font-semibold truncate ${
-                      isDark ? "text-white" : "text-gray-800"
-                    }`}
-                  >
-                    {member.nameAr.trim()}
-                  </span>
-                  <span
-                    className={`block text-[11px] truncate ${
-                      isDark ? "text-gray-400" : "text-gray-500"
-                    }`}
-                  >
-                    {member.specialtyAr}
-                  </span>
-                </span>
-                {isActive && (
-                  <Check
-                    className={`w-4 h-4 flex-shrink-0 ${
-                      isDark ? "text-blue-400" : "text-blue-600"
-                    }`}
-                  />
-                )}
+                اختر الدكتور
+              </span>
+              <button
+                type="button"
+                onClick={() => setOpen(false)}
+                aria-label="إغلاق"
+                className={`w-8 h-8 rounded-full flex items-center justify-center ${
+                  isDark
+                    ? "bg-white/5 text-gray-300"
+                    : "bg-gray-100 text-gray-500"
+                }`}
+              >
+                <X className="w-4 h-4" />
               </button>
-            );
-          })}
-        </div>
+            </div>
+
+            {teamMembers.map(optionRow)}
+
+            {/* مساحة أمان لشريط الموبايل السفلي */}
+            <div className="h-4 sm:hidden" />
+          </div>
+        </>
       )}
     </div>
   );
