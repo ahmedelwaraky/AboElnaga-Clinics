@@ -1,9 +1,17 @@
 import { useEffect, useRef, useState } from "react";
-import { X, Star, Loader2, CheckCircle2, AlertCircle } from "lucide-react";
+import {
+  X,
+  Star,
+  Loader2,
+  CheckCircle2,
+  AlertCircle,
+  ChevronDown,
+  Check,
+} from "lucide-react";
 import { useTheme } from "../../core/createContext";
 import { teamMembers } from "../../data/team";
 import { submitReview } from "../lib/supabase";
-// import { submitReview } from "../../lib/supabase";
+
 const RATING_LABELS = {
   1: "سيئ",
   2: "مقبول",
@@ -12,6 +20,167 @@ const RATING_LABELS = {
   5: "ممتاز",
 };
 
+/* ============================================
+   قائمة اختيار الدكتور — custom بدل select
+   ============================================ */
+const DoctorSelect = ({ value, onChange, isDark, hasError }) => {
+  const [open, setOpen] = useState(false);
+  const wrapRef = useRef(null);
+  const listRef = useRef(null);
+
+  const selected = teamMembers.find((m) => String(m.id) === String(value));
+
+  // قفل بالضغط برّه القائمة
+  useEffect(() => {
+    if (!open) return;
+    const onClick = (e) => {
+      if (!wrapRef.current?.contains(e.target)) setOpen(false);
+    };
+    document.addEventListener("mousedown", onClick);
+    return () => document.removeEventListener("mousedown", onClick);
+  }, [open]);
+
+  // تمرير القائمة للعنصر المختار عند الفتح
+  useEffect(() => {
+    if (!open) return;
+    listRef.current
+      ?.querySelector("[data-selected='true']")
+      ?.scrollIntoView({ block: "center" });
+  }, [open]);
+
+  return (
+    <div ref={wrapRef} className="relative">
+      {/* الزرار */}
+      <button
+        type="button"
+        onClick={() => setOpen((v) => !v)}
+        aria-haspopup="listbox"
+        aria-expanded={open}
+        className={`w-full flex items-center gap-2.5 rounded-xl px-3 py-2 text-right border transition-colors duration-200 ${
+          isDark
+            ? "bg-[#0f1c2e] border-gray-700/60 text-white hover:border-gray-600"
+            : "bg-white border-gray-200 text-gray-800 hover:border-gray-300"
+        } ${
+          hasError
+            ? "border-red-500"
+            : open
+            ? isDark
+              ? "border-blue-400"
+              : "border-blue-600"
+            : ""
+        }`}
+      >
+        {selected ? (
+          <>
+            <img
+              src={selected.img}
+              alt=""
+              className="w-9 h-9 rounded-full object-cover object-top flex-shrink-0"
+            />
+            <span className="flex-1 min-w-0 text-right">
+              <span className="block text-sm font-semibold truncate">
+                {selected.nameAr.trim()}
+              </span>
+              <span
+                className={`block text-[11px] truncate ${
+                  isDark ? "text-gray-400" : "text-gray-500"
+                }`}
+              >
+                {selected.specialtyAr}
+              </span>
+            </span>
+          </>
+        ) : (
+          <span
+            className={`flex-1 py-1 text-sm ${
+              isDark ? "text-gray-500" : "text-gray-400"
+            }`}
+          >
+            اختر الدكتور
+          </span>
+        )}
+
+        <ChevronDown
+          className={`w-4 h-4 flex-shrink-0 transition-transform duration-200 ${
+            open ? "rotate-180" : ""
+          } ${isDark ? "text-gray-400" : "text-gray-500"}`}
+        />
+      </button>
+
+      {/* القائمة */}
+      {open && (
+        <div
+          ref={listRef}
+          role="listbox"
+          className={`absolute z-20 w-full mt-1.5 max-h-64 overflow-y-auto rounded-xl border shadow-xl ${
+            isDark
+              ? "bg-[#0f1c2e] border-gray-700/60"
+              : "bg-white border-gray-200"
+          }`}
+        >
+          {teamMembers.map((member) => {
+            const isActive = String(member.id) === String(value);
+            return (
+              <button
+                key={member.id}
+                type="button"
+                role="option"
+                aria-selected={isActive}
+                data-selected={isActive}
+                onClick={() => {
+                  onChange(String(member.id));
+                  setOpen(false);
+                }}
+                className={`w-full flex items-center gap-2.5 px-3 py-2 text-right transition-colors ${
+                  isActive
+                    ? isDark
+                      ? "bg-blue-500/15"
+                      : "bg-blue-50"
+                    : isDark
+                    ? "hover:bg-white/5"
+                    : "hover:bg-gray-50"
+                }`}
+              >
+                <img
+                  src={member.img}
+                  alt=""
+                  className="w-9 h-9 rounded-full object-cover object-top flex-shrink-0"
+                />
+                <span className="flex-1 min-w-0">
+                  <span
+                    className={`block text-sm font-semibold truncate ${
+                      isDark ? "text-white" : "text-gray-800"
+                    }`}
+                  >
+                    {member.nameAr.trim()}
+                  </span>
+                  <span
+                    className={`block text-[11px] truncate ${
+                      isDark ? "text-gray-400" : "text-gray-500"
+                    }`}
+                  >
+                    {member.specialtyAr}
+                  </span>
+                </span>
+                {isActive && (
+                  <Check
+                    className={`w-4 h-4 flex-shrink-0 ${
+                      isDark ? "text-blue-400" : "text-blue-600"
+                    }`}
+                  />
+                )}
+              </button>
+            );
+          })}
+        </div>
+      )}
+    </div>
+  );
+};
+
+/* ============================================
+   المودال
+   ============================================ */
 const ReviewFormModal = ({ open, onClose, onSubmitted }) => {
   const { isDark } = useTheme();
   const dialogRef = useRef(null);
@@ -23,10 +192,6 @@ const ReviewFormModal = ({ open, onClose, onSubmitted }) => {
   const [errors, setErrors] = useState({});
   const [status, setStatus] = useState("idle"); // idle | loading | success | error
   const [serverError, setServerError] = useState("");
-
-  const selectedDoctor = teamMembers.find(
-    (m) => String(m.id) === String(form.doctorId)
-  );
 
   // قفل بالـ Escape + منع تمرير الصفحة ورا المودال
   useEffect(() => {
@@ -71,7 +236,8 @@ const ReviewFormModal = ({ open, onClose, onSubmitted }) => {
     if (form.name.trim().length < 3) next.name = "اكتب اسمك (3 حروف على الأقل)";
     if (!form.doctorId) next.doctorId = "اختر الدكتور";
     if (!rating) next.rating = "اختر تقييمك";
-    if (form.comment.trim().length < 10) next.comment = "اكتب رأيك (10 حروف على الأقل)";
+    if (form.comment.trim().length < 10)
+      next.comment = "اكتب رأيك (10 حروف على الأقل)";
     setErrors(next);
     return Object.keys(next).length === 0;
   };
@@ -82,9 +248,8 @@ const ReviewFormModal = ({ open, onClose, onSubmitted }) => {
     setStatus("loading");
     setServerError("");
 
-    const { ok, error } = await submitReview({
+    const { ok } = await submitReview({
       doctorId: form.doctorId,
-    //   doctorName: selectedDoctor?.nameAr?.trim() || "",
       patientName: form.name.trim(),
       rating,
       comment: form.comment.trim(),
@@ -131,7 +296,9 @@ const ReviewFormModal = ({ open, onClose, onSubmitted }) => {
         aria-modal="true"
         aria-labelledby="review-form-title"
         className={`relative w-full max-w-lg rounded-2xl shadow-2xl ${
-          isDark ? "bg-[#1a2332] border border-gray-700/40" : "bg-white border border-gray-200"
+          isDark
+            ? "bg-[#1a2332] border border-gray-700/40"
+            : "bg-white border border-gray-200"
         }`}
       >
         {/* زرار الإغلاق */}
@@ -151,13 +318,19 @@ const ReviewFormModal = ({ open, onClose, onSubmitted }) => {
         {status === "success" ? (
           <div className="px-6 py-12 text-center">
             <CheckCircle2
-              className={`w-14 h-14 mx-auto mb-3 ${isDark ? "text-blue-400" : "text-blue-600"}`}
+              className={`w-14 h-14 mx-auto mb-3 ${
+                isDark ? "text-blue-400" : "text-blue-600"
+              }`}
             />
-            <h3 className={`text-lg font-bold mb-1.5 ${isDark ? "text-white" : "text-gray-800"}`}>
+            <h3
+              className={`text-lg font-bold mb-1.5 ${
+                isDark ? "text-white" : "text-gray-800"
+              }`}
+            >
               وصلنا رأيك
             </h3>
             <p className={`text-sm ${isDark ? "text-gray-400" : "text-gray-600"}`}>
-              شكرًا ليك. هيظهر على الموقع بعد المراجعة.
+              شكرًا ليك، رأيك ظهر على الموقع.
             </p>
           </div>
         ) : (
@@ -197,35 +370,13 @@ const ReviewFormModal = ({ open, onClose, onSubmitted }) => {
 
               {/* الدكتور */}
               <div>
-                <label htmlFor="review-doctor" className={labelBase}>
-                  الدكتور
-                </label>
-                <div className="flex items-center gap-2.5">
-                  {selectedDoctor && (
-                    <img
-                      src={selectedDoctor.img}
-                      alt={selectedDoctor.nameAr.trim()}
-                      className={`w-10 h-10 rounded-full object-cover flex-shrink-0 border-2 ${
-                        isDark ? "border-blue-400/40" : "border-blue-100"
-                      }`}
-                    />
-                  )}
-                  <select
-                    id="review-doctor"
-                    value={form.doctorId}
-                    onChange={(e) => setField("doctorId", e.target.value)}
-                    className={`${inputBase} appearance-none cursor-pointer ${
-                      errors.doctorId ? "border-red-500" : ""
-                    }`}
-                  >
-                    <option value="">اختر الدكتور</option>
-                    {teamMembers.map((member) => (
-                      <option key={member.id} value={member.id}>
-                        {member.nameAr.trim()} — {member.specialtyAr}
-                      </option>
-                    ))}
-                  </select>
-                </div>
+                <span className={labelBase}>الدكتور</span>
+                <DoctorSelect
+                  value={form.doctorId}
+                  onChange={(id) => setField("doctorId", id)}
+                  isDark={isDark}
+                  hasError={!!errors.doctorId}
+                />
                 {errorText(errors.doctorId)}
               </div>
 
@@ -289,10 +440,16 @@ const ReviewFormModal = ({ open, onClose, onSubmitted }) => {
                   onChange={(e) => setField("comment", e.target.value)}
                   placeholder="احكي لنا عن تجربتك في العيادة"
                   maxLength={500}
-                  className={`${inputBase} resize-none ${errors.comment ? "border-red-500" : ""}`}
+                  className={`${inputBase} resize-none ${
+                    errors.comment ? "border-red-500" : ""
+                  }`}
                 />
                 <div className="flex items-center justify-between mt-1">
-                  <span className={`text-[11px] ${isDark ? "text-gray-500" : "text-gray-400"}`}>
+                  <span
+                    className={`text-[11px] ${
+                      isDark ? "text-gray-500" : "text-gray-400"
+                    }`}
+                  >
                     {form.comment.length}/500
                   </span>
                   {errorText(errors.comment)}

@@ -33,7 +33,9 @@ const Testimonials = () => {
   // الآراء الحقيقية من Supabase بس
   const items = reviews.map((r) => {
     // اسم الدكتور بيتجاب من team.js عن طريق doctor_id
-    const doctor = teamMembers.find((m) => String(m.id) === String(r.doctor_id));
+    const doctor = teamMembers.find(
+      (m) => String(m.id) === String(r.doctor_id),
+    );
     return {
       key: r.id,
       name: r.name,
@@ -93,9 +95,15 @@ const Testimonials = () => {
           </div>
 
           <div className="flex items-center justify-center gap-1.5 mt-4 md:mt-6">
-            <div className={`w-1.5 h-1.5 rounded-full ${isDark ? "bg-blue-400" : "bg-blue-500"}`}></div>
-            <div className={`w-2 h-2 rounded-full ${isDark ? "bg-blue-400" : "bg-blue-500"}`}></div>
-            <div className={`w-1.5 h-1.5 rounded-full ${isDark ? "bg-blue-400" : "bg-blue-500"}`}></div>
+            <div
+              className={`w-1.5 h-1.5 rounded-full ${isDark ? "bg-blue-400" : "bg-blue-500"}`}
+            ></div>
+            <div
+              className={`w-2 h-2 rounded-full ${isDark ? "bg-blue-400" : "bg-blue-500"}`}
+            ></div>
+            <div
+              className={`w-1.5 h-1.5 rounded-full ${isDark ? "bg-blue-400" : "bg-blue-500"}`}
+            ></div>
           </div>
         </div>
 
@@ -172,7 +180,9 @@ const Testimonials = () => {
                               isDark ? "text-gray-400" : "text-gray-500"
                             }`}
                           >
-                            {item.subtitle}
+                            {item.subtitle
+                              ? `تقييم لـ ${item.subtitle}`
+                              : ""}{" "}
                           </p>
                         </div>
                       </div>
@@ -221,7 +231,9 @@ const Testimonials = () => {
 
         {/* CTA: اكتب رأيك */}
         <div className="mt-10 md:mt-14 text-center">
-          <p className={`text-sm md:text-base mb-4 ${isDark ? "text-gray-400" : "text-gray-600"}`}>
+          <p
+            className={`text-sm md:text-base mb-4 ${isDark ? "text-gray-400" : "text-gray-600"}`}
+          >
             جربت العيادة قبل كده؟ شاركنا رأيك
           </p>
           <button
