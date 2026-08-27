@@ -132,16 +132,3 @@ export const teamMembers = [
     img: Yousef,
   },
 ];
-
-// /* حارس تطوير: بيكشف تكرار الـ id أو نقص الصور */
-// if (import.meta.env?.DEV) {
-//   const ids = teamMembers.map((m) => m.id);
-//   const dupes = ids.filter((id, i) => ids.indexOf(id) !== i);
-//   if (dupes.length) console.warn("[team] Duplicate ids:", dupes);
-
-//   const missing = teamMembers.filter((m) => !m.img).map((m) => m.nameAr);
-//   if (missing.length) console.warn("[team] Missing images:", missing);
-// }
-
-// export const getMemberById = (id) =>
-//   teamMembers.find((m) => String(m.id) === String(id)) ?? null;

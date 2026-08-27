@@ -116,7 +116,7 @@ const DoctorSelect = ({ value, onChange, isDark, hasError }) => {
         onClick={() => setOpen((v) => !v)}
         aria-haspopup="listbox"
         aria-expanded={open}
-        className={`w-full flex items-center gap-2.5 rounded-xl px-3 py-2 text-right border transition-colors duration-200 ${
+        className={`w-full flex items-center gap-2.5 rounded-xl px-3 py-2 text-right border transition-colors duration-200 overflow-hidden ${
           isDark
             ? "bg-[#0f1c2e] border-gray-700/60 text-white hover:border-gray-600"
             : "bg-white border-gray-200 text-gray-800 hover:border-gray-300"
@@ -152,7 +152,7 @@ const DoctorSelect = ({ value, onChange, isDark, hasError }) => {
           </>
         ) : (
           <span
-            className={`flex-1 py-1 text-sm ${
+            className={`flex-1 min-w-0 py-1 text-sm truncate ${
               isDark ? "text-gray-500" : "text-gray-400"
             }`}
           >
@@ -178,7 +178,8 @@ const DoctorSelect = ({ value, onChange, isDark, hasError }) => {
             role="listbox"
             dir="rtl"
             className={`
-              fixed inset-x-0 bottom-0 z-[110] max-h-[65vh] overflow-y-auto
+              fixed inset-x-0 bottom-0 z-[110] w-screen max-w-full max-h-[65vh]
+              overflow-y-auto overflow-x-hidden overscroll-contain
               rounded-t-2xl border-t shadow-2xl
               sm:absolute sm:inset-x-auto sm:bottom-auto sm:z-20 sm:w-full sm:mt-1.5
               sm:max-h-64 sm:rounded-xl sm:border sm:shadow-xl
@@ -244,20 +245,34 @@ const ReviewFormModal = ({ open, onClose, onSubmitted }) => {
   const [status, setStatus] = useState("idle"); // idle | loading | success | error
   const [serverError, setServerError] = useState("");
 
-  // قفل بالـ Escape + منع تمرير الصفحة ورا المودال
+  // قفل بالـ Escape + تثبيت الصفحة ورا المودال (بيشتغل على iOS كمان)
   useEffect(() => {
     if (!open) return;
 
     const onKeyDown = (e) => e.key === "Escape" && onClose();
-    const prevOverflow = document.body.style.overflow;
+    const scrollY = window.scrollY;
+    const body = document.body;
+    const prev = {
+      position: body.style.position,
+      top: body.style.top,
+      width: body.style.width,
+      overflowX: body.style.overflowX,
+    };
+
+    body.style.position = "fixed";
+    body.style.top = `-${scrollY}px`;
+    body.style.width = "100%";
+    body.style.overflowX = "hidden";
 
     document.addEventListener("keydown", onKeyDown);
-    document.body.style.overflow = "hidden";
-    firstFieldRef.current?.focus();
 
     return () => {
       document.removeEventListener("keydown", onKeyDown);
-      document.body.style.overflow = prevOverflow;
+      body.style.position = prev.position;
+      body.style.top = prev.top;
+      body.style.width = prev.width;
+      body.style.overflowX = prev.overflowX;
+      window.scrollTo(0, scrollY);
     };
   }, [open, onClose]);
 
@@ -317,7 +332,8 @@ const ReviewFormModal = ({ open, onClose, onSubmitted }) => {
     setTimeout(onClose, 2600);
   };
 
-  const inputBase = `w-full rounded-xl px-4 py-2.5 text-sm text-right outline-none transition-colors duration-200 border ${
+  // ⚠️ text-base (16px) على الموبايل إجباري — أقل من كده المتصفح بيعمل zoom
+  const inputBase = `w-full rounded-xl px-4 py-2.5 text-base sm:text-sm text-right outline-none transition-colors duration-200 border ${
     isDark
       ? "bg-[#0f1c2e] border-gray-700/60 text-white placeholder:text-gray-500 focus:border-blue-400"
       : "bg-white border-gray-200 text-gray-800 placeholder:text-gray-400 focus:border-blue-600"
@@ -331,14 +347,14 @@ const ReviewFormModal = ({ open, onClose, onSubmitted }) => {
     msg ? (
       <p className="mt-1 text-right text-[11px] text-red-500 flex items-center justify-end gap-1">
         <span>{msg}</span>
-        <AlertCircle className="w-3 h-3" />
+        <AlertCircle className="w-3 h-3 flex-shrink-0" />
       </p>
     ) : null;
 
   return (
     <div
       dir="rtl"
-      className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
+      className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm overflow-x-hidden"
       onMouseDown={(e) => e.target === e.currentTarget && onClose()}
     >
       <div
@@ -495,9 +511,9 @@ const ReviewFormModal = ({ open, onClose, onSubmitted }) => {
                     errors.comment ? "border-red-500" : ""
                   }`}
                 />
-                <div className="flex items-center justify-between mt-1">
+                <div className="flex items-center justify-between gap-2 mt-1">
                   <span
-                    className={`text-[11px] ${
+                    className={`text-[11px] flex-shrink-0 ${
                       isDark ? "text-gray-500" : "text-gray-400"
                     }`}
                   >
