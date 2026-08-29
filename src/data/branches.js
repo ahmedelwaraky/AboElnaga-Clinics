@@ -77,9 +77,9 @@ export const locations = [
     weekday: [10, 22],
     friday: [17, 23],
   },
-  lat: 30.5122714,
-  lng: 31.0919087,
-  map: "https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d19444.36181272969!2d31.091908766486135!3d30.512271495424578!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14f7d83b8e312205%3A0x460d9424d911dc48!5e0!3m2!1sar!2seg!4v1762808165744!5m2!1sar!2seg",
+   lat: 30.5122714,
+    lng: 31.0919087,
+    map: "https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d19444.36181272969!2d31.091908766486135!3d30.512271495424578!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14f7d83b8e312205%3A0x460d9424d911dc48!2z2YXYsdmD2LIg2LTYqNin2Kgg2KfZhNi52KzYp9mK2LLZhw!5e0!3m2!1sar!2seg!4v1762808165744!5m2!1sar!2seg",
 },
 ];
 
