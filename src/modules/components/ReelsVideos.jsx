@@ -12,7 +12,7 @@ import {
   Play,
 } from "lucide-react";
 import { useTheme } from "../../core/createContext";
-import { videos } from "../../data/reels-data";
+import { videos as defaultVideos } from "../../data/reels-data";
 import {
   Carousel,
   CarouselContent,
@@ -22,6 +22,7 @@ import {
 } from "../../shared/ui/Carousel";
 import { Card, CardContent } from "../../shared/ui/Card";
 import useFullscreenVideoFit from "../../shared/ui/Usefullscreenvideofit";
+import SectionHeader from "../../shared/ui/SectionHeader";
 
 /* ── Dialog ───────────────────────────────────────────── */
 const Dialog = ({ open, onOpenChange, children }) => {
@@ -176,10 +177,20 @@ const VideoCard = ({ video, index, videoRefs, isDark, onPlay, onShare }) => {
   );
 };
 
-/* ── السيكشن ──────────────────────────────────────────── */
-const ReelsVideos = () => {
+/* ── السيكشن ──────────────────────────────────────────────
+   الرئيسية:     <ReelsVideos />
+   صفحة الدكتور: <ReelsVideos items={doctor.videos} withNavSpacer={false} title="..." />
+──────────────────────────────────────────────────────── */
+const ReelsVideos = ({
+  items = defaultVideos,
+  id = "videos",
+  title = "فيديوهات تعليمية وريلز",
+  subtitle = "تعلم عن رعاية الأسنان وشاهد إجراءاتنا عملياً",
+  bgClass,
+  withNavSpacer = true,
+}) => {
   const { isDark } = useTheme();
-  useFullscreenVideoFit(); // ← ضيف السطر ده
+  useFullscreenVideoFit();
 
   const videoRefs = useRef([]);
   const [shareDialog, setShareDialog] = useState({ open: false, video: null });
@@ -251,72 +262,28 @@ const ReelsVideos = () => {
     ];
   };
 
+  if (!items?.length) return null;
+
   return (
     <>
       <section
-        id="videos"
-        className={`py-16 md:py-20 transition-colors duration-300 ${
-          isDark ? "bg-[#0f1419]" : "bg-gray-100"
+        id={id}
+        className={`scroll-mt-24 py-16 md:py-20 transition-colors duration-300 ${
+          bgClass ?? (isDark ? "bg-[#0f1419]" : "bg-gray-100")
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="h-16 md:h-20" />
-
-          {/* العنوان */}
-          <div className="text-center mb-10 md:mb-16">
-            <h2
-              className={`text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-3 md:mb-4 ${
-                isDark ? "text-white" : "text-gray-700"
-              }`}
-            >
-              فيديوهات تعليمية وريلز
-            </h2>
-            <p
-              className={`text-sm sm:text-base md:text-lg max-w-2xl mx-auto px-4 mb-6 md:mb-8 ${
-                isDark ? "text-gray-300" : "text-gray-600"
-              }`}
-            >
-              تعلم عن رعاية الأسنان وشاهد إجراءاتنا عملياً
-            </p>
-
-            <div className="flex items-center justify-center gap-3 md:gap-4">
-              <div
-                className={`h-[2px] w-24 md:w-32 rounded-full ${
-                  isDark
-                    ? "bg-gradient-to-r from-transparent via-blue-400 to-blue-400"
-                    : "bg-gradient-to-r from-transparent via-blue-500 to-blue-500"
-                }`}
-              />
-              <div
-                className={`h-[2px] w-24 md:w-32 rounded-full ${
-                  isDark
-                    ? "bg-gradient-to-l from-transparent via-blue-400 to-blue-400"
-                    : "bg-gradient-to-l from-transparent via-blue-500 to-blue-500"
-                }`}
-              />
-            </div>
-
-            <div className="flex items-center justify-center gap-1.5 mt-4 md:mt-6">
-              <div
-                className={`w-1.5 h-1.5 rounded-full ${isDark ? "bg-blue-400" : "bg-blue-500"}`}
-              />
-              <div
-                className={`w-2 h-2 rounded-full ${isDark ? "bg-blue-400" : "bg-blue-500"}`}
-              />
-              <div
-                className={`w-1.5 h-1.5 rounded-full ${isDark ? "bg-blue-400" : "bg-blue-500"}`}
-              />
-            </div>
-          </div>
+          {withNavSpacer && <div className="h-16 md:h-20" />}
+          <SectionHeader title={title} subtitle={subtitle} />
 
           {/* الكاروسيل */}
           <Carousel
-            opts={{ align: "start", loop: true, direction: "rtl" }}
+            opts={{ align: "start", loop: items.length > 4, direction: "rtl" }}
             autoplay={false}
             className="w-full"
           >
             <CarouselContent className="-ml-2 md:-ml-4">
-              {videos.map((video, index) => (
+              {items.map((video, index) => (
                 <CarouselItem
                   key={video.id}
                   className="pl-2 md:pl-4 basis-4/5 sm:basis-1/2 md:basis-1/3 lg:basis-1/4 xl:basis-1/5"

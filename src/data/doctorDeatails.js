@@ -1,3 +1,6 @@
+// ============================================================
+//  Doctors Images
+// ============================================================
 import Wafa from "../assets/images/doctors/Wafa.jpeg";
 import Mariam from "../assets/images/doctors/Mariam.jpeg";
 import Hadeer from "../assets/images/doctors/Hadeer.jpeg";
@@ -12,19 +15,70 @@ import Salah from "../assets/images/doctors/Salah.jpeg";
 import AhmedIbrahim2 from "../assets/images/doctors/AhmedIbrahim2.jpeg";
 import Yousef from "../assets/images/doctors/Yousef.jpeg";
 
-import Vedio1 from "../assets/images/vedios/omar3.mp4";
-import Vedio2 from "../assets/images/vedios/aya.mp4";
-import Vedio3 from "../assets/images/vedios/wafaa.mp4";
-import Vedio4 from "../assets/images/vedios/mariam.mp4";
-import Vedio5 from "../assets/images/vedios/ahmed.mp4";
-import Vedio6 from "../assets/images/vedios/nada.mp4";
-import Vedio7 from "../assets/images/vedios/mariam1.mp4";
-import Vedio8 from "../assets/images/vedios/omar2.mp4";
-import Vedio9 from "../assets/images/vedios/wafaa1.mp4";
-import Vedio10 from "../assets/images/vedios/aya1.mp4";
-import Vedio11 from "../assets/images/vedios/omar.mp4";
-import Vedio12 from "../assets/images/vedios/wafaa2.mp4";
+// ============================================================
+//  Videos — grouped by doctor
+// ============================================================
+// د. وفاء قاسم
+import WafaaVideo1 from "../assets/images/vedios/wafaa.mp4";
+import WafaaVideo2 from "../assets/images/vedios/wafaa1.mp4";
+import WafaaVideo3 from "../assets/images/vedios/wafaa2.mp4";
+// د. مريم ناجي
+import MariamVideo1 from "../assets/images/vedios/mariam.mp4";
+import MariamVideo2 from "../assets/images/vedios/mariam1.mp4";
+// د. ندى فرحات
+import NadaVideo1 from "../assets/images/vedios/nada.mp4";
+// د. آية أشرف
+import AyaVideo1 from "../assets/images/vedios/aya.mp4";
+import AyaVideo2 from "../assets/images/vedios/aya1.mp4";
+// د. عمر سمير
+import OmarVideo1 from "../assets/images/vedios/omar3.mp4";
+import OmarVideo2 from "../assets/images/vedios/omar2.mp4";
+import OmarVideo3 from "../assets/images/vedios/omar.mp4";
+// د. أحمد إبراهيم
+import AhmedVideo1 from "../assets/images/vedios/ahmed.mp4";
 
+// ============================================================
+//  Cases (before / after) — prev folder
+// ============================================================
+import case1 from "../assets/images/prev/1.jpg";
+import case2 from "../assets/images/prev/2.jpg";
+import case3 from "../assets/images/prev/3.jpg";
+import case5 from "../assets/images/prev/5.jpg";
+import case6 from "../assets/images/prev/6.jpg";
+import case7 from "../assets/images/prev/7.jpg";
+import case8 from "../assets/images/prev/8.jpg";
+import case9 from "../assets/images/prev/9.jpg";
+import case10 from "../assets/images/prev/10.jpg";
+import case11 from "../assets/images/prev/11.jpg";
+import case12 from "../assets/images/prev/12.jpg";
+import case13 from "../assets/images/prev/13.jpg";
+import case14 from "../assets/images/prev/14.jpg";
+import case15 from "../assets/images/prev/15.jpg";
+import case16 from "../assets/images/prev/16.jpg";
+import case17 from "../assets/images/prev/17.jpg";
+import case18 from "../assets/images/prev/18.jpg";
+import case19 from "../assets/images/prev/19.jpg";
+import case21 from "../assets/images/prev/21.jpg";
+import case23 from "../assets/images/prev/23.jpg";
+import case24 from "../assets/images/prev/24.jpg";
+import case25 from "../assets/images/prev/25.jpg";
+import case26 from "../assets/images/prev/26.jpg";
+import case28 from "../assets/images/prev/28.jpg";
+import case29 from "../assets/images/prev/29.jpg";
+import case30 from "../assets/images/prev/30.jpg";
+import case31 from "../assets/images/prev/31.jpg";
+import case32 from "../assets/images/prev/32.jpg";
+import case33 from "../assets/images/prev/33.jpg";
+import case34 from "../assets/images/prev/34.jpg";
+import case35 from "../assets/images/prev/35.jpg";
+import case37 from "../assets/images/prev/37.jpg";
+import case38 from "../assets/images/prev/38.jpg";
+import case40 from "../assets/images/prev/40.jpg";
+import case41 from "../assets/images/prev/41.jpg";
+
+// ============================================================
+//  Doctors Data
+// ============================================================
 export const doctorsDetails = [
   {
     id: 1,
@@ -54,9 +108,16 @@ export const doctorsDetails = [
       "تثقيف الأطفال عن صحة الفم",
     ],
     videos: [
-      { id: 1, title: "حشو العصب", duration: "3:15", src: Vedio3, url: "https://www.tiktok.com/@aboelnagadc/video/7542845179703594258" },
-      { id: 2, title: "التخدير الكلي", duration: "2:15", src: Vedio9, url: "https://www.tiktok.com/@aboelnagadc/video/7546525704742128904" },
-      { id: 3, title: "أسنان القرش", duration: "2:45", src: Vedio12, url: "https://www.tiktok.com/@aboelnagadc/video/7564844816786263297" },
+      { id: 1, titleAr: "حشو العصب", categoryAr: "حشو العصب", duration: "3:15", src: WafaaVideo1, url: "https://www.tiktok.com/@aboelnagadc/video/7542845179703594258" },
+      { id: 2, titleAr: "التخدير الكلي", categoryAr: "التخدير الكلي", duration: "2:15", src: WafaaVideo2, url: "https://www.tiktok.com/@aboelnagadc/video/7546525704742128904" },
+      { id: 3, titleAr: "أسنان القرش", categoryAr: "أسنان القرش", duration: "2:45", src: WafaaVideo3, url: "https://www.tiktok.com/@aboelnagadc/video/7564844816786263297" },
+    ],
+    cases: [
+      { id: 1, image: case30, titleAr: "علاج أسنان الأطفال", procedureAr: "طب أطفال" },
+      { id: 2, image: case6, titleAr: "علاج تسوس متقدم", procedureAr: "حشوات تجميلية" },
+      { id: 3, image: case32, titleAr: "علاج الحساسية", procedureAr: "علاج الحساسية" },
+      { id: 4, image: case37, titleAr: "علاج الخراج", procedureAr: "علاج الخراج" },
+      { id: 5, image: case28, titleAr: "علاج الصرير", procedureAr: "واقي الأسنان" },
     ],
     reviews: [
       { id: 1, name: "سارة محمد", rating: 5, comment: "دكتورة وفاء رائعة مع أطفالي، تعاملها لطيف جداً والأطفال بيحبوها", date: "منذ أسبوع" },
@@ -80,7 +141,7 @@ export const doctorsDetails = [
     ],
     achievements: [
       "أخصائية الحشوات التجميلية والتركيبات",
-      "خبرة في تركيبات الزirconia والإيماكس",
+      "خبرة في تركيبات الزيركونيا والإيماكس",
       "متخصصة في تجميل الابتسامة",
       "أكثر من 1800 حالة ناجحة",
     ],
@@ -89,11 +150,18 @@ export const doctorsDetails = [
       "تركيبات الأسنان",
       "ابتسامة هوليود",
       "تجميل الأسنان الأمامية",
-      "تركيبات الزirconia",
+      "تركيبات الزيركونيا",
     ],
     videos: [
-      { id: 1, title: "كسور الأسنان", duration: "2:00", src: Vedio4, url: "https://www.tiktok.com/@aboelnagadc/video/7559988525509266689" },
-      { id: 2, title: "ابتسامة هوليود", duration: "1:55", src: Vedio7, url: "https://www.tiktok.com/@aboelnagadc/video/7570007804296072469" },
+      { id: 1, titleAr: "كسور الأسنان", categoryAr: "كسور الأسنان", duration: "2:00", src: MariamVideo1, url: "https://www.tiktok.com/@aboelnagadc/video/7559988525509266689" },
+      { id: 2, titleAr: "ابتسامة هوليود", categoryAr: "ابتسامة هوليود", duration: "1:55", src: MariamVideo2, url: "https://www.tiktok.com/@aboelnagadc/video/7570007804296072469" },
+    ],
+    cases: [
+      { id: 1, image: case5, titleAr: "ابتسامة هوليود", procedureAr: "فينير مخصص" },
+      { id: 2, image: case2, titleAr: "تجميل الابتسامة الكامل", procedureAr: "قشور خزفية" },
+      { id: 3, image: case14, titleAr: "تجميل الأسنان الأمامية", procedureAr: "فينير أمامي" },
+      { id: 4, image: case25, titleAr: "ابتسامة رقمية", procedureAr: "تصميم رقمي" },
+      { id: 5, image: case40, titleAr: "ابتسامة مثالية", procedureAr: "تجميل شامل" },
     ],
     reviews: [
       { id: 1, name: "هبة علي", rating: 5, comment: "دكتورة مريم غيرت شكل أسناني بالكامل، النتيجة طبيعية جداً", date: "منذ أسبوع" },
@@ -125,10 +193,17 @@ export const doctorsDetails = [
       "تركيبات الأسنان الثابتة",
       "تركيبات الأسنان المتحركة",
       "تركيبات على الزرعات",
-      "تاج و جسر",
+      "تاج وجسر",
       "تركيبات جزئية",
     ],
     videos: [],
+    cases: [
+      { id: 1, image: case12, titleAr: "جسر أسنان ثابت", procedureAr: "جسر ثابت" },
+      { id: 2, image: case24, titleAr: "تركيبات ثابتة متعددة", procedureAr: "جسور متعددة" },
+      { id: 3, image: case38, titleAr: "تركيبة هجينة", procedureAr: "تركيبة مختلطة" },
+      { id: 4, image: case7, titleAr: "تركيبات الزيركون", procedureAr: "تيجان زيركون" },
+      { id: 5, image: case33, titleAr: "تركيبات مؤقتة", procedureAr: "تركيبات مؤقتة" },
+    ],
     reviews: [
       { id: 1, name: "خالد إبراهيم", rating: 5, comment: "دكتورة هدير محترفة جداً في التركيبات، النتيجة ممتازة", date: "منذ أسبوع" },
       { id: 2, name: "فاطمة سعيد", rating: 5, comment: "تركيباتي طبيعية ومريحة، شكراً دكتورة", date: "منذ أسبوعين" },
@@ -162,7 +237,14 @@ export const doctorsDetails = [
       "علاج الالتهابات",
     ],
     videos: [
-      { id: 1, title: "الالتهابات", duration: "2:30", src: Vedio6, url: "https://www.tiktok.com/@aboelnagadc/video/7534740436607454465" },
+      { id: 1, titleAr: "الالتهابات", categoryAr: "الالتهابات", duration: "2:30", src: NadaVideo1, url: "https://www.tiktok.com/@aboelnagadc/video/7534740436607454465" },
+    ],
+    cases: [
+      { id: 1, image: case10, titleAr: "حشو العصب بالميكروسكوب", procedureAr: "علاج العصب" },
+      { id: 2, image: case37, titleAr: "علاج الخراج", procedureAr: "علاج الخراج" },
+      { id: 3, image: case21, titleAr: "إعادة بناء الأسنان", procedureAr: "بناء كامل" },
+      { id: 4, image: case12, titleAr: "جسر أسنان ثابت", procedureAr: "جسر ثابت" },
+      { id: 5, image: case34, titleAr: "قشور السيراميك", procedureAr: "سيراميك" },
     ],
     reviews: [
       { id: 1, name: "ياسمين أحمد", rating: 5, comment: "دكتورة ندى أنقذت ضرسي بحشو عصب ممتاز، بدون ألم", date: "منذ أسبوع" },
@@ -198,8 +280,15 @@ export const doctorsDetails = [
       "تجميل الابتسامة",
     ],
     videos: [
-      { id: 1, title: "التسوس الخفي", duration: "1:45", src: Vedio2, url: "https://www.tiktok.com/@aboelnagadc/video/7531054115451915528" },
-      { id: 2, title: "حشو العصب", duration: "1:30", src: Vedio10, url: "https://www.tiktok.com/@aboelnagadc/video/7541388128326585618" },
+      { id: 1, titleAr: "التسوس الخفي", categoryAr: "التسوس الخفي", duration: "1:45", src: AyaVideo1, url: "https://www.tiktok.com/@aboelnagadc/video/7531054115451915528" },
+      { id: 2, titleAr: "حشو العصب", categoryAr: "حشو العصب", duration: "1:30", src: AyaVideo2, url: "https://www.tiktok.com/@aboelnagadc/video/7541388128326585618" },
+    ],
+    cases: [
+      { id: 1, image: case18, titleAr: "تجميل بالكومبوزيت", procedureAr: "كومبوزيت فينير" },
+      { id: 2, image: case6, titleAr: "علاج تسوس متقدم", procedureAr: "حشوات تجميلية" },
+      { id: 3, image: case35, titleAr: "علاج الفراغات", procedureAr: "إغلاق الفراغات" },
+      { id: 4, image: case14, titleAr: "تجميل الأسنان الأمامية", procedureAr: "فينير أمامي" },
+      { id: 5, image: case9, titleAr: "تجميل الابتسامة", procedureAr: "تصميم الابتسامة" },
     ],
     reviews: [
       { id: 1, name: "مريم حسين", rating: 5, comment: "دكتورة آية شاطرة جداً في الحشوات التجميلية", date: "منذ أسبوع" },
@@ -234,6 +323,13 @@ export const doctorsDetails = [
       "صيانة التركيبات",
     ],
     videos: [],
+    cases: [
+      { id: 1, image: case16, titleAr: "تركيبة متحركة", procedureAr: "طقم أسنان" },
+      { id: 2, image: case38, titleAr: "تركيبة هجينة", procedureAr: "تركيبة مختلطة" },
+      { id: 3, image: case26, titleAr: "زراعة All-on-4", procedureAr: "زراعة كاملة" },
+      { id: 4, image: case33, titleAr: "تركيبات مؤقتة", procedureAr: "تركيبات مؤقتة" },
+      { id: 5, image: case31, titleAr: "تعديل الإطباق", procedureAr: "تعديل العضة" },
+    ],
     reviews: [
       { id: 1, name: "سعيد محمود", rating: 5, comment: "تركيباتي مريحة جداً ومظهرها طبيعي", date: "منذ أسبوع" },
       { id: 2, name: "عائشة علي", rating: 5, comment: "دكتورة أفنان محترفة ومتعاونة", date: "منذ أسبوعين" },
@@ -267,6 +363,13 @@ export const doctorsDetails = [
       "ترميم الأسنان",
     ],
     videos: [],
+    cases: [
+      { id: 1, image: case29, titleAr: "تركيب إيماكس", procedureAr: "إيماكس" },
+      { id: 2, image: case12, titleAr: "جسر أسنان ثابت", procedureAr: "جسر ثابت" },
+      { id: 3, image: case24, titleAr: "تركيبات ثابتة متعددة", procedureAr: "جسور متعددة" },
+      { id: 4, image: case34, titleAr: "قشور السيراميك", procedureAr: "سيراميك" },
+      { id: 5, image: case21, titleAr: "إعادة بناء الأسنان", procedureAr: "بناء كامل" },
+    ],
     reviews: [
       { id: 1, name: "ليلى أحمد", rating: 5, comment: "دكتورة آية محمدي ممتازة، شغلها دقيق ومنظم", date: "منذ أسبوع" },
       { id: 2, name: "حسام فتحي", rating: 5, comment: "تركيبات ثابتة ممتازة، أنصح بيها", date: "منذ أسبوعين" },
@@ -300,9 +403,16 @@ export const doctorsDetails = [
       "علاج ضرس العقل",
     ],
     videos: [
-      { id: 1, title: "زراعة الأسنان", duration: "0:50", src: Vedio1, url: "https://www.tiktok.com/@aboelnagadc/video/7554137350373133584" },
-      { id: 2, title: "التهابات ضرس العقل", duration: "3:40", src: Vedio8, url: "https://www.tiktok.com/@aboelnagadc/video/7527343301104569608" },
-      { id: 3, title: "زراعة الأسنان", duration: "4:00", src: Vedio11, url: "https://www.tiktok.com/@aboelnagadc/video/7539519366593858823" },
+      { id: 1, titleAr: "زراعة الأسنان", categoryAr: "زراعة الأسنان", duration: "0:50", src: OmarVideo1, url: "https://www.tiktok.com/@aboelnagadc/video/7554137350373133584" },
+      { id: 2, titleAr: "التهابات ضرس العقل", categoryAr: "التهابات ضرس العقل", duration: "3:40", src: OmarVideo2, url: "https://www.tiktok.com/@aboelnagadc/video/7527343301104569608" },
+      { id: 3, titleAr: "زراعة الأسنان", categoryAr: "زراعة الأسنان", duration: "4:00", src: OmarVideo3, url: "https://www.tiktok.com/@aboelnagadc/video/7539519366593858823" },
+    ],
+    cases: [
+      { id: 1, image: case3, titleAr: "زراعة أسنان متقدمة", procedureAr: "زراعة فورية" },
+      { id: 2, image: case26, titleAr: "زراعة All-on-4", procedureAr: "زراعة كاملة" },
+      { id: 3, image: case19, titleAr: "زراعة عظم الفك", procedureAr: "ترقيع عظمي" },
+      { id: 4, image: case15, titleAr: "علاج ضرس العقل", procedureAr: "خلع جراحي" },
+      { id: 5, image: case8, titleAr: "علاج اللثة المتقدم", procedureAr: "جراحة لثة" },
     ],
     reviews: [
       { id: 1, name: "محمود سامي", rating: 5, comment: "دكتور عمر أفضل دكتور زراعة، عملية ناجحة 100%", date: "منذ أسبوع" },
@@ -338,7 +448,14 @@ export const doctorsDetails = [
       "علاج الالتهابات",
     ],
     videos: [
-      { id: 1, title: "نزيف اللثة", duration: "4:20", src: Vedio5, url: "https://www.tiktok.com/@aboelnagadc/video/7562250183296240912" },
+      { id: 1, titleAr: "نزيف اللثة", categoryAr: "نزيف اللثة", duration: "4:20", src: AhmedVideo1, url: "https://www.tiktok.com/@aboelnagadc/video/7562250183296240912" },
+    ],
+    cases: [
+      { id: 1, image: case23, titleAr: "علاج الجذور المعقد", procedureAr: "علاج قنوات" },
+      { id: 2, image: case10, titleAr: "حشو العصب بالميكروسكوب", procedureAr: "علاج العصب" },
+      { id: 3, image: case37, titleAr: "علاج الخراج", procedureAr: "علاج الخراج" },
+      { id: 4, image: case17, titleAr: "علاج التهاب اللثة", procedureAr: "تنظيف عميق" },
+      { id: 5, image: case32, titleAr: "علاج الحساسية", procedureAr: "علاج الحساسية" },
     ],
     reviews: [
       { id: 1, name: "أمل يوسف", rating: 5, comment: "دكتور أحمد محترف في حشو العصب، أنصح بيه", date: "منذ أسبوع" },
@@ -373,6 +490,13 @@ export const doctorsDetails = [
       "علاج التسوس",
     ],
     videos: [],
+    cases: [
+      { id: 1, image: case18, titleAr: "تجميل بالكومبوزيت", procedureAr: "كومبوزيت فينير" },
+      { id: 2, image: case10, titleAr: "حشو العصب بالميكروسكوب", procedureAr: "علاج العصب" },
+      { id: 3, image: case21, titleAr: "إعادة بناء الأسنان", procedureAr: "بناء كامل" },
+      { id: 4, image: case13, titleAr: "قشور لومينير", procedureAr: "لومينير" },
+      { id: 5, image: case6, titleAr: "علاج تسوس متقدم", procedureAr: "حشوات تجميلية" },
+    ],
     reviews: [
       { id: 1, name: "منى سعيد", rating: 5, comment: "دكتور أحمد جلال شاطر جداً، حشواتي مش باينة خالص", date: "منذ أسبوع" },
       { id: 2, name: "وليد كمال", rating: 5, comment: "محترف ومتعاون", date: "منذ أسبوعين" },
@@ -394,7 +518,7 @@ export const doctorsDetails = [
     ],
     achievements: [
       "أخصائي الحشوات التجميلية",
-      "خبرة في مواد الحشو composite",
+      "خبرة في مواد الحشو الكومبوزيت",
       "متخصص في علاج التسوس",
       "أكثر من 1300 حالة ناجحة",
     ],
@@ -406,6 +530,13 @@ export const doctorsDetails = [
       "تجميل الابتسامة",
     ],
     videos: [],
+    cases: [
+      { id: 1, image: case6, titleAr: "علاج تسوس متقدم", procedureAr: "حشوات تجميلية" },
+      { id: 2, image: case18, titleAr: "تجميل بالكومبوزيت", procedureAr: "كومبوزيت فينير" },
+      { id: 3, image: case35, titleAr: "علاج الفراغات", procedureAr: "إغلاق الفراغات" },
+      { id: 4, image: case1, titleAr: "تحول تبييض الأسنان", procedureAr: "تبييض احترافي" },
+      { id: 5, image: case32, titleAr: "علاج الحساسية", procedureAr: "علاج الحساسية" },
+    ],
     reviews: [
       { id: 1, name: "منى أحمد", rating: 5, comment: "دكتور صلاح ممتاز في الحشوات التجميلية", date: "منذ أسبوع" },
       { id: 2, name: "حسين محمد", rating: 5, comment: "شغل نظيف ومحترف", date: "منذ أسبوعين" },
@@ -413,7 +544,7 @@ export const doctorsDetails = [
   },
   {
     id: 12,
-    nameAr: "د. أحمد ابراهيم",
+    nameAr: "د. أحمد إبراهيم",
     nameEn: "Dr. Ahmed Ibrahim",
     roleAr: "أخصائي الحشوات والتركيبات الثابتة",
     specialtyAr: "أخصائي الحشوات والتركيبات الثابتة",
@@ -439,6 +570,13 @@ export const doctorsDetails = [
       "ترميم الأسنان",
     ],
     videos: [],
+    cases: [
+      { id: 1, image: case7, titleAr: "تركيبات الزيركون", procedureAr: "تيجان زيركون" },
+      { id: 2, image: case24, titleAr: "تركيبات ثابتة متعددة", procedureAr: "جسور متعددة" },
+      { id: 3, image: case29, titleAr: "تركيب إيماكس", procedureAr: "إيماكس" },
+      { id: 4, image: case33, titleAr: "تركيبات مؤقتة", procedureAr: "تركيبات مؤقتة" },
+      { id: 5, image: case21, titleAr: "إعادة بناء الأسنان", procedureAr: "بناء كامل" },
+    ],
     reviews: [
       { id: 1, name: "نادية فؤاد", rating: 5, comment: "دكتور أحمد محترف في التركيبات الثابتة", date: "منذ أسبوع" },
       { id: 2, name: "جمال رشاد", rating: 5, comment: "نتيجة ممتازة وسعر مناسب", date: "منذ أسبوعين" },
@@ -469,9 +607,16 @@ export const doctorsDetails = [
       "حشو العصب",
       "التركيبات",
       "علاج التسوس",
-      "ترmيم الأسنان",
+      "ترميم الأسنان",
     ],
     videos: [],
+    cases: [
+      { id: 1, image: case23, titleAr: "علاج الجذور المعقد", procedureAr: "علاج قنوات" },
+      { id: 2, image: case18, titleAr: "تجميل بالكومبوزيت", procedureAr: "كومبوزيت فينير" },
+      { id: 3, image: case9, titleAr: "تجميل الابتسامة", procedureAr: "تصميم الابتسامة" },
+      { id: 4, image: case11, titleAr: "تبييض بالليزر", procedureAr: "تبييض ليزر" },
+      { id: 5, image: case41, titleAr: "ابتسامة مثالية", procedureAr: "تجميل شامل" },
+    ],
     reviews: [
       { id: 1, name: "سمية حسن", rating: 5, comment: "دكتور يوسف ممتاز ومحترف", date: "منذ أسبوع" },
       { id: 2, name: "باسم حسن", rating: 5, comment: "حشو عصب بدون ألم، شكراً دكتور", date: "منذ أسبوعين" },
@@ -484,8 +629,10 @@ export const getDoctorById = (id) =>
 
 export const detailsNavLinks = [
   { label: "الرئيسية", to: "/" },
-  { label: "المؤهلات والإنجازات", href: "#achievements" },
-  { label: "التخصصات", href: "#specializations" },
-  { label: "الفيديوهات", href: "#videos" },
+  { label: "المؤهلات", href: "#achievements", field: "achievements" },
+  { label: "التخصصات", href: "#specializations", field: "specializations" },
+  { label: "الحالات", href: "#cases", field: "cases" },
+  { label: "الفيديوهات", href: "#videos", field: "videos" },
   { label: "آراء المرضى", href: "#reviews" },
+  { label: "احجز موعد", href: "#booking" },
 ];
