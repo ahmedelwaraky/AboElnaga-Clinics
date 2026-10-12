@@ -7,7 +7,6 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "../../shared/ui/Carousel";
-//import SectionHeader from "../../shared/ui/SectionHeader";
 import { Sparkles } from "lucide-react";
 import SectionHeader from "../../shared/ui/SectionHeader";
 
