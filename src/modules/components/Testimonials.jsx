@@ -9,10 +9,12 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "../../shared/ui/Carousel";
-import SectionHeader from "../../shared/ui/SectionHeader";
+//import SectionHeader from "../../shared/ui/SectionHeader";
 import { teamMembers } from "../../data/team";
 import ReviewFormModal from "../../shared/component/ReviewFormModal";
 import { fetchApprovedReviews } from "../../shared/lib/supabase";
+import SectionHeader from "../../shared/ui/SectionHeader";
+
 
 /**
  * آراء المرضى — نفس المكون للرئيسية ولصفحة الدكتور

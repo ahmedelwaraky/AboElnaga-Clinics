@@ -7,8 +7,10 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "../../shared/ui/Carousel";
-import SectionHeader from "../../shared/ui/SectionHeader";
+//import SectionHeader from "../../shared/ui/SectionHeader";
 import { Sparkles } from "lucide-react";
+import SectionHeader from "../../shared/ui/SectionHeader";
+
 
 /**
  * سكشن قبل وبعد — نفس المكون للرئيسية ولصفحة الدكتور
