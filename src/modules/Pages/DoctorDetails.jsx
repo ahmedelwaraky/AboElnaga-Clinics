@@ -16,7 +16,7 @@ import { useTheme } from "../../core/createContext";
 import Navbar from "../components/Navbar";
 import ClinicSelectionPopup from "../../shared/ui/ClinicSelectionPopup";
 import {
-  getDoctorById,
+  getDoctorBySlug,
   detailsNavLinks,
   getDoctorSchedule,
 } from "../../data/doctorDeatails";
@@ -47,16 +47,16 @@ const INFO_PANELS = [
 ];
 
 const DoctorDetails = () => {
-  const { id } = useParams();
+  const { slug } = useParams();
   const { isDark } = useTheme();
   const [showClinicPopup, setShowClinicPopup] = useState(false);
   const openBooking = () => setShowClinicPopup(true);
 
-  const doctor = useMemo(() => getDoctorById(id), [id]);
+  const doctor = useMemo(() => getDoctorBySlug(slug), [slug]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, [id]);
+  }, [slug]);
 
   // 🆕 أي سكشن تروحله من الـ Navbar يقف في نص الشاشة
   useCenteredSections(CENTERED_SECTIONS, [doctor]);

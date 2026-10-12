@@ -1,5 +1,6 @@
 import { useTheme } from "../../core/createContext";
 import { teamMembers } from "../../data/team";
+import { getDoctorById, getDoctorPath } from "../../data/doctorDeatails";
 import {
   Carousel,
   CarouselContent,
@@ -24,16 +25,19 @@ const Team = () => {
   const [activeCard, setActiveCard] = useState(null);
 
   const handleDoctorClick = (doctorId) => {
+    const doctor = getDoctorById(doctorId);
+    if (!doctor) return;
+    const path = getDoctorPath(doctor);
     const isMobile = window.innerWidth < 768;
 
     if (isMobile) {
       if (activeCard === doctorId) {
-        navigate(`/doctor-details/${doctorId}`);
+        navigate(path);
       } else {
         setActiveCard(doctorId);
       }
     } else {
-      navigate(`/doctor-details/${doctorId}`);
+      navigate(path);
     }
   };
 

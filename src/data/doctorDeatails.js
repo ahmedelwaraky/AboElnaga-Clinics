@@ -100,7 +100,7 @@ const CLINIC_HOURS = Object.keys(CLINICS).map((clinic) => ({ clinic, daysAr: nul
 //    daysAr = null  → مواعيد العيادة الأساسية
 //    daysAr = [...] → أيام خاصة بالدكتور في العيادة دي
 // ============================================================
-export const doctorsDetails = [
+const doctorsDetailsRaw = [
   {
     id: 1,
     nameAr: "د. وفاء قاسم",
@@ -670,8 +670,47 @@ export const doctorsDetails = [
   },
 ];
 
+const usedDoctorSlugs = new Set();
+
+/** URL slug from English name (e.g. /wafaa-kassem); suffix when names collide */
+function buildDoctorSlug(nameEn, used) {
+  const base = nameEn
+    .replace(/^Dr\.\s*/i, "")
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+  let slug = base;
+  let suffix = 2;
+  while (used.has(slug)) {
+    slug = `${base}-${suffix}`;
+    suffix += 1;
+  }
+  used.add(slug);
+  return slug;
+}
+
+export const doctorsDetails = doctorsDetailsRaw.map((doctor) => ({
+  ...doctor,
+  slug: buildDoctorSlug(doctor.nameEn, usedDoctorSlugs),
+}));
+
 export const getDoctorById = (id) =>
   doctorsDetails.find((d) => String(d.id) === String(id)) ?? null;
+
+export const getDoctorBySlug = (slug) => {
+  if (!slug) return null;
+  let decoded = slug;
+  try {
+    decoded = decodeURIComponent(slug);
+  } catch {
+    decoded = slug;
+  }
+  const normalized = decoded.toLowerCase();
+  return doctorsDetails.find((d) => d.slug === normalized) ?? null;
+};
+
+export const getDoctorPath = (doctor) => (doctor?.slug ? `/${doctor.slug}` : "/");
 
 // بيرجّع مواعيد الدكتور جاهزة للعرض:
 // [{ key, nameAr, daysAr, hoursAr, isCustom }]
