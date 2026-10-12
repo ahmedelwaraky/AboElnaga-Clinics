@@ -24,6 +24,7 @@ import { Card, CardContent } from "../../shared/ui/Card";
 import useFullscreenVideoFit from "../../shared/ui/Usefullscreenvideofit";
 import SectionHeader from "../../shared/ui/SectionHeader";
 
+
 /* ── Dialog ───────────────────────────────────────────── */
 const Dialog = ({ open, onOpenChange, children }) => {
   if (!open) return null;
