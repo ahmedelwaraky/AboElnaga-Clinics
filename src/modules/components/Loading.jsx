@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import MainLogo from "../../assets/images/main/MainLogo.png";
-import All from "../../assets/images/doctors/All-Doctors.png";
+import All from "../../assets/images/doctors/All-Doctor.png";
 
 // ألوان الهوية — غيّرها من هنا (والـ hex نفسها مستخدمة في كلاسات Tailwind تحت)
 // primary   #2C5F8D  |  secondary #4A90E2  |  sky #87CEEB  |  gold #FDB913  |  deep #0B2239
