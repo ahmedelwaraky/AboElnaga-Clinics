@@ -1,125 +1,186 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import MainLogo from "../../assets/images/main/MainLogo.png";
+import All from "../../assets/images/doctors/All-Doctors.png";
+
+// ألوان الهوية — غيّرها من هنا (والـ hex نفسها مستخدمة في كلاسات Tailwind تحت)
+// primary   #2C5F8D  |  secondary #4A90E2  |  sky #87CEEB  |  gold #FDB913  |  deep #0B2239
+const BRAND = {
+  primary: "#2C5F8D",
+  secondary: "#4A90E2",
+  sky: "#87CEEB",
+  gold: "#FDB913",
+};
+
+const RING_RADIUS = 92;
+const RING_CIRCUMFERENCE = 2 * Math.PI * RING_RADIUS;
+
+// تحميل صورة الخلفية مبكراً (بمجرد ما الملف يتحمّل) بدل ما ننتظر ظهور الـ <img>
+if (typeof window !== "undefined") {
+  const preload = new Image();
+  preload.decoding = "async";
+  preload.src = All;
+}
 
 const Loading = ({ onComplete }) => {
   const [progress, setProgress] = useState(0);
+  const [mounted, setMounted] = useState(false);
+  const [leaving, setLeaving] = useState(false);
+  const [imgLoaded, setImgLoaded] = useState(false);
+  const imgRef = useRef(null);
 
+  // لو الصورة متخزنة في الكاش وجاهزة قبل ما الـ onLoad يشتغل
   useEffect(() => {
-    const interval = setInterval(() => {
-      setProgress((prev) => {
-        if (prev >= 100) {
-          clearInterval(interval);
-          setTimeout(onComplete, 500);
-          return 100;
-        }
-        return prev + 2;
-      });
-    }, 30);
+    if (imgRef.current?.complete) setImgLoaded(true);
+  }, []);
 
-    return () => clearInterval(interval);
+  // نحتفظ بآخر نسخة من onComplete عشان الـ effect ميتعاد تشغيله
+  const onCompleteRef = useRef(onComplete);
+  useEffect(() => {
+    onCompleteRef.current = onComplete;
   }, [onComplete]);
 
+  // ظهور تدريجي عند الفتح
+  useEffect(() => {
+    const frame = requestAnimationFrame(() => setMounted(true));
+    return () => cancelAnimationFrame(frame);
+  }, []);
+
+  // التقدم
+  // التقدم
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setProgress((prev) => Math.min(100, prev + 1)); // ← الحد 100 والزيادة 1
+    }, 40); // ← الفاصل
+    return () => clearInterval(interval);
+  }, []);
+
+  // الخروج بعد الوصول لـ 100%
+  useEffect(() => {
+    if (progress < 100) return undefined;
+    const fadeTimer = setTimeout(() => setLeaving(true), 300);
+    const doneTimer = setTimeout(() => onCompleteRef.current?.(), 800);
+    return () => {
+      clearTimeout(fadeTimer);
+      clearTimeout(doneTimer);
+    };
+  }, [progress]);
+
+  const dashOffset = RING_CIRCUMFERENCE * (1 - progress / 100);
+
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center overflow-hidden bg-gradient-to-br from-[#2C5F8D] via-[#4A90E2] to-[#87CEEB]">
-      {/* خلفية متحركة بأشكال هندسية */}
-      <div className="absolute inset-0 overflow-hidden">
-        {/* دوائر كبيرة متحركة */}
-        <div
-          className="absolute -top-20 -left-20 w-96 h-96 bg-white/10 rounded-full blur-3xl animate-pulse"
-          style={{ animationDuration: "4s" }}
+    <div
+      role="status"
+      aria-live="polite"
+      aria-label="جاري تحميل الموقع"
+      className={`fixed inset-0 z-50 flex items-center justify-center overflow-hidden bg-gradient-to-br from-[#0B2239] via-[#2C5F8D] to-[#0B2239] transition-opacity duration-500 ${
+        leaving ? "opacity-0" : "opacity-100"
+      }`}
+    >
+      {/* صورة الخلفية */}
+      <div className="pointer-events-none absolute inset-0" aria-hidden="true">
+        <img
+          ref={imgRef}
+          src={All}
+          alt=""
+          loading="eager"
+          fetchPriority="high"
+          decoding="async"
+          onLoad={() => setImgLoaded(true)}
+          onError={() => setImgLoaded(true)}
+          className={`h-full w-full object-cover object-top transition-all duration-1000 ease-out ${
+            imgLoaded ? "scale-100 opacity-100" : "scale-110 opacity-0"
+          }`}
         />
-        <div
-          className="absolute -bottom-32 -right-32 w-[500px] h-[500px] bg-yellow-400/10 rounded-full blur-3xl animate-pulse"
-          style={{ animationDuration: "5s", animationDelay: "1s" }}
-        />
-        <div
-          className="absolute top-1/3 left-1/4 w-72 h-72 bg-blue-300/10 rounded-full blur-3xl animate-pulse"
-          style={{ animationDuration: "6s", animationDelay: "2s" }}
-        />
-
-        {/* أشكال هندسية صغيرة */}
-        <div
-          className="absolute top-20 right-1/4 w-4 h-4 bg-yellow-400/30 rounded-full animate-bounce"
-          style={{ animationDuration: "3s" }}
-        />
-        <div
-          className="absolute bottom-40 left-1/3 w-3 h-3 bg-white/40 rounded-full animate-bounce"
-          style={{ animationDuration: "4s", animationDelay: "1s" }}
-        />
-        <div
-          className="absolute top-1/2 right-20 w-5 h-5 bg-blue-200/30 rounded-full animate-bounce"
-          style={{ animationDuration: "3.5s", animationDelay: "0.5s" }}
-        />
-
-        {/* خطوط قطرية */}
-        <div className="absolute top-0 left-1/4 w-px h-full bg-gradient-to-b from-transparent via-white/10 to-transparent" />
-        <div className="absolute top-0 right-1/3 w-px h-full bg-gradient-to-b from-transparent via-white/10 to-transparent" />
+        {/* طبقة لونية بألوان الهوية عشان النص يفضل واضح */}
+        <div className="absolute inset-0 bg-gradient-to-b from-[#0B2239]/85 via-[#2C5F8D]/70 to-[#0B2239]/90" />
+        <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-[#2C5F8D] via-[#4A90E2] to-[#FDB913]" />
       </div>
 
-      {/* المحتوى الرئيسي */}
-      <div className="relative z-10 flex flex-col items-center justify-center space-y-8 md:space-y-12">
-        {/* اللوجو مع الحلقة الدوارة */}
-        <div className="relative">
-          {/* حلقات دوارة متعددة */}
-          <div className="absolute -inset-4 md:-inset-6">
-            <div
-              className="w-full h-full border-[2px] md:border-[3px] border-transparent border-t-yellow-400 border-r-yellow-400 rounded-full animate-spin"
-              style={{ animationDuration: "3s" }}
+      {/* المحتوى */}
+      <div
+        className={`relative z-10 flex flex-col items-center px-6 text-center transition-all duration-700 ease-out ${
+          mounted ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"
+        }`}
+      >
+        {/* اللوجو داخل حلقة التقدم */}
+        <div
+          className="relative h-44 w-44 md:h-60 md:w-60"
+          role="progressbar"
+          aria-valuemin={0}
+          aria-valuemax={100}
+          aria-valuenow={progress}
+        >
+          <svg viewBox="0 0 200 200" className="h-full w-full -rotate-90">
+            <defs>
+              <linearGradient
+                id="loading-ring-gradient"
+                x1="0%"
+                y1="0%"
+                x2="100%"
+                y2="100%"
+              >
+                <stop offset="0%" stopColor={BRAND.sky} />
+                <stop offset="100%" stopColor={BRAND.gold} />
+              </linearGradient>
+            </defs>
+            {/* المسار الخلفي */}
+            <circle
+              cx="100"
+              cy="100"
+              r={RING_RADIUS}
+              fill="none"
+              stroke="#FFFFFF"
+              strokeOpacity="0.25"
+              strokeWidth="5"
             />
-          </div>
-          <div className="absolute -inset-6 md:-inset-8">
-            <div
-              className="w-full h-full border-[1.5px] md:border-[2px] border-transparent border-b-white/40 border-l-white/40 rounded-full animate-spin"
-              style={{ animationDuration: "4s", animationDirection: "reverse" }}
+            {/* التقدم */}
+            <circle
+              cx="100"
+              cy="100"
+              r={RING_RADIUS}
+              fill="none"
+              stroke="url(#loading-ring-gradient)"
+              strokeWidth="5"
+              strokeLinecap="round"
+              strokeDasharray={RING_CIRCUMFERENCE}
+              strokeDashoffset={dashOffset}
+              style={{ transition: "stroke-dashoffset 120ms linear" }}
             />
-          </div>
+          </svg>
 
-          {/* توهج خلف اللوجو */}
-          <div
-            className="absolute inset-0 bg-yellow-400/20 rounded-full blur-2xl animate-pulse"
-            style={{ animationDuration: "2s" }}
-          />
-
-          {/* اللوجو */}
-          <div className="relative bg-white rounded-full p-6 md:p-10 shadow-[0_25px_70px_rgba(0,0,0,0.2)]">
+          <div className="absolute inset-[14%] flex items-center justify-center rounded-full bg-white shadow-[0_18px_50px_rgba(0,0,0,0.35)] ring-1 ring-white/40">
             <img
               src={MainLogo}
-              alt="Dental Clinic Logo"
-              className="w-24 h-24 md:w-36 md:h-36 object-contain"
+              alt="شعار عيادات أبو النجا"
+              className="h-3/5 w-3/5 object-contain"
             />
           </div>
         </div>
 
         {/* النص */}
-        <div className="text-center space-y-2 md:space-y-3 px-4">
-          <h1 className="pb-1 md:pb-2 text-3xl md:text-5xl font-bold text-white drop-shadow-[0_4px_12px_rgba(0,0,0,0.3)]">
-            التميز في رعاية الأسنان
+        <div className="mt-8 space-y-2 md:mt-10 md:space-y-3">
+          <h1 className="text-2xl font-bold text-white drop-shadow-[0_2px_10px_rgba(0,0,0,0.35)] md:text-4xl">
+            عيادات أبو النجا
           </h1>
-          <p className="text-base md:text-xl text-white/95 font-medium drop-shadow-lg">
-            عيادات أبو النجا لتقويم وزراعة الأسنان
+          <div className="mx-auto h-0.5 w-12 rounded-full bg-[#FDB913]" />
+          <p className="text-sm font-medium text-[#87CEEB] md:text-lg">
+            لتقويم وزراعة الأسنان
           </p>
-          <p className="text-sm md:text-lg text-white/85 drop-shadow-md">
+          <p
+            dir="ltr"
+            className="text-[11px] font-medium uppercase tracking-[0.3em] text-white/70 md:text-xs"
+          >
             Abo Elnaga Dental Clinics
           </p>
         </div>
 
-        {/* Progress Bar */}
-        <div className="w-full max-w-[280px] md:max-w-md px-4" dir="ltr">
-          {/* شريط التقدم */}
-          <div className="relative h-2.5 md:h-3 bg-white/20 rounded-full overflow-hidden backdrop-blur-sm shadow-lg">
-            {/* الخلفية المتوهجة */}
-            <div
-              className="absolute right-0 top-0 bottom-0 bg-gradient-to-l from-yellow-400 to-yellow-500 rounded-full transition-all duration-300 ease-out"
-              style={{
-                width: `${progress}%`,
-                boxShadow: "0 0 20px rgba(253, 185, 19, 0.6)",
-              }}
-            >
-              {/* تأثير اللمعان المتحرك */}
-              <div className="absolute inset-0 bg-gradient-to-l from-transparent via-white/30 to-transparent animate-pulse" />
-            </div>
-          </div>
-        </div>
+        {/* النسبة */}
+        <p
+          dir="ltr"
+          className="mt-6 text-sm font-semibold tabular-nums text-white/85 md:mt-8"
+        >
+          {progress}%
+        </p>
       </div>
     </div>
   );

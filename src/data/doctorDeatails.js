@@ -77,28 +77,22 @@ import case40 from "../assets/images/prev/40.jpg";
 import case41 from "../assets/images/prev/41.jpg";
 
 // ============================================================
-//  Clinics — الأربع عيادات (مكان واحد للتعديل)
-// ------------------------------------------------------------
-//  nameAr         : اسم العيادة — لو فاضي "" العيادة مش هتظهر في الموقع
-//  defaultDaysAr  : أيام العمل الأساسية للعيادة
-//  defaultHoursAr : ساعات العمل الأساسية (مثال: "من 12 ظهراً إلى 10 مساءً")
+//  Clinics — أسماء العيادات بس (المواعيد عند كل دكتور)
 // ============================================================
 export const CLINICS = {
-  qweisna: { nameAr: "عيادة قويسنا", defaultDaysAr: [], defaultHoursAr: "" }, // TODO: مواعيد العيادة
-  shebin: { nameAr: "عيادة شبين", defaultDaysAr: [], defaultHoursAr: "" }, // TODO: مواعيد العيادة
-  clinic3: { nameAr: "", defaultDaysAr: [], defaultHoursAr: "" }, // TODO: اسم + مواعيد العيادة الثالثة
-  clinic4: { nameAr: "", defaultDaysAr: [], defaultHoursAr: "" }, // TODO: اسم + مواعيد العيادة الرابعة
+  qweisna: { nameAr: "عيادات قويسنا" },
+  shebin: { nameAr: "عيادات شبين" },
+  clinic3: { nameAr: "عيادات طه شبرا" },
+  clinic4: { nameAr: "عيادات العجايزة" },
 };
 
-// مواعيد العيادة الأساسية في الأربع عيادات (daysAr: null → ياخد مواعيد العيادة من CLINICS)
-const CLINIC_HOURS = Object.keys(CLINICS).map((clinic) => ({ clinic, daysAr: null }));
+// كل أيام الأسبوع (للدكاترة المتواجدين طول الأسبوع)
+const ALL_WEEK = ["السبت", "الأحد", "الاثنين", "الثلاثاء", "الأربعاء", "الخميس", "الجمعة"];
 
 // ============================================================
 //  Doctors Data
-// ------------------------------------------------------------
-//  schedule: [{ clinic: "<key من CLINICS>", daysAr: [...] | null, hoursAr?: "" }]
-//    daysAr = null  → مواعيد العيادة الأساسية
-//    daysAr = [...] → أيام خاصة بالدكتور في العيادة دي
+//  schedule: [{ clinic, daysAr, hoursAr }]  ← كل دكتور له مواعيده
+//  hoursAr فاضية = متحددتش ساعات (بتظهر الأيام بس)
 // ============================================================
 const doctorsDetailsRaw = [
   {
@@ -109,10 +103,15 @@ const doctorsDetailsRaw = [
     specialtyAr: "أخصائية طب أسنان الأطفال",
     img: Wafa,
     bio: "أخصائية طب أسنان الأطفال بماجستير من جامعة طنطا، تتميز بالتعامل اللطيف مع الأطفال وتقديم رعاية شاملة لأسنانهم في بيئة مريحة وآمنة.",
-    schedule: CLINIC_HOURS,
+    schedule: [
+      { clinic: "qweisna", daysAr: ALL_WEEK },
+      { clinic: "shebin", daysAr: ALL_WEEK },
+      { clinic: "clinic3", daysAr: ALL_WEEK },
+      { clinic: "clinic4", daysAr: ALL_WEEK },
+    ],
     stats: [
       { number: "2000+", label: "مريض سعيد" },
-      { number: "8+", label: "سنة خبرة" },
+      { number: "10+", label: "سنة خبرة" },
       { number: "4.9", label: "تقييم" },
       { number: "150+", label: "حالة شهرياً" },
     ],
@@ -148,18 +147,22 @@ const doctorsDetailsRaw = [
     ],
   },
   {
-    // ✏️ UPDATED
     id: 2,
     nameAr: "د. مريم ناجي",
     nameEn: "Dr. Mariam Nagi",
     roleAr: "أخصائية طب أسنان الأطفال",
     specialtyAr: "أخصائية طب أسنان الأطفال",
     img: Mariam,
-    bio: "أخصائية طب أسنان الأطفال والحشوات التجميلية والتركيبات، متخصصة في جراحات اللثة التجميلية وعلاج الابتسامة اللثوية، وتهتم بتحقيق ابتسامة طبيعية وجميلة لمرضاها باستخدام أحدث المواد والتقنيات.",
-    schedule: CLINIC_HOURS,
+    bio: "أخصائية جراحات اللثة التجميلية وعلاج الابتسامة اللثوية، بالإضافة إلى طب أسنان الأطفال والحشوات التجميلية والتركيبات، وتهتم بتحقيق ابتسامة طبيعية وجميلة لمرضاها باستخدام أحدث المواد والتقنيات.",
+    schedule: [
+      { clinic: "qweisna", daysAr: ALL_WEEK },
+      { clinic: "shebin", daysAr: ALL_WEEK },
+      { clinic: "clinic3", daysAr: ALL_WEEK },
+      { clinic: "clinic4", daysAr: ALL_WEEK },
+    ],
     stats: [
       { number: "1800+", label: "مريض سعيد" },
-      { number: "7+", label: "سنة خبرة" },
+      { number: "5+", label: "سنة خبرة" },
       { number: "4.8", label: "تقييم" },
       { number: "120+", label: "حالة شهرياً" },
     ],
@@ -195,7 +198,6 @@ const doctorsDetailsRaw = [
     ],
   },
   {
-    // ✏️ UPDATED
     id: 3,
     nameAr: "د. هدير نبيل الفقي",
     nameEn: "Dr. Hadeer Nabil El Feky",
@@ -203,10 +205,15 @@ const doctorsDetailsRaw = [
     specialtyAr: "أخصائية حشو العصب والتركيبات الثابتة والتجميلية",
     img: Hadeer,
     bio: "أخصائية حشو العصب والتركيبات الثابتة والتجميلية، تجمع بين إنقاذ الأسنان الطبيعية وتصميم تركيبات دقيقة بمظهر طبيعي وأعلى معايير الجودة.",
-    schedule: CLINIC_HOURS,
+    schedule: [
+      { clinic: "qweisna", daysAr: ALL_WEEK },
+      { clinic: "shebin", daysAr: ALL_WEEK },
+      { clinic: "clinic3", daysAr: ALL_WEEK },
+      { clinic: "clinic4", daysAr: ALL_WEEK },
+    ],
     stats: [
       { number: "1500+", label: "مريض سعيد" },
-      { number: "6+", label: "سنة خبرة" },
+      { number: "10+", label: "سنة خبرة" },
       { number: "4.9", label: "تقييم" },
       { number: "100+", label: "حالة شهرياً" },
     ],
@@ -238,7 +245,6 @@ const doctorsDetailsRaw = [
     ],
   },
   {
-    // ✏️ UPDATED
     id: 4,
     nameAr: "د. ندى فرحات",
     nameEn: "Dr. Nada Farahat",
@@ -247,12 +253,14 @@ const doctorsDetailsRaw = [
     img: Nada,
     bio: "أخصائية طب وجراحة الفم والأسنان، حاصلة على بكالوريوس طب الفم والأسنان من جامعة بني سويف عام 2020، تهتم بحشو العصب والحشوات التجميلية والتركيبات الثابتة لإنقاذ الأسنان الطبيعية وتقديم علاج شامل.",
     schedule: [
-      { clinic: "qweisna", daysAr: ["الأحد", "الأربعاء"] },
-      { clinic: "shebin", daysAr: ["السبت", "الثلاثاء"] },
+      { clinic: "qweisna", daysAr: ALL_WEEK },
+      { clinic: "shebin", daysAr: ALL_WEEK },
+      { clinic: "clinic3", daysAr: ALL_WEEK },
+      { clinic: "clinic4", daysAr: ALL_WEEK },
     ],
     stats: [
       { number: "2200+", label: "مريض سعيد" },
-      { number: "6+", label: "سنة خبرة" },
+      { number: "7+", label: "سنة خبرة" },
       { number: "4.9", label: "تقييم" },
       { number: "130+", label: "حالة شهرياً" },
     ],
@@ -290,29 +298,34 @@ const doctorsDetailsRaw = [
     id: 5,
     nameAr: "د. آية أشرف",
     nameEn: "Dr. Aya Ashraf",
-    roleAr: "أخصائية الحشوات والتركيبات التجميلية",
-    specialtyAr: "أخصائية الحشوات والتركيبات التجميلية",
+    roleAr: "أخصائية طب أسنان الأطفال",
+    specialtyAr: "أخصائية طب أسنان الأطفال",
     img: AyaAshraf,
-    bio: "أخصائية في الحشوات والتركيبات التجميلية، تهتم بتقديم علاج دقيق يحافظ على مظهر الأسنان الطبيعي.",
-    schedule: CLINIC_HOURS,
+    bio: "أخصائية طب أسنان الأطفال، تهتم بتقديم علاج لطيف وآمن للأطفال في بيئة مريحة تشجعهم على حب زيارة الطبيب والحفاظ على أسنانهم.",
+    schedule: [
+      { clinic: "qweisna", daysAr: ["الاثنين", "الخميس"], hoursAr: "من 11 ص إلى 10 م" },
+      { clinic: "shebin", daysAr: ["الأحد", "الأربعاء"], hoursAr: "من 5 م إلى 10 م" },
+      { clinic: "clinic3", daysAr: ["السبت"], hoursAr: "من 11 ص إلى 6 م" },
+      { clinic: "clinic3", daysAr: ["الأربعاء"], hoursAr: "من 11 ص إلى 4 م" },
+    ],
     stats: [
       { number: "1600+", label: "مريض سعيد" },
-      { number: "6+", label: "سنة خبرة" },
+      { number: "5+", label: "سنة خبرة" },
       { number: "4.8", label: "تقييم" },
       { number: "110+", label: "حالة شهرياً" },
     ],
     achievements: [
-      "أخصائية الحشوات والتركيبات التجميلية",
-      "خبرة في مواد الحشو التجميلي الحديثة",
-      "متخصصة في ترميم الأسنان الأمامية",
+      "أخصائية طب أسنان الأطفال",
+      "خبرة في التعامل مع الأطفال وتهدئتهم أثناء العلاج",
+      "متخصصة في حشو وعلاج أسنان الألبان",
       "أكثر من 1600 حالة ناجحة",
     ],
     specializations: [
-      "الحشوات التجميلية",
-      "تركيبات تجميلية",
-      "ترميم الأسنان",
-      "علاج التسوس",
-      "تجميل الابتسامة",
+      "طب أسنان الأطفال",
+      "حشو وعلاج أسنان الألبان",
+      "علاج التسوس المبكر عند الأطفال",
+      "الوقاية والفلورايد وسدادات الشقوق",
+      "تثقيف الأطفال عن صحة الفم",
     ],
     videos: [
       { id: 1, titleAr: "التسوس الخفي", categoryAr: "التسوس الخفي", duration: "1:45", src: AyaVideo1, url: "https://www.tiktok.com/@aboelnagadc/video/7531054115451915528" },
@@ -338,7 +351,12 @@ const doctorsDetailsRaw = [
     specialtyAr: "أخصائية التركيبات المتحركة",
     img: Afnan,
     bio: "أخصائية في التركيبات المتحركة، تقدم حلولاً مريحة وعملية لاستبدال الأسنان المفقودة بأعلى جودة.",
-    schedule: CLINIC_HOURS,
+    schedule: [
+      { clinic: "qweisna", daysAr: ALL_WEEK },
+      { clinic: "shebin", daysAr: ALL_WEEK },
+      { clinic: "clinic3", daysAr: ALL_WEEK },
+      { clinic: "clinic4", daysAr: ALL_WEEK },
+    ],
     stats: [
       { number: "1200+", label: "مريض سعيد" },
       { number: "5+", label: "سنة خبرة" },
@@ -379,10 +397,15 @@ const doctorsDetailsRaw = [
     specialtyAr: "أخصائية الحشوات والتركيبات الثابتة",
     img: AyaMohamedy,
     bio: "أخصائية في الحشوات التجميلية والتركيبات الثابتة، تلتزم بتقديم علاج متكامل يجمع بين الجمال والوظيفة.",
-    schedule: CLINIC_HOURS,
+    schedule: [
+      { clinic: "qweisna", daysAr: ALL_WEEK },
+      { clinic: "shebin", daysAr: ALL_WEEK },
+      { clinic: "clinic3", daysAr: ALL_WEEK },
+      { clinic: "clinic4", daysAr: ALL_WEEK },
+    ],
     stats: [
       { number: "1400+", label: "مريض سعيد" },
-      { number: "6+", label: "سنة خبرة" },
+      { number: "5+", label: "سنة خبرة" },
       { number: "4.9", label: "تقييم" },
       { number: "100+", label: "حالة شهرياً" },
     ],
@@ -419,26 +442,29 @@ const doctorsDetailsRaw = [
     roleAr: "أخصائي جراحة وزراعة الأسنان",
     specialtyAr: "أخصائي جراحة وزراعة الأسنان",
     img: Omar,
-    bio: "أخصائي في جراحة وزراعة الأسنان، يقدم حلولاً متقدمة لاستبدال الأسنان المفقودة بزرعات عالية الجودة.",
-    schedule: CLINIC_HOURS,
+    bio: "أخصائي جراحة وزراعة الأسنان، حاصل على الماجستير في زراعة وتركيبات الأسنان من جامعة طنطا، يقدم حلولاً متقدمة لاستبدال الأسنان المفقودة بزرعات عالية الجودة. يتميز بالخلع والزراعة الفورية في نفس الجلسة، وزراعة الفك الكامل لتعويض الأسنان، بالإضافة إلى جراحات ضرس العقل المدفون وإزالة الأورام والجراحات المتقدمة.",
+    schedule: [
+      { clinic: "qweisna", daysAr: ["السبت", "الأحد", "الثلاثاء", "الأربعاء"], hoursAr: "من 2 م إلى 10 م" },
+      { clinic: "shebin", daysAr: ["الاثنين", "الخميس"] , hoursAr: "من 2 م إلى 10 م"},
+      { clinic: "clinic3", daysAr: ["الجمعة"], hoursAr: "من 2 م إلى 5 م" },
+      { clinic: "clinic4", daysAr: ["الجمعة"], hoursAr: "من 6 م إلى 11 م" },
+    ],
     stats: [
       { number: "3000+", label: "مريض سعيد" },
-      { number: "10+", label: "سنة خبرة" },
+      { number: "6+", label: "سنة خبرة" },
       { number: "4.9", label: "تقييم" },
       { number: "180+", label: "حالة شهرياً" },
     ],
     achievements: [
+      "ماجستير زراعة وتركيبات الأسنان — جامعة طنطا",
       "أخصائي جراحة وزراعة الأسنان",
-      "خبرة في زراعة الأسنان الفورية",
-      "متخصص في جراحة الفم والأسنان",
+      "خبرة في الخلع والزراعة الفورية في نفس الجلسة",
       "أكثر من 3000 حالة ناجحة",
     ],
     specializations: [
-      "زراعة الأسنان",
-      "جراحة الفم",
-      "خلع الأسنان",
-      "زراعة فورية",
-      "علاج ضرس العقل",
+      "خلع وزراعة فورية في نفس الجلسة",
+      "زراعة فك كامل لتعويض الأسنان",
+      "جراحات ضرس العقل المدفون وإزالة الأورام والجراحات المتقدمة",
     ],
     videos: [
       { id: 1, titleAr: "زراعة الأسنان", categoryAr: "زراعة الأسنان", duration: "0:50", src: OmarVideo1, url: "https://www.tiktok.com/@aboelnagadc/video/7554137350373133584" },
@@ -466,10 +492,15 @@ const doctorsDetailsRaw = [
     specialtyAr: "أخصائي حشو العصب والتركيبات",
     img: AhmedIbrahim1,
     bio: "أخصائي في حشو العصب والحشوات التجميلية والتركيبات، يسعى لإنقاذ كل سن ممكن مع الحفاظ على جمال الابتسامة.",
-    schedule: CLINIC_HOURS,
+    schedule: [
+      { clinic: "qweisna", daysAr: ALL_WEEK },
+      { clinic: "shebin", daysAr: ALL_WEEK },
+      { clinic: "clinic3", daysAr: ALL_WEEK },
+      { clinic: "clinic4", daysAr: ALL_WEEK },
+    ],
     stats: [
       { number: "2500+", label: "مريض سعيد" },
-      { number: "9+", label: "سنة خبرة" },
+      { number: "5+", label: "سنة خبرة" },
       { number: "4.9", label: "تقييم" },
       { number: "140+", label: "حالة شهرياً" },
     ],
@@ -502,7 +533,6 @@ const doctorsDetailsRaw = [
     ],
   },
   {
-    // ✏️ UPDATED
     id: 10,
     nameAr: "د. أحمد جلال",
     nameEn: "Dr. Ahmed Galal",
@@ -510,10 +540,15 @@ const doctorsDetailsRaw = [
     specialtyAr: "طبيب أسنان عام | طب الأسنان الترميمي والتجميلي",
     img: AhmedGalal,
     bio: "طبيب أسنان عام حاصل على بكالوريوس طب وجراحة الفم والأسنان من جامعة عين شمس عام 2023، يهتم بطب الأسنان الترميمي والتجميلي وعلاج الجذور، بنهج محافظ يحافظ على الأسنان الطبيعية ويحقق نتيجة وظيفية وجمالية متوازنة.",
-    schedule: CLINIC_HOURS,
+    schedule: [
+      { clinic: "qweisna", daysAr: ALL_WEEK },
+      { clinic: "shebin", daysAr: ALL_WEEK },
+      { clinic: "clinic3", daysAr: ALL_WEEK },
+      { clinic: "clinic4", daysAr: ALL_WEEK },
+    ],
     stats: [
       { number: "2000+", label: "مريض سعيد" },
-      { number: "3+", label: "سنة خبرة" },
+      { number: "5+", label: "سنة خبرة" },
       { number: "4.8", label: "تقييم" },
       { number: "120+", label: "حالة شهرياً" },
     ],
@@ -544,7 +579,6 @@ const doctorsDetailsRaw = [
     ],
   },
   {
-    // ✏️ UPDATED
     id: 11,
     nameAr: "د. محمد صلاح",
     nameEn: "Dr. Mohamed Salah",
@@ -552,10 +586,15 @@ const doctorsDetailsRaw = [
     specialtyAr: "أخصائي الحشوات والتركيبات التجميلية وحشو العصب",
     img: Salah,
     bio: "أخصائي الحشوات والتركيبات التجميلية وحشو العصب، يركز على علاج يحافظ على مظهر الأسنان الطبيعي مع ضمان المتانة.",
-    schedule: CLINIC_HOURS,
+    schedule: [
+      { clinic: "qweisna", daysAr: ALL_WEEK },
+      { clinic: "shebin", daysAr: ALL_WEEK },
+      { clinic: "clinic3", daysAr: ALL_WEEK },
+      { clinic: "clinic4", daysAr: ALL_WEEK },
+    ],
     stats: [
       { number: "1300+", label: "مريض سعيد" },
-      { number: "5+", label: "سنة خبرة" },
+      { number: "6+", label: "سنة خبرة" },
       { number: "4.8", label: "تقييم" },
       { number: "90+", label: "حالة شهرياً" },
     ],
@@ -594,10 +633,15 @@ const doctorsDetailsRaw = [
     specialtyAr: "أخصائي الحشوات والتركيبات الثابتة",
     img: AhmedIbrahim2,
     bio: "أخصائي في الحشوات التجميلية والتركيبات الثابتة، يقدم حلولاً شاملة لترميم الأسنان واستعادة وظيفتها.",
-    schedule: CLINIC_HOURS,
+    schedule: [
+      { clinic: "qweisna", daysAr: ALL_WEEK },
+      { clinic: "shebin", daysAr: ALL_WEEK },
+      { clinic: "clinic3", daysAr: ALL_WEEK },
+      { clinic: "clinic4", daysAr: ALL_WEEK },
+    ],
     stats: [
       { number: "1700+", label: "مريض سعيد" },
-      { number: "7+", label: "سنة خبرة" },
+      { number: "5+", label: "سنة خبرة" },
       { number: "4.9", label: "تقييم" },
       { number: "110+", label: "حالة شهرياً" },
     ],
@@ -635,10 +679,15 @@ const doctorsDetailsRaw = [
     specialtyAr: "أخصائي الحشوات التجميلية وحشو العصب",
     img: Yousef,
     bio: "أخصائي في الحشوات التجميلية وحشو العصب والتركيبات، يلتزم بتقديم رعاية شاملة تجمع بين العلاج والتجميل.",
-    schedule: CLINIC_HOURS,
+    schedule: [
+      { clinic: "qweisna", daysAr: ALL_WEEK },
+      { clinic: "shebin", daysAr: ALL_WEEK },
+      { clinic: "clinic3", daysAr: ALL_WEEK },
+      { clinic: "clinic4", daysAr: ALL_WEEK },
+    ],
     stats: [
       { number: "1500+", label: "مريض سعيد" },
-      { number: "6+", label: "سنة خبرة" },
+      { number: "4+", label: "سنة خبرة" },
       { number: "4.8", label: "تقييم" },
       { number: "100+", label: "حالة شهرياً" },
     ],
@@ -690,8 +739,60 @@ function buildDoctorSlug(nameEn, used) {
   return slug;
 }
 
+// ============================================================
+//  Auto-growing stats
+//  الأرقام اللي فوق في stats هي "الأساس" بتاريخ BASE_DATE
+//  - سنين الخبرة: +1 كل سنة (في نفس يوم BASE_DATE من كل سنة)
+//  - المرضى/الحالات: +CASES_PER_DAY كل يوم لكل دكتور
+// ============================================================
+const BASE_DATE = new Date(2026, 9, 21); // 21 أكتوبر 2026 (الشهر 9 = أكتوبر)
+const CASES_PER_DAY = 3;
+
+const startOfDay = (d) => new Date(d.getFullYear(), d.getMonth(), d.getDate());
+
+const daysSinceBase = () => {
+  const diff = startOfDay(new Date()) - startOfDay(BASE_DATE);
+  return Math.max(0, Math.floor(diff / 86400000));
+};
+
+const yearsSinceBase = () => {
+  const now = new Date();
+  let years = now.getFullYear() - BASE_DATE.getFullYear();
+  const anniversary = new Date(now.getFullYear(), BASE_DATE.getMonth(), BASE_DATE.getDate());
+  if (now < anniversary) years -= 1;
+  return Math.max(0, years);
+};
+
+const toNumber = (value) => parseInt(String(value).replace(/\D/g, ""), 10) || 0;
+
+function applyGrowingStats(doctor) {
+  const extraCases = daysSinceBase() * CASES_PER_DAY;
+  const extraYears = yearsSinceBase();
+
+  let patients = null;
+  const stats = doctor.stats.map((item) => {
+    if (item.label === "مريض سعيد") {
+      patients = toNumber(item.number) + extraCases;
+      return { ...item, number: `${patients}+` };
+    }
+    if (item.label === "سنة خبرة") {
+      return { ...item, number: `${toNumber(item.number) + extraYears}+` };
+    }
+    return item;
+  });
+
+  const achievements =
+    patients === null
+      ? doctor.achievements
+      : doctor.achievements.map((text) =>
+          text.replace(/أكثر من \d+ حالة ناجحة/, `أكثر من ${patients} حالة ناجحة`)
+        );
+
+  return { ...doctor, stats, achievements };
+}
+
 export const doctorsDetails = doctorsDetailsRaw.map((doctor) => ({
-  ...doctor,
+  ...applyGrowingStats(doctor),
   slug: buildDoctorSlug(doctor.nameEn, usedDoctorSlugs),
 }));
 
@@ -713,19 +814,17 @@ export const getDoctorBySlug = (slug) => {
 export const getDoctorPath = (doctor) => (doctor?.slug ? `/${doctor.slug}` : "/");
 
 // بيرجّع مواعيد الدكتور جاهزة للعرض:
-// [{ key, nameAr, daysAr, hoursAr, isCustom }]
+// [{ key, nameAr, daysAr, hoursAr }]
 export const getDoctorSchedule = (doctor) =>
-  (doctor?.schedule?.length ? doctor.schedule : CLINIC_HOURS)
-    .map(({ clinic, daysAr, hoursAr }) => {
+  (doctor?.schedule ?? [])
+    .map(({ clinic, daysAr, hoursAr }, index) => {
       const info = CLINICS[clinic];
-      if (!info?.nameAr) return null; // عيادة لسه اسمها مش متسجل → متظهرش
-      const isCustom = Array.isArray(daysAr);
+      if (!info?.nameAr) return null; // عيادة اسمها مش مسجل → متظهرش
       return {
-        key: clinic,
+        key: `${clinic}-${index}`,
         nameAr: info.nameAr,
-        daysAr: isCustom ? daysAr : info.defaultDaysAr,
-        hoursAr: hoursAr || info.defaultHoursAr,
-        isCustom,
+        daysAr: daysAr ?? [],
+        hoursAr: hoursAr ?? "",
       };
     })
     .filter(Boolean);
