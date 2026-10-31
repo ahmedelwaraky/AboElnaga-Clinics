@@ -1,6 +1,6 @@
 import hero1 from "../assets/images/heros/hero-1.jpg";
 import hero2 from "../assets/images/heros/hero-2.jpg";
-import hero3 from "../assets/images/heros/hero-3.jpg";
+import hero3 from "../assets/images/doctors/All-Doctor.png";
 
 export const heroSliders = [
   {
