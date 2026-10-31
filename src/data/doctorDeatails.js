@@ -87,7 +87,15 @@ export const CLINICS = {
 };
 
 // كل أيام الأسبوع (للدكاترة المتواجدين طول الأسبوع)
-const ALL_WEEK = ["السبت", "الأحد", "الاثنين", "الثلاثاء", "الأربعاء", "الخميس", "الجمعة"];
+const ALL_WEEK = [
+  "السبت",
+  "الأحد",
+  "الاثنين",
+  "الثلاثاء",
+  "الأربعاء",
+  "الخميس",
+  "الجمعة",
+];
 
 // ============================================================
 //  Doctors Data
@@ -104,10 +112,11 @@ const doctorsDetailsRaw = [
     img: Wafa,
     bio: "أخصائية طب أسنان الأطفال بماجستير من جامعة طنطا، تتميز بالتعامل اللطيف مع الأطفال وتقديم رعاية شاملة لأسنانهم في بيئة مريحة وآمنة.",
     schedule: [
-      { clinic: "qweisna", daysAr: ALL_WEEK },
-      { clinic: "shebin", daysAr: ALL_WEEK },
-      { clinic: "clinic3", daysAr: ALL_WEEK },
-      { clinic: "clinic4", daysAr: ALL_WEEK },
+      {
+        clinic: "qweisna",
+        daysAr: ["الاثنين", "الخميس"],
+        hoursAr: "من 4 م إلى 10 م",
+      },
     ],
     stats: [
       { number: "2000+", label: "مريض سعيد" },
@@ -129,36 +138,98 @@ const doctorsDetailsRaw = [
       "تثقيف الأطفال عن صحة الفم",
     ],
     videos: [
-      { id: 1, titleAr: "حشو العصب", categoryAr: "حشو العصب", duration: "3:15", src: WafaaVideo1, url: "https://www.tiktok.com/@aboelnagadc/video/7542845179703594258" },
-      { id: 2, titleAr: "التخدير الكلي", categoryAr: "التخدير الكلي", duration: "2:15", src: WafaaVideo2, url: "https://www.tiktok.com/@aboelnagadc/video/7546525704742128904" },
-      { id: 3, titleAr: "أسنان القرش", categoryAr: "أسنان القرش", duration: "2:45", src: WafaaVideo3, url: "https://www.tiktok.com/@aboelnagadc/video/7564844816786263297" },
+      {
+        id: 1,
+        titleAr: "حشو العصب",
+        categoryAr: "حشو العصب",
+        duration: "3:15",
+        src: WafaaVideo1,
+        url: "https://www.tiktok.com/@aboelnagadc/video/7542845179703594258",
+      },
+      {
+        id: 2,
+        titleAr: "التخدير الكلي",
+        categoryAr: "التخدير الكلي",
+        duration: "2:15",
+        src: WafaaVideo2,
+        url: "https://www.tiktok.com/@aboelnagadc/video/7546525704742128904",
+      },
+      {
+        id: 3,
+        titleAr: "أسنان القرش",
+        categoryAr: "أسنان القرش",
+        duration: "2:45",
+        src: WafaaVideo3,
+        url: "https://www.tiktok.com/@aboelnagadc/video/7564844816786263297",
+      },
     ],
     cases: [
-      { id: 1, image: case30, titleAr: "علاج أسنان الأطفال", procedureAr: "طب أطفال" },
-      { id: 2, image: case6, titleAr: "علاج تسوس متقدم", procedureAr: "حشوات تجميلية" },
-      { id: 3, image: case32, titleAr: "علاج الحساسية", procedureAr: "علاج الحساسية" },
-      { id: 4, image: case37, titleAr: "علاج الخراج", procedureAr: "علاج الخراج" },
-      { id: 5, image: case28, titleAr: "علاج الصرير", procedureAr: "واقي الأسنان" },
+      {
+        id: 1,
+        image: case30,
+        titleAr: "علاج أسنان الأطفال",
+        procedureAr: "طب أطفال",
+      },
+      {
+        id: 2,
+        image: case6,
+        titleAr: "علاج تسوس متقدم",
+        procedureAr: "حشوات تجميلية",
+      },
+      {
+        id: 3,
+        image: case32,
+        titleAr: "علاج الحساسية",
+        procedureAr: "علاج الحساسية",
+      },
+      {
+        id: 4,
+        image: case37,
+        titleAr: "علاج الخراج",
+        procedureAr: "علاج الخراج",
+      },
+      {
+        id: 5,
+        image: case28,
+        titleAr: "علاج الصرير",
+        procedureAr: "واقي الأسنان",
+      },
     ],
     reviews: [
-      { id: 1, name: "سارة محمد", rating: 5, comment: "دكتورة وفاء رائعة مع أطفالي، تعاملها لطيف جداً والأطفال بيحبوها", date: "منذ أسبوع" },
-      { id: 2, name: "محمد عبدالله", rating: 5, comment: "أفضل دكتورة أطفال، ابني كان خايف وخرج مبسوط من العيادة", date: "منذ أسبوعين" },
-      { id: 3, name: "نورا أحمد", rating: 5, comment: "محترفة وصبورة، أنصح بيها كل أم", date: "منذ 3 أسابيع" },
+      {
+        id: 1,
+        name: "سارة محمد",
+        rating: 5,
+        comment:
+          "دكتورة وفاء رائعة مع أطفالي، تعاملها لطيف جداً والأطفال بيحبوها",
+        date: "منذ أسبوع",
+      },
+      {
+        id: 2,
+        name: "محمد عبدالله",
+        rating: 5,
+        comment: "أفضل دكتورة أطفال، ابني كان خايف وخرج مبسوط من العيادة",
+        date: "منذ أسبوعين",
+      },
+      {
+        id: 3,
+        name: "نورا أحمد",
+        rating: 5,
+        comment: "محترفة وصبورة، أنصح بيها كل أم",
+        date: "منذ 3 أسابيع",
+      },
     ],
   },
   {
     id: 2,
     nameAr: "د. مريم ناجي",
     nameEn: "Dr. Mariam Nagi",
-    roleAr: "أخصائية طب أسنان الأطفال",
-    specialtyAr: "أخصائية طب أسنان الأطفال",
+    roleAr: "أخصائية الحشوات التجميلية والتركيبات وجراحات اللثة",
+    specialtyAr: "أخصائية الحشوات التجميلية والتركيبات وجراحات اللثة",
     img: Mariam,
-    bio: "أخصائية جراحات اللثة التجميلية وعلاج الابتسامة اللثوية، بالإضافة إلى طب أسنان الأطفال والحشوات التجميلية والتركيبات، وتهتم بتحقيق ابتسامة طبيعية وجميلة لمرضاها باستخدام أحدث المواد والتقنيات.",
+    bio: "أخصائية جراحات اللثة التجميلية وعلاج الابتسامة اللثوية، بالإضافة إلى الحشوات التجميلية والتركيبات، وتهتم بتحقيق ابتسامة طبيعية وجميلة لمرضاها باستخدام أحدث المواد والتقنيات.",
     schedule: [
-      { clinic: "qweisna", daysAr: ALL_WEEK },
-      { clinic: "shebin", daysAr: ALL_WEEK },
-      { clinic: "clinic3", daysAr: ALL_WEEK },
-      { clinic: "clinic4", daysAr: ALL_WEEK },
+      { clinic: "clinic3", daysAr: ["الاربعاء"], hoursAr: "من 3 م إلى 10 م" },
     ],
     stats: [
       { number: "1800+", label: "مريض سعيد" },
@@ -167,13 +238,12 @@ const doctorsDetailsRaw = [
       { number: "120+", label: "حالة شهرياً" },
     ],
     achievements: [
-      "أخصائية طب أسنان الأطفال",
+      "أخصائية الحشوات التجميلية والتركيبات وجراحات اللثة",
       "متخصصة في جراحات اللثة التجميلية وعلاج الابتسامة اللثوية",
       "خبرة في الحشوات التجميلية وتركيبات الزيركونيا والإيماكس",
       "أكثر من 1800 حالة ناجحة",
     ],
     specializations: [
-      "طب أسنان الأطفال",
       "جراحات اللثة التجميلية",
       "علاج الابتسامة اللثوية",
       "الحشوات التجميلية",
@@ -181,20 +251,77 @@ const doctorsDetailsRaw = [
       "ابتسامة هوليود",
     ],
     videos: [
-      { id: 1, titleAr: "كسور الأسنان", categoryAr: "كسور الأسنان", duration: "2:00", src: MariamVideo1, url: "https://www.tiktok.com/@aboelnagadc/video/7559988525509266689" },
-      { id: 2, titleAr: "ابتسامة هوليود", categoryAr: "ابتسامة هوليود", duration: "1:55", src: MariamVideo2, url: "https://www.tiktok.com/@aboelnagadc/video/7570007804296072469" },
+      {
+        id: 1,
+        titleAr: "كسور الأسنان",
+        categoryAr: "كسور الأسنان",
+        duration: "2:00",
+        src: MariamVideo1,
+        url: "https://www.tiktok.com/@aboelnagadc/video/7559988525509266689",
+      },
+      {
+        id: 2,
+        titleAr: "ابتسامة هوليود",
+        categoryAr: "ابتسامة هوليود",
+        duration: "1:55",
+        src: MariamVideo2,
+        url: "https://www.tiktok.com/@aboelnagadc/video/7570007804296072469",
+      },
     ],
     cases: [
-      { id: 1, image: case5, titleAr: "ابتسامة هوليود", procedureAr: "فينير مخصص" },
-      { id: 2, image: case2, titleAr: "تجميل الابتسامة الكامل", procedureAr: "قشور خزفية" },
-      { id: 3, image: case14, titleAr: "تجميل الأسنان الأمامية", procedureAr: "فينير أمامي" },
-      { id: 4, image: case25, titleAr: "ابتسامة رقمية", procedureAr: "تصميم رقمي" },
-      { id: 5, image: case40, titleAr: "ابتسامة مثالية", procedureAr: "تجميل شامل" },
+      {
+        id: 1,
+        image: case5,
+        titleAr: "ابتسامة هوليود",
+        procedureAr: "فينير مخصص",
+      },
+      {
+        id: 2,
+        image: case2,
+        titleAr: "تجميل الابتسامة الكامل",
+        procedureAr: "قشور خزفية",
+      },
+      {
+        id: 3,
+        image: case14,
+        titleAr: "تجميل الأسنان الأمامية",
+        procedureAr: "فينير أمامي",
+      },
+      {
+        id: 4,
+        image: case25,
+        titleAr: "ابتسامة رقمية",
+        procedureAr: "تصميم رقمي",
+      },
+      {
+        id: 5,
+        image: case40,
+        titleAr: "ابتسامة مثالية",
+        procedureAr: "تجميل شامل",
+      },
     ],
     reviews: [
-      { id: 1, name: "هبة علي", rating: 5, comment: "دكتورة مريم غيرت شكل أسناني بالكامل، النتيجة طبيعية جداً", date: "منذ أسبوع" },
-      { id: 2, name: "أحمد حسن", rating: 5, comment: "محترفة في التجميل، أنصح بيها", date: "منذ أسبوعين" },
-      { id: 3, name: "ريم محمود", rating: 5, comment: "ابتسامتي بقت أحلى بفضل دكتورة مريم", date: "منذ شهر" },
+      {
+        id: 1,
+        name: "هبة علي",
+        rating: 5,
+        comment: "دكتورة مريم غيرت شكل أسناني بالكامل، النتيجة طبيعية جداً",
+        date: "منذ أسبوع",
+      },
+      {
+        id: 2,
+        name: "أحمد حسن",
+        rating: 5,
+        comment: "محترفة في التجميل، أنصح بيها",
+        date: "منذ أسبوعين",
+      },
+      {
+        id: 3,
+        name: "ريم محمود",
+        rating: 5,
+        comment: "ابتسامتي بقت أحلى بفضل دكتورة مريم",
+        date: "منذ شهر",
+      },
     ],
   },
   {
@@ -206,10 +333,16 @@ const doctorsDetailsRaw = [
     img: Hadeer,
     bio: "أخصائية حشو العصب والتركيبات الثابتة والتجميلية، تجمع بين إنقاذ الأسنان الطبيعية وتصميم تركيبات دقيقة بمظهر طبيعي وأعلى معايير الجودة.",
     schedule: [
-      { clinic: "qweisna", daysAr: ALL_WEEK },
-      { clinic: "shebin", daysAr: ALL_WEEK },
-      { clinic: "clinic3", daysAr: ALL_WEEK },
-      { clinic: "clinic4", daysAr: ALL_WEEK },
+      {
+        clinic: "qweisna",
+        daysAr: ["السبت", "الثلاثاء"],
+        hoursAr: "من 4 م إلى 10 م",
+      },
+      {
+        clinic: "shebin",
+        daysAr: ["الأحد", "الاثنين", "الخميس"],
+        hoursAr: "الأحد من 11 ص إلى 5 م، والاثنين والخميس من 4 م إلى 10 م",
+      },
     ],
     stats: [
       { number: "1500+", label: "مريض سعيد" },
@@ -233,15 +366,52 @@ const doctorsDetailsRaw = [
     ],
     videos: [],
     cases: [
-      { id: 1, image: case10, titleAr: "حشو العصب بالميكروسكوب", procedureAr: "علاج العصب" },
-      { id: 2, image: case12, titleAr: "جسر أسنان ثابت", procedureAr: "جسر ثابت" },
-      { id: 3, image: case24, titleAr: "تركيبات ثابتة متعددة", procedureAr: "جسور متعددة" },
-      { id: 4, image: case7, titleAr: "تركيبات الزيركون", procedureAr: "تيجان زيركون" },
-      { id: 5, image: case34, titleAr: "قشور السيراميك", procedureAr: "سيراميك" },
+      {
+        id: 1,
+        image: case10,
+        titleAr: "حشو العصب بالميكروسكوب",
+        procedureAr: "علاج العصب",
+      },
+      {
+        id: 2,
+        image: case12,
+        titleAr: "جسر أسنان ثابت",
+        procedureAr: "جسر ثابت",
+      },
+      {
+        id: 3,
+        image: case24,
+        titleAr: "تركيبات ثابتة متعددة",
+        procedureAr: "جسور متعددة",
+      },
+      {
+        id: 4,
+        image: case7,
+        titleAr: "تركيبات الزيركون",
+        procedureAr: "تيجان زيركون",
+      },
+      {
+        id: 5,
+        image: case34,
+        titleAr: "قشور السيراميك",
+        procedureAr: "سيراميك",
+      },
     ],
     reviews: [
-      { id: 1, name: "خالد إبراهيم", rating: 5, comment: "دكتورة هدير محترفة جداً في التركيبات، النتيجة ممتازة", date: "منذ أسبوع" },
-      { id: 2, name: "فاطمة سعيد", rating: 5, comment: "تركيباتي طبيعية ومريحة، شكراً دكتورة", date: "منذ أسبوعين" },
+      {
+        id: 1,
+        name: "خالد إبراهيم",
+        rating: 5,
+        comment: "دكتورة هدير محترفة جداً في التركيبات، النتيجة ممتازة",
+        date: "منذ أسبوع",
+      },
+      {
+        id: 2,
+        name: "فاطمة سعيد",
+        rating: 5,
+        comment: "تركيباتي طبيعية ومريحة، شكراً دكتورة",
+        date: "منذ أسبوعين",
+      },
     ],
   },
   {
@@ -253,10 +423,16 @@ const doctorsDetailsRaw = [
     img: Nada,
     bio: "أخصائية طب وجراحة الفم والأسنان، حاصلة على بكالوريوس طب الفم والأسنان من جامعة بني سويف عام 2020، تهتم بحشو العصب والحشوات التجميلية والتركيبات الثابتة لإنقاذ الأسنان الطبيعية وتقديم علاج شامل.",
     schedule: [
-      { clinic: "qweisna", daysAr: ALL_WEEK },
-      { clinic: "shebin", daysAr: ALL_WEEK },
-      { clinic: "clinic3", daysAr: ALL_WEEK },
-      { clinic: "clinic4", daysAr: ALL_WEEK },
+      {
+        clinic: "qweisna",
+        daysAr: ["الاحد", "الاربعاء"],
+        hoursAr: "من 3 م إلى 11 م",
+      },
+      {
+        clinic: "shebin",
+        daysAr: ["السبت", "الثلاثاء"],
+        hoursAr: "من 4 م إلى 10 م",
+      },
     ],
     stats: [
       { number: "2200+", label: "مريض سعيد" },
@@ -279,34 +455,91 @@ const doctorsDetailsRaw = [
       "علاج الالتهابات",
     ],
     videos: [
-      { id: 1, titleAr: "الالتهابات", categoryAr: "الالتهابات", duration: "2:30", src: NadaVideo1, url: "https://www.tiktok.com/@aboelnagadc/video/7534740436607454465" },
+      {
+        id: 1,
+        titleAr: "الالتهابات",
+        categoryAr: "الالتهابات",
+        duration: "2:30",
+        src: NadaVideo1,
+        url: "https://www.tiktok.com/@aboelnagadc/video/7534740436607454465",
+      },
     ],
     cases: [
-      { id: 1, image: case10, titleAr: "حشو العصب بالميكروسكوب", procedureAr: "علاج العصب" },
-      { id: 2, image: case37, titleAr: "علاج الخراج", procedureAr: "علاج الخراج" },
-      { id: 3, image: case21, titleAr: "إعادة بناء الأسنان", procedureAr: "بناء كامل" },
-      { id: 4, image: case12, titleAr: "جسر أسنان ثابت", procedureAr: "جسر ثابت" },
-      { id: 5, image: case34, titleAr: "قشور السيراميك", procedureAr: "سيراميك" },
+      {
+        id: 1,
+        image: case10,
+        titleAr: "حشو العصب بالميكروسكوب",
+        procedureAr: "علاج العصب",
+      },
+      {
+        id: 2,
+        image: case37,
+        titleAr: "علاج الخراج",
+        procedureAr: "علاج الخراج",
+      },
+      {
+        id: 3,
+        image: case21,
+        titleAr: "إعادة بناء الأسنان",
+        procedureAr: "بناء كامل",
+      },
+      {
+        id: 4,
+        image: case12,
+        titleAr: "جسر أسنان ثابت",
+        procedureAr: "جسر ثابت",
+      },
+      {
+        id: 5,
+        image: case34,
+        titleAr: "قشور السيراميك",
+        procedureAr: "سيراميك",
+      },
     ],
     reviews: [
-      { id: 1, name: "ياسمين أحمد", rating: 5, comment: "دكتورة ندى أنقذت ضرسي بحشو عصب ممتاز، بدون ألم", date: "منذ أسبوع" },
-      { id: 2, name: "عمر خالد", rating: 5, comment: "محترفة ودقيقة في شغلها", date: "منذ أسبوعين" },
-      { id: 3, name: "دينا محمد", rating: 5, comment: "أفضل دكتورة حشو عصب تعاملت معاها", date: "منذ 3 أسابيع" },
+      {
+        id: 1,
+        name: "ياسمين أحمد",
+        rating: 5,
+        comment: "دكتورة ندى أنقذت ضرسي بحشو عصب ممتاز، بدون ألم",
+        date: "منذ أسبوع",
+      },
+      {
+        id: 2,
+        name: "عمر خالد",
+        rating: 5,
+        comment: "محترفة ودقيقة في شغلها",
+        date: "منذ أسبوعين",
+      },
+      {
+        id: 3,
+        name: "دينا محمد",
+        rating: 5,
+        comment: "أفضل دكتورة حشو عصب تعاملت معاها",
+        date: "منذ 3 أسابيع",
+      },
     ],
   },
   {
     id: 5,
     nameAr: "د. آية أشرف",
     nameEn: "Dr. Aya Ashraf",
-    roleAr: "أخصائية طب أسنان الأطفال",
-    specialtyAr: "أخصائية طب أسنان الأطفال",
+    roleAr: "أخصائية الحشوات والتركيبات التجميلية وحشو العصب",
+    specialtyAr: "أخصائية الحشوات والتركيبات التجميلية وحشو العصب",
     img: AyaAshraf,
-    bio: "أخصائية طب أسنان الأطفال، تهتم بتقديم علاج لطيف وآمن للأطفال في بيئة مريحة تشجعهم على حب زيارة الطبيب والحفاظ على أسنانهم.",
+    bio: "أخصائية الحشوات والتركيبات التجميلية وعلاج جذور الأسنان (حشو العصب)، تهتم بتقديم علاجات دقيقة وفعّالة للحفاظ على صحة الأسنان واستعادة وظيفتها ومظهرها الجمالي، مع الحرص على راحة المريض والحصول على ابتسامة صحية وجذابة.",
     schedule: [
-      { clinic: "qweisna", daysAr: ["الاثنين", "الخميس"], hoursAr: "من 11 ص إلى 10 م" },
-      { clinic: "shebin", daysAr: ["الأحد", "الأربعاء"], hoursAr: "من 5 م إلى 10 م" },
-      { clinic: "clinic3", daysAr: ["السبت"], hoursAr: "من 11 ص إلى 6 م" },
-      { clinic: "clinic3", daysAr: ["الأربعاء"], hoursAr: "من 11 ص إلى 4 م" },
+      {
+        clinic: "qweisna",
+        daysAr: ["الاثنين", "الخميس"],
+        hoursAr: "من 11 ص إلى 10 م",
+      },
+      {
+        clinic: "shebin",
+        daysAr: ["الأحد", "الأربعاء"],
+        hoursAr: "من 4 م إلى 10 م",
+      },
+      { clinic: "clinic3", daysAr: ["السبت"], hoursAr: "من 11 ص إلى 5 م" },
     ],
     stats: [
       { number: "1600+", label: "مريض سعيد" },
@@ -315,32 +548,84 @@ const doctorsDetailsRaw = [
       { number: "110+", label: "حالة شهرياً" },
     ],
     achievements: [
-      "أخصائية طب أسنان الأطفال",
-      "خبرة في التعامل مع الأطفال وتهدئتهم أثناء العلاج",
-      "متخصصة في حشو وعلاج أسنان الألبان",
-      "أكثر من 1600 حالة ناجحة",
+      "أخصائية الحشوات والتركيبات التجميلية",
+      "متخصصة في علاج وحشو جذور الأسنان (حشو العصب)",
+      "خبرة في ترميم الأسنان واستعادة وظيفتها ومظهرها الجمالي",
+      "الاهتمام بالحفاظ على الأسنان الطبيعية وتحسين الابتسامة",
     ],
     specializations: [
-      "طب أسنان الأطفال",
-      "حشو وعلاج أسنان الألبان",
-      "علاج التسوس المبكر عند الأطفال",
-      "الوقاية والفلورايد وسدادات الشقوق",
-      "تثقيف الأطفال عن صحة الفم",
+      "الحشوات التجميلية",
+      "التركيبات التجميلية للأسنان",
+      "علاج جذور الأسنان (حشو العصب)",
+      "علاج تسوس الأسنان",
+      "ترميم الأسنان المكسورة والمتضررة",
+      "تجميل وتحسين الابتسامة",
     ],
     videos: [
-      { id: 1, titleAr: "التسوس الخفي", categoryAr: "التسوس الخفي", duration: "1:45", src: AyaVideo1, url: "https://www.tiktok.com/@aboelnagadc/video/7531054115451915528" },
-      { id: 2, titleAr: "حشو العصب", categoryAr: "حشو العصب", duration: "1:30", src: AyaVideo2, url: "https://www.tiktok.com/@aboelnagadc/video/7541388128326585618" },
+      {
+        id: 1,
+        titleAr: "التسوس الخفي",
+        categoryAr: "التسوس الخفي",
+        duration: "1:45",
+        src: AyaVideo1,
+        url: "https://www.tiktok.com/@aboelnagadc/video/7531054115451915528",
+      },
+      {
+        id: 2,
+        titleAr: "حشو العصب",
+        categoryAr: "حشو العصب",
+        duration: "1:30",
+        src: AyaVideo2,
+        url: "https://www.tiktok.com/@aboelnagadc/video/7541388128326585618",
+      },
     ],
     cases: [
-      { id: 1, image: case18, titleAr: "تجميل بالكومبوزيت", procedureAr: "كومبوزيت فينير" },
-      { id: 2, image: case6, titleAr: "علاج تسوس متقدم", procedureAr: "حشوات تجميلية" },
-      { id: 3, image: case35, titleAr: "علاج الفراغات", procedureAr: "إغلاق الفراغات" },
-      { id: 4, image: case14, titleAr: "تجميل الأسنان الأمامية", procedureAr: "فينير أمامي" },
-      { id: 5, image: case9, titleAr: "تجميل الابتسامة", procedureAr: "تصميم الابتسامة" },
+      {
+        id: 1,
+        image: case18,
+        titleAr: "تجميل بالكومبوزيت",
+        procedureAr: "كومبوزيت فينير",
+      },
+      {
+        id: 2,
+        image: case6,
+        titleAr: "علاج تسوس متقدم",
+        procedureAr: "حشوات تجميلية",
+      },
+      {
+        id: 3,
+        image: case35,
+        titleAr: "علاج الفراغات",
+        procedureAr: "إغلاق الفراغات",
+      },
+      {
+        id: 4,
+        image: case14,
+        titleAr: "تجميل الأسنان الأمامية",
+        procedureAr: "فينير أمامي",
+      },
+      {
+        id: 5,
+        image: case9,
+        titleAr: "تجميل الابتسامة",
+        procedureAr: "تصميم الابتسامة",
+      },
     ],
     reviews: [
-      { id: 1, name: "مريم حسين", rating: 5, comment: "دكتورة آية شاطرة جداً في الحشوات التجميلية", date: "منذ أسبوع" },
-      { id: 2, name: "كريم سعد", rating: 5, comment: "نتيجة ممتازة وأسعار مناسبة", date: "منذ أسبوعين" },
+      {
+        id: 1,
+        name: "مريم حسين",
+        rating: 5,
+        comment: "دكتورة آية شاطرة جداً في الحشوات التجميلية",
+        date: "منذ أسبوع",
+      },
+      {
+        id: 2,
+        name: "كريم سعد",
+        rating: 5,
+        comment: "نتيجة ممتازة وأسعار مناسبة",
+        date: "منذ أسبوعين",
+      },
     ],
   },
   {
@@ -352,10 +637,11 @@ const doctorsDetailsRaw = [
     img: Afnan,
     bio: "أخصائية في التركيبات المتحركة، تقدم حلولاً مريحة وعملية لاستبدال الأسنان المفقودة بأعلى جودة.",
     schedule: [
-      { clinic: "qweisna", daysAr: ALL_WEEK },
-      { clinic: "shebin", daysAr: ALL_WEEK },
-      { clinic: "clinic3", daysAr: ALL_WEEK },
-      { clinic: "clinic4", daysAr: ALL_WEEK },
+      {
+        clinic: "qweisna",
+        daysAr: ALL_WEEK,
+        hoursAr: "يومياً، ما عدا الجمعة من 2 م إلى 8 م",
+      },
     ],
     stats: [
       { number: "1200+", label: "مريض سعيد" },
@@ -378,15 +664,52 @@ const doctorsDetailsRaw = [
     ],
     videos: [],
     cases: [
-      { id: 1, image: case16, titleAr: "تركيبة متحركة", procedureAr: "طقم أسنان" },
-      { id: 2, image: case38, titleAr: "تركيبة هجينة", procedureAr: "تركيبة مختلطة" },
-      { id: 3, image: case26, titleAr: "زراعة All-on-4", procedureAr: "زراعة كاملة" },
-      { id: 4, image: case33, titleAr: "تركيبات مؤقتة", procedureAr: "تركيبات مؤقتة" },
-      { id: 5, image: case31, titleAr: "تعديل الإطباق", procedureAr: "تعديل العضة" },
+      {
+        id: 1,
+        image: case16,
+        titleAr: "تركيبة متحركة",
+        procedureAr: "طقم أسنان",
+      },
+      {
+        id: 2,
+        image: case38,
+        titleAr: "تركيبة هجينة",
+        procedureAr: "تركيبة مختلطة",
+      },
+      {
+        id: 3,
+        image: case26,
+        titleAr: "زراعة All-on-4",
+        procedureAr: "زراعة كاملة",
+      },
+      {
+        id: 4,
+        image: case33,
+        titleAr: "تركيبات مؤقتة",
+        procedureAr: "تركيبات مؤقتة",
+      },
+      {
+        id: 5,
+        image: case31,
+        titleAr: "تعديل الإطباق",
+        procedureAr: "تعديل العضة",
+      },
     ],
     reviews: [
-      { id: 1, name: "سعيد محمود", rating: 5, comment: "تركيباتي مريحة جداً ومظهرها طبيعي", date: "منذ أسبوع" },
-      { id: 2, name: "عائشة علي", rating: 5, comment: "دكتورة أفنان محترفة ومتعاونة", date: "منذ أسبوعين" },
+      {
+        id: 1,
+        name: "سعيد محمود",
+        rating: 5,
+        comment: "تركيباتي مريحة جداً ومظهرها طبيعي",
+        date: "منذ أسبوع",
+      },
+      {
+        id: 2,
+        name: "عائشة علي",
+        rating: 5,
+        comment: "دكتورة أفنان محترفة ومتعاونة",
+        date: "منذ أسبوعين",
+      },
     ],
   },
   {
@@ -398,10 +721,11 @@ const doctorsDetailsRaw = [
     img: AyaMohamedy,
     bio: "أخصائية في الحشوات التجميلية والتركيبات الثابتة، تلتزم بتقديم علاج متكامل يجمع بين الجمال والوظيفة.",
     schedule: [
-      { clinic: "qweisna", daysAr: ALL_WEEK },
-      { clinic: "shebin", daysAr: ALL_WEEK },
-      { clinic: "clinic3", daysAr: ALL_WEEK },
-      { clinic: "clinic4", daysAr: ALL_WEEK },
+      {
+        clinic: "clinic4",
+        daysAr: ["الاحد", "الثلاثاء", "الاربعاء"],
+        hoursAr: "من 11 ص إلى 10 م",
+      },
     ],
     stats: [
       { number: "1400+", label: "مريض سعيد" },
@@ -425,14 +749,46 @@ const doctorsDetailsRaw = [
     videos: [],
     cases: [
       { id: 1, image: case29, titleAr: "تركيب إيماكس", procedureAr: "إيماكس" },
-      { id: 2, image: case12, titleAr: "جسر أسنان ثابت", procedureAr: "جسر ثابت" },
-      { id: 3, image: case24, titleAr: "تركيبات ثابتة متعددة", procedureAr: "جسور متعددة" },
-      { id: 4, image: case34, titleAr: "قشور السيراميك", procedureAr: "سيراميك" },
-      { id: 5, image: case21, titleAr: "إعادة بناء الأسنان", procedureAr: "بناء كامل" },
+      {
+        id: 2,
+        image: case12,
+        titleAr: "جسر أسنان ثابت",
+        procedureAr: "جسر ثابت",
+      },
+      {
+        id: 3,
+        image: case24,
+        titleAr: "تركيبات ثابتة متعددة",
+        procedureAr: "جسور متعددة",
+      },
+      {
+        id: 4,
+        image: case34,
+        titleAr: "قشور السيراميك",
+        procedureAr: "سيراميك",
+      },
+      {
+        id: 5,
+        image: case21,
+        titleAr: "إعادة بناء الأسنان",
+        procedureAr: "بناء كامل",
+      },
     ],
     reviews: [
-      { id: 1, name: "ليلى أحمد", rating: 5, comment: "دكتورة آية محمدي ممتازة، شغلها دقيق ومنظم", date: "منذ أسبوع" },
-      { id: 2, name: "حسام فتحي", rating: 5, comment: "تركيبات ثابتة ممتازة، أنصح بيها", date: "منذ أسبوعين" },
+      {
+        id: 1,
+        name: "ليلى أحمد",
+        rating: 5,
+        comment: "دكتورة آية محمدي ممتازة، شغلها دقيق ومنظم",
+        date: "منذ أسبوع",
+      },
+      {
+        id: 2,
+        name: "حسام فتحي",
+        rating: 5,
+        comment: "تركيبات ثابتة ممتازة، أنصح بيها",
+        date: "منذ أسبوعين",
+      },
     ],
   },
   {
@@ -444,10 +800,18 @@ const doctorsDetailsRaw = [
     img: Omar,
     bio: "أخصائي جراحة وزراعة الأسنان، حاصل على الماجستير في زراعة وتركيبات الأسنان من جامعة طنطا، يقدم حلولاً متقدمة لاستبدال الأسنان المفقودة بزرعات عالية الجودة. يتميز بالخلع والزراعة الفورية في نفس الجلسة، وزراعة الفك الكامل لتعويض الأسنان، بالإضافة إلى جراحات ضرس العقل المدفون وإزالة الأورام والجراحات المتقدمة.",
     schedule: [
-      { clinic: "qweisna", daysAr: ["السبت", "الأحد", "الثلاثاء", "الأربعاء"], hoursAr: "من 2 م إلى 10 م" },
-      { clinic: "shebin", daysAr: ["الاثنين", "الخميس"] , hoursAr: "من 2 م إلى 10 م"},
-      { clinic: "clinic3", daysAr: ["الجمعة"], hoursAr: "من 2 م إلى 5 م" },
-      { clinic: "clinic4", daysAr: ["الجمعة"], hoursAr: "من 6 م إلى 11 م" },
+      {
+        clinic: "qweisna",
+        daysAr: ["السبت", "الأحد", "الثلاثاء", "الأربعاء"],
+        hoursAr: "من 4 م إلى 10 م",
+      },
+      {
+        clinic: "shebin",
+        daysAr: ["الاربعاء", "الاحد"],
+        hoursAr: "من 3 م إلى 11 م",
+      },
+      { clinic: "clinic3", daysAr: ["الجمعة"], hoursAr: "من 2 م إلى 6 م" },
+      { clinic: "clinic4", daysAr: ["الجمعة"], hoursAr: "من 7 م إلى 10 م" },
     ],
     stats: [
       { number: "3000+", label: "مريض سعيد" },
@@ -467,21 +831,85 @@ const doctorsDetailsRaw = [
       "جراحات ضرس العقل المدفون وإزالة الأورام والجراحات المتقدمة",
     ],
     videos: [
-      { id: 1, titleAr: "زراعة الأسنان", categoryAr: "زراعة الأسنان", duration: "0:50", src: OmarVideo1, url: "https://www.tiktok.com/@aboelnagadc/video/7554137350373133584" },
-      { id: 2, titleAr: "التهابات ضرس العقل", categoryAr: "التهابات ضرس العقل", duration: "3:40", src: OmarVideo2, url: "https://www.tiktok.com/@aboelnagadc/video/7527343301104569608" },
-      { id: 3, titleAr: "زراعة الأسنان", categoryAr: "زراعة الأسنان", duration: "4:00", src: OmarVideo3, url: "https://www.tiktok.com/@aboelnagadc/video/7539519366593858823" },
+      {
+        id: 1,
+        titleAr: "زراعة الأسنان",
+        categoryAr: "زراعة الأسنان",
+        duration: "0:50",
+        src: OmarVideo1,
+        url: "https://www.tiktok.com/@aboelnagadc/video/7554137350373133584",
+      },
+      {
+        id: 2,
+        titleAr: "التهابات ضرس العقل",
+        categoryAr: "التهابات ضرس العقل",
+        duration: "3:40",
+        src: OmarVideo2,
+        url: "https://www.tiktok.com/@aboelnagadc/video/7527343301104569608",
+      },
+      {
+        id: 3,
+        titleAr: "زراعة الأسنان",
+        categoryAr: "زراعة الأسنان",
+        duration: "4:00",
+        src: OmarVideo3,
+        url: "https://www.tiktok.com/@aboelnagadc/video/7539519366593858823",
+      },
     ],
     cases: [
-      { id: 1, image: case3, titleAr: "زراعة أسنان متقدمة", procedureAr: "زراعة فورية" },
-      { id: 2, image: case26, titleAr: "زراعة All-on-4", procedureAr: "زراعة كاملة" },
-      { id: 3, image: case19, titleAr: "زراعة عظم الفك", procedureAr: "ترقيع عظمي" },
-      { id: 4, image: case15, titleAr: "علاج ضرس العقل", procedureAr: "خلع جراحي" },
-      { id: 5, image: case8, titleAr: "علاج اللثة المتقدم", procedureAr: "جراحة لثة" },
+      {
+        id: 1,
+        image: case3,
+        titleAr: "زراعة أسنان متقدمة",
+        procedureAr: "زراعة فورية",
+      },
+      {
+        id: 2,
+        image: case26,
+        titleAr: "زراعة All-on-4",
+        procedureAr: "زراعة كاملة",
+      },
+      {
+        id: 3,
+        image: case19,
+        titleAr: "زراعة عظم الفك",
+        procedureAr: "ترقيع عظمي",
+      },
+      {
+        id: 4,
+        image: case15,
+        titleAr: "علاج ضرس العقل",
+        procedureAr: "خلع جراحي",
+      },
+      {
+        id: 5,
+        image: case8,
+        titleAr: "علاج اللثة المتقدم",
+        procedureAr: "جراحة لثة",
+      },
     ],
     reviews: [
-      { id: 1, name: "محمود سامي", rating: 5, comment: "دكتور عمر أفضل دكتور زراعة، عملية ناجحة 100%", date: "منذ أسبوع" },
-      { id: 2, name: "رانيا حسن", rating: 5, comment: "محترف في الزراعة، النتيجة طبيعية جداً", date: "منذ أسبوعين" },
-      { id: 3, name: "طارق عبدالرحمن", rating: 5, comment: "جراحة ممتازة وبدون مضاعفات", date: "منذ 3 أسابيع" },
+      {
+        id: 1,
+        name: "محمود سامي",
+        rating: 5,
+        comment: "دكتور عمر أفضل دكتور زراعة، عملية ناجحة 100%",
+        date: "منذ أسبوع",
+      },
+      {
+        id: 2,
+        name: "رانيا حسن",
+        rating: 5,
+        comment: "محترف في الزراعة، النتيجة طبيعية جداً",
+        date: "منذ أسبوعين",
+      },
+      {
+        id: 3,
+        name: "طارق عبدالرحمن",
+        rating: 5,
+        comment: "جراحة ممتازة وبدون مضاعفات",
+        date: "منذ 3 أسابيع",
+      },
     ],
   },
   {
@@ -493,10 +921,13 @@ const doctorsDetailsRaw = [
     img: AhmedIbrahim1,
     bio: "أخصائي في حشو العصب والحشوات التجميلية والتركيبات، يسعى لإنقاذ كل سن ممكن مع الحفاظ على جمال الابتسامة.",
     schedule: [
-      { clinic: "qweisna", daysAr: ALL_WEEK },
-      { clinic: "shebin", daysAr: ALL_WEEK },
-      { clinic: "clinic3", daysAr: ALL_WEEK },
-      { clinic: "clinic4", daysAr: ALL_WEEK },
+      { clinic: "clinic3", daysAr: ALL_WEEK, hoursAr: "من 10 ص إلى 3 م" },
+      {
+        clinic: "qweisna",
+        daysAr: ALL_WEEK.filter((day) => day !== "الخميس"),
+        hoursAr: "من 4 م إلى 10 م",
+      },
+      { clinic: "shebin", daysAr: ["الخميس"], hoursAr: "من 11 ص إلى 3 م" },
     ],
     stats: [
       { number: "2500+", label: "مريض سعيد" },
@@ -518,18 +949,62 @@ const doctorsDetailsRaw = [
       "علاج الالتهابات",
     ],
     videos: [
-      { id: 1, titleAr: "نزيف اللثة", categoryAr: "نزيف اللثة", duration: "4:20", src: AhmedVideo1, url: "https://www.tiktok.com/@aboelnagadc/video/7562250183296240912" },
+      {
+        id: 1,
+        titleAr: "نزيف اللثة",
+        categoryAr: "نزيف اللثة",
+        duration: "4:20",
+        src: AhmedVideo1,
+        url: "https://www.tiktok.com/@aboelnagadc/video/7562250183296240912",
+      },
     ],
     cases: [
-      { id: 1, image: case23, titleAr: "علاج الجذور المعقد", procedureAr: "علاج قنوات" },
-      { id: 2, image: case10, titleAr: "حشو العصب بالميكروسكوب", procedureAr: "علاج العصب" },
-      { id: 3, image: case37, titleAr: "علاج الخراج", procedureAr: "علاج الخراج" },
-      { id: 4, image: case17, titleAr: "علاج التهاب اللثة", procedureAr: "تنظيف عميق" },
-      { id: 5, image: case32, titleAr: "علاج الحساسية", procedureAr: "علاج الحساسية" },
+      {
+        id: 1,
+        image: case23,
+        titleAr: "علاج الجذور المعقد",
+        procedureAr: "علاج قنوات",
+      },
+      {
+        id: 2,
+        image: case10,
+        titleAr: "حشو العصب بالميكروسكوب",
+        procedureAr: "علاج العصب",
+      },
+      {
+        id: 3,
+        image: case37,
+        titleAr: "علاج الخراج",
+        procedureAr: "علاج الخراج",
+      },
+      {
+        id: 4,
+        image: case17,
+        titleAr: "علاج التهاب اللثة",
+        procedureAr: "تنظيف عميق",
+      },
+      {
+        id: 5,
+        image: case32,
+        titleAr: "علاج الحساسية",
+        procedureAr: "علاج الحساسية",
+      },
     ],
     reviews: [
-      { id: 1, name: "أمل يوسف", rating: 5, comment: "دكتور أحمد محترف في حشو العصب، أنصح بيه", date: "منذ أسبوع" },
-      { id: 2, name: "إبراهيم ناصر", rating: 5, comment: "علاج ممتاز وبدون ألم", date: "منذ أسبوعين" },
+      {
+        id: 1,
+        name: "أمل يوسف",
+        rating: 5,
+        comment: "دكتور أحمد محترف في حشو العصب، أنصح بيه",
+        date: "منذ أسبوع",
+      },
+      {
+        id: 2,
+        name: "إبراهيم ناصر",
+        rating: 5,
+        comment: "علاج ممتاز وبدون ألم",
+        date: "منذ أسبوعين",
+      },
     ],
   },
   {
@@ -567,15 +1042,47 @@ const doctorsDetailsRaw = [
     ],
     videos: [],
     cases: [
-      { id: 1, image: case18, titleAr: "تجميل بالكومبوزيت", procedureAr: "كومبوزيت فينير" },
-      { id: 2, image: case10, titleAr: "حشو العصب بالميكروسكوب", procedureAr: "علاج العصب" },
-      { id: 3, image: case21, titleAr: "إعادة بناء الأسنان", procedureAr: "بناء كامل" },
+      {
+        id: 1,
+        image: case18,
+        titleAr: "تجميل بالكومبوزيت",
+        procedureAr: "كومبوزيت فينير",
+      },
+      {
+        id: 2,
+        image: case10,
+        titleAr: "حشو العصب بالميكروسكوب",
+        procedureAr: "علاج العصب",
+      },
+      {
+        id: 3,
+        image: case21,
+        titleAr: "إعادة بناء الأسنان",
+        procedureAr: "بناء كامل",
+      },
       { id: 4, image: case13, titleAr: "قشور لومينير", procedureAr: "لومينير" },
-      { id: 5, image: case6, titleAr: "علاج تسوس متقدم", procedureAr: "حشوات تجميلية" },
+      {
+        id: 5,
+        image: case6,
+        titleAr: "علاج تسوس متقدم",
+        procedureAr: "حشوات تجميلية",
+      },
     ],
     reviews: [
-      { id: 1, name: "منى سعيد", rating: 5, comment: "دكتور أحمد جلال شاطر جداً، حشواتي مش باينة خالص", date: "منذ أسبوع" },
-      { id: 2, name: "وليد كمال", rating: 5, comment: "محترف ومتعاون", date: "منذ أسبوعين" },
+      {
+        id: 1,
+        name: "منى سعيد",
+        rating: 5,
+        comment: "دكتور أحمد جلال شاطر جداً، حشواتي مش باينة خالص",
+        date: "منذ أسبوع",
+      },
+      {
+        id: 2,
+        name: "وليد كمال",
+        rating: 5,
+        comment: "محترف ومتعاون",
+        date: "منذ أسبوعين",
+      },
     ],
   },
   {
@@ -587,10 +1094,11 @@ const doctorsDetailsRaw = [
     img: Salah,
     bio: "أخصائي الحشوات والتركيبات التجميلية وحشو العصب، يركز على علاج يحافظ على مظهر الأسنان الطبيعي مع ضمان المتانة.",
     schedule: [
-      { clinic: "qweisna", daysAr: ALL_WEEK },
-      { clinic: "shebin", daysAr: ALL_WEEK },
-      { clinic: "clinic3", daysAr: ALL_WEEK },
-      { clinic: "clinic4", daysAr: ALL_WEEK },
+      {
+        clinic: "clinic4",
+        daysAr: ["الاثنين", "الخميس"],
+        hoursAr: "من 11 ص إلى4 م",
+      },
     ],
     stats: [
       { number: "1300+", label: "مريض سعيد" },
@@ -614,15 +1122,52 @@ const doctorsDetailsRaw = [
     ],
     videos: [],
     cases: [
-      { id: 1, image: case6, titleAr: "علاج تسوس متقدم", procedureAr: "حشوات تجميلية" },
-      { id: 2, image: case18, titleAr: "تجميل بالكومبوزيت", procedureAr: "كومبوزيت فينير" },
-      { id: 3, image: case23, titleAr: "علاج الجذور المعقد", procedureAr: "علاج قنوات" },
-      { id: 4, image: case1, titleAr: "تحول تبييض الأسنان", procedureAr: "تبييض احترافي" },
-      { id: 5, image: case32, titleAr: "علاج الحساسية", procedureAr: "علاج الحساسية" },
+      {
+        id: 1,
+        image: case6,
+        titleAr: "علاج تسوس متقدم",
+        procedureAr: "حشوات تجميلية",
+      },
+      {
+        id: 2,
+        image: case18,
+        titleAr: "تجميل بالكومبوزيت",
+        procedureAr: "كومبوزيت فينير",
+      },
+      {
+        id: 3,
+        image: case23,
+        titleAr: "علاج الجذور المعقد",
+        procedureAr: "علاج قنوات",
+      },
+      {
+        id: 4,
+        image: case1,
+        titleAr: "تحول تبييض الأسنان",
+        procedureAr: "تبييض احترافي",
+      },
+      {
+        id: 5,
+        image: case32,
+        titleAr: "علاج الحساسية",
+        procedureAr: "علاج الحساسية",
+      },
     ],
     reviews: [
-      { id: 1, name: "منى أحمد", rating: 5, comment: "دكتور صلاح ممتاز في الحشوات التجميلية", date: "منذ أسبوع" },
-      { id: 2, name: "حسين محمد", rating: 5, comment: "شغل نظيف ومحترف", date: "منذ أسبوعين" },
+      {
+        id: 1,
+        name: "منى أحمد",
+        rating: 5,
+        comment: "دكتور صلاح ممتاز في الحشوات التجميلية",
+        date: "منذ أسبوع",
+      },
+      {
+        id: 2,
+        name: "حسين محمد",
+        rating: 5,
+        comment: "شغل نظيف ومحترف",
+        date: "منذ أسبوعين",
+      },
     ],
   },
   {
@@ -634,10 +1179,11 @@ const doctorsDetailsRaw = [
     img: AhmedIbrahim2,
     bio: "أخصائي في الحشوات التجميلية والتركيبات الثابتة، يقدم حلولاً شاملة لترميم الأسنان واستعادة وظيفتها.",
     schedule: [
-      { clinic: "qweisna", daysAr: ALL_WEEK },
-      { clinic: "shebin", daysAr: ALL_WEEK },
-      { clinic: "clinic3", daysAr: ALL_WEEK },
-      { clinic: "clinic4", daysAr: ALL_WEEK },
+      {
+        clinic: "clinic4",
+        daysAr: ["الأحد", "الخميس"],
+        hoursAr: "الأحد من 11 ص إلى 10 م، والخميس من 11 ص إلى 5 م",
+      },
     ],
     stats: [
       { number: "1700+", label: "مريض سعيد" },
@@ -660,15 +1206,47 @@ const doctorsDetailsRaw = [
     ],
     videos: [],
     cases: [
-      { id: 1, image: case7, titleAr: "تركيبات الزيركون", procedureAr: "تيجان زيركون" },
-      { id: 2, image: case24, titleAr: "تركيبات ثابتة متعددة", procedureAr: "جسور متعددة" },
+      {
+        id: 1,
+        image: case7,
+        titleAr: "تركيبات الزيركون",
+        procedureAr: "تيجان زيركون",
+      },
+      {
+        id: 2,
+        image: case24,
+        titleAr: "تركيبات ثابتة متعددة",
+        procedureAr: "جسور متعددة",
+      },
       { id: 3, image: case29, titleAr: "تركيب إيماكس", procedureAr: "إيماكس" },
-      { id: 4, image: case33, titleAr: "تركيبات مؤقتة", procedureAr: "تركيبات مؤقتة" },
-      { id: 5, image: case21, titleAr: "إعادة بناء الأسنان", procedureAr: "بناء كامل" },
+      {
+        id: 4,
+        image: case33,
+        titleAr: "تركيبات مؤقتة",
+        procedureAr: "تركيبات مؤقتة",
+      },
+      {
+        id: 5,
+        image: case21,
+        titleAr: "إعادة بناء الأسنان",
+        procedureAr: "بناء كامل",
+      },
     ],
     reviews: [
-      { id: 1, name: "نادية فؤاد", rating: 5, comment: "دكتور أحمد محترف في التركيبات الثابتة", date: "منذ أسبوع" },
-      { id: 2, name: "جمال رشاد", rating: 5, comment: "نتيجة ممتازة وسعر مناسب", date: "منذ أسبوعين" },
+      {
+        id: 1,
+        name: "نادية فؤاد",
+        rating: 5,
+        comment: "دكتور أحمد محترف في التركيبات الثابتة",
+        date: "منذ أسبوع",
+      },
+      {
+        id: 2,
+        name: "جمال رشاد",
+        rating: 5,
+        comment: "نتيجة ممتازة وسعر مناسب",
+        date: "منذ أسبوعين",
+      },
     ],
   },
   {
@@ -680,13 +1258,14 @@ const doctorsDetailsRaw = [
     img: Yousef,
     bio: "أخصائي في الحشوات التجميلية وحشو العصب والتركيبات، يلتزم بتقديم رعاية شاملة تجمع بين العلاج والتجميل.",
     schedule: [
-      { clinic: "qweisna", daysAr: ALL_WEEK },
-      { clinic: "shebin", daysAr: ALL_WEEK },
-      { clinic: "clinic3", daysAr: ALL_WEEK },
-      { clinic: "clinic4", daysAr: ALL_WEEK },
+      {
+        clinic: "qweisna",
+        daysAr: ALL_WEEK,
+        hoursAr: "يومياً، ما عدا الجمعة من 2 م إلى 8 م",
+      },
     ],
     stats: [
-      { number: "1500+", label: "مريض سعيد" },
+      { number: "1300+", label: "مريض سعيد" },
       { number: "4+", label: "سنة خبرة" },
       { number: "4.8", label: "تقييم" },
       { number: "100+", label: "حالة شهرياً" },
@@ -695,7 +1274,7 @@ const doctorsDetailsRaw = [
       "أخصائي الحشوات التجميلية وحشو العصب",
       "خبرة في علاج الجذور",
       "متخصص في الحشوات الأمامية",
-      "أكثر من 1500 حالة ناجحة",
+      "أكثر من 1300 حالة ناجحة",
     ],
     specializations: [
       "الحشوات التجميلية",
@@ -706,15 +1285,52 @@ const doctorsDetailsRaw = [
     ],
     videos: [],
     cases: [
-      { id: 1, image: case23, titleAr: "علاج الجذور المعقد", procedureAr: "علاج قنوات" },
-      { id: 2, image: case18, titleAr: "تجميل بالكومبوزيت", procedureAr: "كومبوزيت فينير" },
-      { id: 3, image: case9, titleAr: "تجميل الابتسامة", procedureAr: "تصميم الابتسامة" },
-      { id: 4, image: case11, titleAr: "تبييض بالليزر", procedureAr: "تبييض ليزر" },
-      { id: 5, image: case41, titleAr: "ابتسامة مثالية", procedureAr: "تجميل شامل" },
+      {
+        id: 1,
+        image: case23,
+        titleAr: "علاج الجذور المعقد",
+        procedureAr: "علاج قنوات",
+      },
+      {
+        id: 2,
+        image: case18,
+        titleAr: "تجميل بالكومبوزيت",
+        procedureAr: "كومبوزيت فينير",
+      },
+      {
+        id: 3,
+        image: case9,
+        titleAr: "تجميل الابتسامة",
+        procedureAr: "تصميم الابتسامة",
+      },
+      {
+        id: 4,
+        image: case11,
+        titleAr: "تبييض بالليزر",
+        procedureAr: "تبييض ليزر",
+      },
+      {
+        id: 5,
+        image: case41,
+        titleAr: "ابتسامة مثالية",
+        procedureAr: "تجميل شامل",
+      },
     ],
     reviews: [
-      { id: 1, name: "سمية حسن", rating: 5, comment: "دكتور يوسف ممتاز ومحترف", date: "منذ أسبوع" },
-      { id: 2, name: "باسم حسن", rating: 5, comment: "حشو عصب بدون ألم، شكراً دكتور", date: "منذ أسبوعين" },
+      {
+        id: 1,
+        name: "سمية حسن",
+        rating: 5,
+        comment: "دكتور يوسف ممتاز ومحترف",
+        date: "منذ أسبوع",
+      },
+      {
+        id: 2,
+        name: "باسم حسن",
+        rating: 5,
+        comment: "حشو عصب بدون ألم، شكراً دكتور",
+        date: "منذ أسبوعين",
+      },
     ],
   },
 ];
@@ -758,7 +1374,11 @@ const daysSinceBase = () => {
 const yearsSinceBase = () => {
   const now = new Date();
   let years = now.getFullYear() - BASE_DATE.getFullYear();
-  const anniversary = new Date(now.getFullYear(), BASE_DATE.getMonth(), BASE_DATE.getDate());
+  const anniversary = new Date(
+    now.getFullYear(),
+    BASE_DATE.getMonth(),
+    BASE_DATE.getDate(),
+  );
   if (now < anniversary) years -= 1;
   return Math.max(0, years);
 };
@@ -785,7 +1405,10 @@ function applyGrowingStats(doctor) {
     patients === null
       ? doctor.achievements
       : doctor.achievements.map((text) =>
-          text.replace(/أكثر من \d+ حالة ناجحة/, `أكثر من ${patients} حالة ناجحة`)
+          text.replace(
+            /أكثر من \d+ حالة ناجحة/,
+            `أكثر من ${patients} حالة ناجحة`,
+          ),
         );
 
   return { ...doctor, stats, achievements };
@@ -811,7 +1434,8 @@ export const getDoctorBySlug = (slug) => {
   return doctorsDetails.find((d) => d.slug === normalized) ?? null;
 };
 
-export const getDoctorPath = (doctor) => (doctor?.slug ? `/${doctor.slug}` : "/");
+export const getDoctorPath = (doctor) =>
+  doctor?.slug ? `/${doctor.slug}` : "/";
 
 // بيرجّع مواعيد الدكتور جاهزة للعرض:
 // [{ key, nameAr, daysAr, hoursAr }]
